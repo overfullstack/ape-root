@@ -1,9 +1,9 @@
 [versions]
-jdk = "17"
+jdk = "23"
 kotlin = "2.1.20"
 revoman = "0.7.8"
 moshix = "0.30.0"
-http4k = "5.47.0.0" # Compatable with JDK 17
+http4k = "6.5.6.1"
 immutables = "2.10.1"
 arrow = "2.0.1"
 graal = "24.2.0"
@@ -57,6 +57,9 @@ http4k-bom = { module = "org.http4k:http4k-bom", version.ref = "http4k" }
 http4k-core = { module = "org.http4k:http4k-core" }
 http4k-client-apache = { module = "org.http4k:http4k-client-apache" }
 http4k-format-moshi = { module = "org.http4k:http4k-format-moshi" }
+http4k-mcp-sdk = { module = "org.http4k.pro:http4k-mcp-sdk" }
+http4k-server-helidon = { module = "org.http4k:http4k-server-helidon" }
+http4k-tools-hotreload = { module = "org.http4k.pro:http4k-tools-hotreload" }
 graal-js = { module = "org.graalvm.js:js-language", version.ref = "graal" }
 underscore = { module = "com.github.javadev:underscore", version.ref = "underscore" }
 kotlin-faker = { module = "io.github.serpro69:kotlin-faker", version.ref = "kotlin-faker" }
@@ -86,7 +89,14 @@ kotest = [
     "kotest-property",
     "kotest-runnerJUnit5",
 ]
-http4k = ["http4k-core", "http4k-client-apache", "http4k-format-moshi"]
+http4k = [
+    "http4k-core",
+    "http4k-client-apache",
+    "http4k-format-moshi",
+    "http4k-mcp-sdk",
+    "http4k-server-helidon",
+    "http4k-tools-hotreload"
+]
 kotlin-logging = ["kotlin-logging-jvm", "log4j-api", "log4j-core", "log4j-slf4j2-impl"]
 
 [plugins]
@@ -99,4 +109,4 @@ moshix = { id = "dev.zacsweers.moshix", version.ref = "moshix" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 node-gradle = { id = "com.github.node-gradle.node", version.ref = "node-gradle" }
 nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus-publish" }
-gradle-taskinfo = {id = "org.barfuin.gradle.taskinfo", version.ref = "gradle-taskinfo"}
+gradle-taskinfo = { id = "org.barfuin.gradle.taskinfo", version.ref = "gradle-taskinfo" }
