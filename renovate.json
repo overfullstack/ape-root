@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "config:recommended"
+  ],
+  "automerge": true,
+  "commitBodyTable": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "groupName": "all dependencies",
+      "groupSlug": "all"
+    },
+    {
+      "matchPackageNames": [
+        "org.graalvm.sdk:graal-sdk",
+        "org.graalvm.js:js",
+        "org.http4k:http4k-core",
+        "org.http4k:http4k-client-apache",
+        "org.http4k:http4k-format-moshi"
+      ],
+      "enabled": false
+    }
+  ]
+}
