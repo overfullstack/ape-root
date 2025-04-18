@@ -6,10 +6,6 @@
       <module name="ape-root.integrationTest" options="-proc:none" />
       <module name="ape-root.main" options="-proc:none" />
       <module name="ape-root.test" options="-proc:none" />
-      <module name="revoman-root" options="-proc:none" />
-      <module name="revoman-root.integrationTest" options="-proc:none" />
-      <module name="revoman-root.main" options="-proc:none" />
-      <module name="revoman-root.test" options="-proc:none" />
     </option>
   </component>
 </project>
