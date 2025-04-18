@@ -7,21 +7,20 @@
 
 package com.salesforce.ape.core;
 
-import com.salesforce.revoman.input.config.HookConfig;
-import com.salesforce.revoman.input.config.ResponseConfig;
-import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse;
-import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse.Graph.ErrorGraph;
-import com.salesforce.revoman.input.json.adapters.salesforce.CompositeResponse;
-import com.salesforce.revoman.output.report.StepReport;
-
-import java.util.List;
-
 import static com.salesforce.revoman.input.config.HookConfig.post;
 import static com.salesforce.revoman.input.config.ResponseConfig.unmarshallResponse;
 import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingURIPathOfAny;
 import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepEndingWithURIPathOfAny;
 import static com.salesforce.revoman.output.report.StepReport.containsHeader;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.salesforce.revoman.input.config.HookConfig;
+import com.salesforce.revoman.input.config.ResponseConfig;
+import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse;
+import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse.Graph.ErrorGraph;
+import com.salesforce.revoman.input.json.adapters.salesforce.CompositeResponse;
+import com.salesforce.revoman.output.report.StepReport;
+import java.util.List;
 
 public class CoreUtils {
 	private CoreUtils() {}

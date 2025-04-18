@@ -6,16 +6,15 @@
 
 package com.salesforce.ape.core.bt2bs;
 
-import com.salesforce.revoman.ReVoman;
-import kotlin.collections.CollectionsKt;
-import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
 import static com.google.common.truth.Truth.assertThat;
 import static com.salesforce.ape.core.bt2bs.ReVomanConfigForBT2BS.MILESTONE_CONFIG;
 import static com.salesforce.ape.core.bt2bs.ReVomanConfigForBT2BS.MILESTONE_SETUP_CONFIG;
 import static com.salesforce.ape.core.bt2bs.ReVomanConfigForBT2BS.PERSONA_CREATION_AND_SETUP_CONFIG;
+
+import com.salesforce.revoman.ReVoman;
+import java.util.Map;
+import kotlin.collections.CollectionsKt;
+import org.junit.jupiter.api.Test;
 
 class MilestoneBillingE2ETest {
 

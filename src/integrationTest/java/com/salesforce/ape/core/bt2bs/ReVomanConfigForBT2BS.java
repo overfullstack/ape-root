@@ -6,18 +6,18 @@
 
 package com.salesforce.ape.core.bt2bs;
 
-import com.salesforce.revoman.input.config.HookConfig;
-import com.salesforce.revoman.input.config.Kick;
-import com.salesforce.ape.core.adapters.IDAdapter;
-
-import static com.salesforce.revoman.input.config.HookConfig.post;
-import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingHeader;
-import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingURIPathOfAny;
 import static com.salesforce.ape.core.CoreUtils.ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS;
 import static com.salesforce.ape.core.CoreUtils.ASSERT_COMPOSITE_RESPONSE_SUCCESS;
 import static com.salesforce.ape.core.CoreUtils.unmarshallCompositeGraphResponse;
 import static com.salesforce.ape.core.CoreUtils.unmarshallCompositeResponse;
+import static com.salesforce.revoman.input.config.HookConfig.post;
+import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingHeader;
+import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingURIPathOfAny;
 import static com.salesforce.revoman.output.ExeType.HTTP_STATUS;
+
+import com.salesforce.ape.core.adapters.IDAdapter;
+import com.salesforce.revoman.input.config.HookConfig;
+import com.salesforce.revoman.input.config.Kick;
 
 public final class ReVomanConfigForBT2BS {
 

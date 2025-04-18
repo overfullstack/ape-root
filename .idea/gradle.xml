@@ -26,6 +26,29 @@
           </set>
         </option>
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/../../work/revoman-root/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/../../work/revoman-root/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../../work/revoman-root" />
+        <option name="gradleHome" value="$USER_HOME$/.sdkman/candidates/gradle/current" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../../work/revoman-root" />
+            <option value="$PROJECT_DIR$/../../work/revoman-root/buildSrc" />
+          </set>
+        </option>
+      </GradleProjectSettings>
     </option>
   </component>
 </project>

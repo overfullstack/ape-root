@@ -7,24 +7,9 @@
 
 package com.salesforce.ape.core.pq;
 
-import com.salesforce.revoman.ReVoman;
-import com.salesforce.revoman.input.config.Kick;
-import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse;
-import com.salesforce.ape.core.adapters.IDAdapter;
-import com.salesforce.ape.core.pq.connect.request.PlaceQuoteInputRepresentation;
-import com.salesforce.ape.core.pq.connect.response.PlaceQuoteOutputRepresentation;
-import com.salesforce.revoman.output.postman.PostmanEnvironment;
-import com.salesforce.revoman.output.report.StepReport;
-import kotlin.random.Random;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import static com.google.common.truth.Truth.assertThat;
+import static com.salesforce.ape.core.CoreUtils.assertCompositeGraphResponseSuccess;
+import static com.salesforce.ape.core.adapters.ConnectInputRepWithGraphAdapter.adapter;
 import static com.salesforce.revoman.input.config.HookConfig.post;
 import static com.salesforce.revoman.input.config.HookConfig.pre;
 import static com.salesforce.revoman.input.config.RequestConfig.unmarshallRequest;
@@ -33,9 +18,23 @@ import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.after
 import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepContainingURIPathOfAny;
 import static com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.afterStepName;
 import static com.salesforce.revoman.input.config.StepPick.PreTxnStepPick.beforeStepContainingURIPathOfAny;
-import static com.salesforce.ape.core.CoreUtils.assertCompositeGraphResponseSuccess;
-import static com.salesforce.ape.core.adapters.ConnectInputRepWithGraphAdapter.adapter;
 import static com.salesforce.revoman.output.ExeType.HTTP_STATUS;
+
+import com.salesforce.ape.core.adapters.IDAdapter;
+import com.salesforce.ape.core.pq.connect.request.PlaceQuoteInputRepresentation;
+import com.salesforce.ape.core.pq.connect.response.PlaceQuoteOutputRepresentation;
+import com.salesforce.revoman.ReVoman;
+import com.salesforce.revoman.input.config.Kick;
+import com.salesforce.revoman.input.json.adapters.salesforce.CompositeGraphResponse;
+import com.salesforce.revoman.output.postman.PostmanEnvironment;
+import com.salesforce.revoman.output.report.StepReport;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import kotlin.random.Random;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ----------------------------------------~~~~~ NOTE ~~~~~-----------------------------------------

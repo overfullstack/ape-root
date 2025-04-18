@@ -7,23 +7,6 @@
 
 package com.salesforce.ape.core.adapters;
 
-import com.salesforce.ape.core.pq.connect.request.ConnectInputRepresentationWithGraph;
-import com.salesforce.ape.core.pq.connect.request.ObjectGraphInputRepresentation;
-import com.salesforce.ape.core.pq.connect.request.ObjectInputRepresentationMap;
-import com.salesforce.ape.core.pq.connect.request.ObjectWithReferenceInputRepresentation;
-import com.salesforce.ape.core.pq.connect.request.ObjectWithReferenceInputRepresentationList;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.JsonReader;
-import com.squareup.moshi.JsonWriter;
-import com.squareup.moshi.Moshi;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.BeanUtils;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Set;
-
 import static com.salesforce.revoman.input.json.JsonReaderUtils.anyMapR;
 import static com.salesforce.revoman.input.json.JsonReaderUtils.listR;
 import static com.salesforce.revoman.input.json.JsonReaderUtils.nextString;
@@ -34,6 +17,22 @@ import static com.salesforce.revoman.input.json.JsonWriterUtils.listW;
 import static com.salesforce.revoman.input.json.JsonWriterUtils.objW;
 import static com.salesforce.revoman.input.json.JsonWriterUtils.string;
 import static com.salesforce.revoman.input.json.JsonWriterUtils.writeProps;
+
+import com.salesforce.ape.core.pq.connect.request.ConnectInputRepresentationWithGraph;
+import com.salesforce.ape.core.pq.connect.request.ObjectGraphInputRepresentation;
+import com.salesforce.ape.core.pq.connect.request.ObjectInputRepresentationMap;
+import com.salesforce.ape.core.pq.connect.request.ObjectWithReferenceInputRepresentation;
+import com.salesforce.ape.core.pq.connect.request.ObjectWithReferenceInputRepresentationList;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonReader;
+import com.squareup.moshi.JsonWriter;
+import com.squareup.moshi.Moshi;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Set;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.BeanUtils;
 
 public class ConnectInputRepWithGraphAdapter<T extends ConnectInputRepresentationWithGraph>
 		extends JsonAdapter<T> {
