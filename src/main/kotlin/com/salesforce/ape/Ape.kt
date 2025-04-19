@@ -61,7 +61,12 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       ) bind revomanToolHandler,
       Tool(
         "dep-graph",
-        "Accepts multiple Postman collections and provides a map of variable name to create and Postman Collection that can create that variable",
+        "Accepts a JSON array of Postman collections and provides a map of variable name and Postman Collection that can create that variable",
+        pmCollectionPathArg,
+      ) bind revomanDepGraphHandler,
+      Tool(
+        "execute-collection",
+        "Accepts a JSON array of Postman collections and environment files to execute",
         pmCollectionPathArg,
       ) bind revomanDepGraphHandler,
     )

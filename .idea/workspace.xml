@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="CONTRIBUTING.adoc">
-      <change afterPath="$PROJECT_DIR$/.cursor/rules.mdc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/detekt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/dependency-graph.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +66,7 @@
   "keyToString": {
     "Gradle.Build ape-root.executor": "Run",
     "Gradle.ape-root [clean build].executor": "Run",
+    "Gradle.ape-root [spotlessApply].executor": "Run",
     "Kotlin.ApeKt.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -93,6 +91,7 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
+      <command value="gradle spotlessApply" />
       <command value="gradle clean build" />
     </option>
   </component>
@@ -110,6 +109,28 @@
           <list>
             <option value="clean" />
             <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ape-root [spotlessApply]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="spotlessApply" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -171,6 +192,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ape-root [spotlessApply]" />
         <item itemvalue="Gradle.ape-root [clean build]" />
         <item itemvalue="Kotlin.ApeKt" />
       </list>
@@ -184,7 +206,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744974858041</updated>
       <workItem from="1744974859255" duration="7840000" />
-      <workItem from="1745033461794" duration="4467000" />
+      <workItem from="1745033461794" duration="9598000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -202,7 +224,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744979823256</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="commit">
+      <option name="closed" value="true" />
+      <created>1745044134246</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745044134246</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,8 +241,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="commit" />
     <MESSAGE value="CONTRIBUTING.adoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="CONTRIBUTING.adoc" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
 </project>

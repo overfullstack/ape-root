@@ -24,7 +24,7 @@ dependencies {
 
   // api(libs.revoman)
   implementation(
-    fileTree(mapOf("dir" to "../../work/revoman-root/build/libs", "include" to listOf("*.jar")))
+    fileTree(mapOf("dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs", "include" to listOf("*.jar")))
   )
   api(libs.moshix.adapters)
   api(libs.java.vavr)
