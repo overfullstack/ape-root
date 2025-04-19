@@ -18,10 +18,16 @@ import org.http4k.routing.mcpHttpStreaming
 import org.http4k.server.Helidon
 
 val pmCollectionPathArg =
-  Tool.Arg.multi.required("collectionPath", "Absolute path to the Postman Collection file")
+  Tool.Arg.multi.required(
+    "collectionPaths",
+    "JSON array of Absolute paths to the Postman Collection files",
+  )
 
 val pmEnvironmentPathArg =
-  Tool.Arg.multi.required("environmentPath", "Absolute path to the Postman Environment file")
+  Tool.Arg.multi.required(
+    "environmentPaths",
+    "JSON array of Absolute paths to the Postman Environment files",
+  )
 
 val revomanToolHandler: ToolHandler = { toolRequest ->
   val pmCollectionPaths = pmCollectionPathArg(toolRequest)
@@ -48,14 +54,14 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
     mcpHttpStreaming(
       ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0"), ToolsChanged),
       Tool(
-        "ape-execute",
+        "execute-collection-file",
         "Executes Postman Collections files along with the environment files",
         pmCollectionPathArg,
         pmEnvironmentPathArg,
       ) bind revomanToolHandler,
       Tool(
-        "ape-dep-graph",
-        "Accepts multiple Postman collections and provides a dependency graph view of those collections based on the variables",
+        "dep-graph",
+        "Accepts multiple Postman collections and provides a map of variable name to create and Postman Collection that can create that variable",
         pmCollectionPathArg,
       ) bind revomanDepGraphHandler,
     )

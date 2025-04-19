@@ -1,5 +1,5 @@
 [versions]
-jdk = "23"
+jdk = "21"
 kotlin = "2.1.20"
 revoman = "0.7.8"
 moshix = "0.30.0"

@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="commit">
-      <changelist_data name="Gopal S Akshintala" email="gopala.akshintala@salesforce.com" automatic="false" />
-      <change afterPath="$PROJECT_DIR$/CONTRIBUTING.adoc" afterDir="false" />
+    <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="CONTRIBUTING.adoc">
+      <change afterPath="$PROJECT_DIR$/.cursor/rules.mdc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/detekt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/dependency-graph.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,25 +32,28 @@
     <option name="SIGN_OFF_COMMIT" value="true" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "overfullstack"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;overfullstack&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:/overfullstack/ape-root.git",
-    "accountId": "67619594-9f71-429c-8848-7bfb75858647"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:/overfullstack/ape-root.git&quot;,
+    &quot;accountId&quot;: &quot;67619594-9f71-429c-8848-7bfb75858647&quot;
   }
-}]]></component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+}</component>
+  <component name="KtfmtSettingsMigration">
+    <option name="stateVersion" value="2" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2vtqk0QPXRKwAniDhiVemQ5U1RF" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -61,6 +68,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Build ape-root.executor": "Run",
+    "Gradle.ape-root [clean build].executor": "Run",
     "Kotlin.ApeKt.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -78,7 +86,40 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle clean build" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.ape-root [clean build]">
+    <configuration name="ape-root [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="ApeKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.salesforce.ape.ApeKt" />
       <module name="ape-root.main" />
@@ -130,6 +171,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ape-root [clean build]" />
         <item itemvalue="Kotlin.ApeKt" />
       </list>
     </recent_temporary>
@@ -141,7 +183,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744974858041</updated>
-      <workItem from="1744974859255" duration="3713000" />
+      <workItem from="1744974859255" duration="7840000" />
+      <workItem from="1745033461794" duration="4467000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -151,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744975390159</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="CONTRIBUTING.adoc">
+      <option name="closed" value="true" />
+      <created>1744979823256</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744979823256</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +212,7 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="CONTRIBUTING.adoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="CONTRIBUTING.adoc" />
   </component>
 </project>

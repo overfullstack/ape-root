@@ -1,0 +1,265 @@
+{
+  "description": "Postman Collection dependency Graph based on how environment variables are set and used",
+  "edges": [
+    {
+      "source": {
+        "index": "2",
+        "rawPMStep": {
+          "name": "add-object",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{$randomProduct}}\", // Dynamic variable\n  \"data\": {\n    \"year\": {{$currentYear}}, // Variable set via Pre-req\n    \"price\": {{$randomPrice}}, // Variable set via Pre-req\n    \"CPU model\": null\n  }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var responseJson = pm.response.json();",
+                  "pm.environment.set(\"objId\", responseJson.id);",
+                  "pm.environment.set(\"data\", responseJson.data)",
+                  "pm.environment.set(\"productName\", responseJson.name)"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var moment = require('moment')",
+                  "var _ = require('lodash')",
+                  "",
+                  "pm.environment.set(\"$currentYear\", moment().year())",
+                  "pm.environment.set(\"$randomPrice\", _.random(1, 1000))"
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "target": {
+        "index": "3",
+        "rawPMStep": {
+          "name": "update-object",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects/{{objId}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"updated - {{productName}}\" // Update Name\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var responseJson = pm.response.json();",
+                  "pm.environment.set(\"objId\", responseJson.id);",
+                  "pm.environment.set(\"data\", responseJson.data)"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var moment = require('moment')",
+                  "var _ = require('lodash')",
+                  "",
+                  "pm.environment.set(\"$currentYear\", moment().year())",
+                  "pm.environment.set(\"$randomPrice\", _.random(1, 1000))"
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "variables": [
+        "productName"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "item": {
+        "index": "1",
+        "rawPMStep": {
+          "name": "all-objects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "sets": [],
+      "uses": []
+    },
+    {
+      "item": {
+        "index": "2",
+        "rawPMStep": {
+          "name": "add-object",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{$randomProduct}}\", // Dynamic variable\n  \"data\": {\n    \"year\": {{$currentYear}}, // Variable set via Pre-req\n    \"price\": {{$randomPrice}}, // Variable set via Pre-req\n    \"CPU model\": null\n  }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var responseJson = pm.response.json();",
+                  "pm.environment.set(\"objId\", responseJson.id);",
+                  "pm.environment.set(\"data\", responseJson.data)",
+                  "pm.environment.set(\"productName\", responseJson.name)"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var moment = require('moment')",
+                  "var _ = require('lodash')",
+                  "",
+                  "pm.environment.set(\"$currentYear\", moment().year())",
+                  "pm.environment.set(\"$randomPrice\", _.random(1, 1000))"
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "sets": [
+        "objId",
+        "data",
+        "productName"
+      ],
+      "uses": [
+        "$randomProduct",
+        "$currentYear",
+        "$randomPrice"
+      ]
+    },
+    {
+      "item": {
+        "index": "3",
+        "rawPMStep": {
+          "name": "update-object",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects/{{objId}}"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"updated - {{productName}}\" // Update Name\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var responseJson = pm.response.json();",
+                  "pm.environment.set(\"objId\", responseJson.id);",
+                  "pm.environment.set(\"data\", responseJson.data)"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var moment = require('moment')",
+                  "var _ = require('lodash')",
+                  "",
+                  "pm.environment.set(\"$currentYear\", moment().year())",
+                  "pm.environment.set(\"$randomPrice\", _.random(1, 1000))"
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "sets": [
+        "objId",
+        "data"
+      ],
+      "uses": [
+        "productName"
+      ]
+    },
+    {
+      "item": {
+        "index": "4",
+        "rawPMStep": {
+          "name": "get-object-by-id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://{{uri}}/objects/{{objId}}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "console.log(pm.environment.get(\"data\"))"
+                ]
+              }
+            }
+          ]
+        },
+        "postStepHookCount": 0,
+        "preStepHookCount": 0
+      },
+      "sets": [],
+      "uses": []
+    }
+  ]
+}
