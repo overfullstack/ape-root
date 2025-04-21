@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1c781427-0751-4e80-be15-a61b9c887020",
+		"_postman_id": "9f5efbe9-a9cd-4b3d-905f-25ec7db16b5a",
 		"name": "milestone-setup",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23827434",
-		"_collection_link": "https://salesforce-734821.postman.co/workspace/billing~1c6fbe60-fabb-4988-890b-b032cf03e25d/collection/23827434-1c781427-0751-4e80-be15-a61b9c887020?action=share&source=collection_link&creator=23827434"
+		"_collection_link": "https://salesforce-734821.postman.co/workspace/bt2bs~d2a2d047-4ca5-41f2-b60d-e1b83c630de1/collection/23827434-9f5efbe9-a9cd-4b3d-905f-25ec7db16b5a?action=share&source=collection_link&creator=23827434"
 	},
 	"item": [
 		{
@@ -87,7 +87,7 @@
 					"response": []
 				},
 				{
-					"name": "BillingTreatmentItems",
+					"name": "BillingTreatment + BillingPolicy",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -107,6 +107,57 @@
 									"",
 									"pm.environment.set(\"billingPolicyId\", graphData.graphResponse.compositeResponse[0].body.id)",
 									"pm.environment.set(\"billingTreatmentId\", graphData.graphResponse.compositeResponse[1].body.id)",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingPolicy\",\n          \"referenceId\": \"billingPolicy\",\n          \"body\": {\n            \"Name\": \"ReVoman Billing Policy\",\n            \"Status\": \"Draft\",\n            \"BillingTreatmentSelection\": \"Default\",\n            \"Description\": \"ReVoman Billing Policy\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatment\",\n          \"referenceId\": \"billingTreatment\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment\",\n            \"BillingPolicyId\": \"@{billingPolicy.id}\",\n            \"Description\": \"Test Billing Treatment\",\n            \"Status\": \"Draft\",\n            \"ExcludeFromBilling\": \"No\",\n            \"IsMilestoneBilling\": true\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+							"host": [
+								"{{baseUrl}}{{versionPath}}"
+							],
+							"path": [
+								"composite",
+								"graph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BillingTreatmentItems",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var graphData = pm.response.json().graphs[0];",
+									"",
 									"graphData.graphResponse.compositeResponse.slice(2).forEach((response, index) =>",
 									"  pm.environment.set(\"billingTreatmentItem\" + index + \"Id\", response.body.id))",
 									""
@@ -121,7 +172,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [ // BTIs: 30, 30, 30\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingPolicy\",\n          \"referenceId\": \"billingPolicy\",\n          \"body\": {\n            \"Name\": \"ReVoman Billing Policy\",\n            \"Status\": \"Draft\",\n            \"BillingTreatmentSelection\": \"Default\",\n            \"Description\": \"ReVoman Billing Policy\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatment\",\n          \"referenceId\": \"billingTreatment\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment\",\n            \"BillingPolicyId\": \"@{billingPolicy.id}\",\n            \"Description\": \"Test Billing Treatment\",\n            \"Status\": \"Draft\",\n            \"ExcludeFromBilling\": \"No\",\n            \"IsMilestoneBilling\": true\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti1\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 1\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"@{billingTreatment.id}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 1,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti2\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 2\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"@{billingTreatment.id}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 2,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti3\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 3\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"@{billingTreatment.id}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 3,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [ // BTIs: 30, 30, 30\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti1\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 1\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"{{billingTreatmentId}}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 1,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti2\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 2\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"{{billingTreatmentId}}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 2,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/BillingTreatmentItem\",\n          \"referenceId\": \"bti3\",\n          \"body\": {\n            \"Name\": \"ReVoman Milestone Billing Treatment Item 3\",\n            \"Status\": \"Active\",\n            \"Sequencing\": \"None\",\n            \"ProcessingOrder\": 0,\n            \"BillingTreatmentId\": \"{{billingTreatmentId}}\",\n            \"Description\": \"Test Billing Treatment Item\",\n            \"type\": \"Percentage\",\n            \"BillingType\": \"None\",\n            \"Percentage\": 30,\n            \"Controller\": \"None\",\n            \"Handling0Amount\": \"None\",\n            \"MilestoneType\": \"Date\",\n            \"MilestoneStartDate\": \"OrderProductActivation\",\n            \"MilestoneStartDateOffset\": 3,\n            \"MilestoneStartDateOffsetUnit\": \"Months\"\n          }\n        }\n      ]\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,9 +394,7 @@
 									"script": {
 										"exec": [
 											"var jsonData = pm.response.json();",
-											"if(jsonData.id!=null){",
-											"    pm.environment.set(\"oneTimeProductId\", jsonData.id);",
-											"}"
+											"pm.environment.set(\"oneTimeProductId\", jsonData.id);"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -396,7 +445,7 @@
 									"script": {
 										"exec": [
 											"var jsonData = pm.response.json();",
-											"pm.environment.set(\"oneTimeSellingModelId\", jsonData.id);"
+											"pm.environment.set(\"oneTimeProductSellingModelId\", jsonData.id);"
 										],
 										"type": "text/javascript",
 										"packages": {}

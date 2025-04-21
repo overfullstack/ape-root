@@ -1,7 +1,7 @@
 [versions]
 jdk = "21"
 kotlin = "2.1.20"
-revoman = "0.42.5"
+revoman = "0.7.9"
 moshix = "0.30.0"
 http4k = "6.6.0.1"
 immutables = "2.10.1"
@@ -31,7 +31,7 @@ gradle-taskinfo = "2.2.0"
 
 # Common dependencies
 
-junit = "5.11.4"
+junit = "5.12.2"
 kover = "0.9.1"
 detekt = "1.23.8"
 spotless = "7.0.3"
@@ -76,6 +76,10 @@ spring-beans = { module = "org.springframework:spring-beans", version.ref = "spr
 json-assert = { module = "org.skyscreamer:jsonassert", version.ref = "json-assert" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime-jvm", version.ref = "kotlinx-datetime" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api" }
+junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+
 
 # Gradle plugins
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -98,6 +102,7 @@ http4k = [
     "http4k-tools-hotreload"
 ]
 kotlin-logging = ["kotlin-logging-jvm", "log4j-api", "log4j-core", "log4j-slf4j2-impl"]
+junit = ["junit-jupiter", "junit-engine"]
 
 [plugins]
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

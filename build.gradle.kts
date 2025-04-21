@@ -24,7 +24,12 @@ dependencies {
 
   // api(libs.revoman)
   implementation(
-    fileTree(mapOf("dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs", "include" to listOf("*.jar")))
+    fileTree(
+      mapOf(
+        "dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs",
+        "include" to listOf("*.jar"),
+      )
+    )
   )
   api(libs.moshix.adapters)
   api(libs.java.vavr)
@@ -42,7 +47,10 @@ dependencies {
   compileOnly(libs.immutables.builder)
   compileOnly(libs.immutables.value.annotations)
   compileOnly(libs.jetbrains.annotations)
-  testImplementation(libs.truth)
+  implementation(libs.truth)
+  implementation(platform(libs.junit.bom))
+  implementation(libs.bundles.junit)
+
   testImplementation(libs.json.assert)
   mockitoAgent(libs.mockito.core) { isTransitive = false }
   testImplementation(libs.mockk)
