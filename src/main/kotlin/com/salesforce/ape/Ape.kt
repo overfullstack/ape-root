@@ -30,7 +30,8 @@ val pmCollectionPathArg =
     .required("collectionPaths", "CSV string of Absolute paths to the Postman Collection files")
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
-val prevVariableNameArg = Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
+val prevVariableNameArg =
+  Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
 val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")
 
 val pmEnvironmentPathArg =
@@ -81,7 +82,11 @@ val exeHandler: ToolHandler = { toolRequest ->
           HTTP_STATUS,
           afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
         )
-        .hooks(WAIT_HOOK, ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS, ASSERT_COMPOSITE_RESPONSE_SUCCESS)
+        .hooks(
+          WAIT_HOOK,
+          ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+          ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+        )
         .nodeModulesPath("js")
         .off(),
     )
@@ -108,7 +113,11 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
           HTTP_STATUS,
           afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
         )
-        .hooks(WAIT_HOOK, ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS, ASSERT_COMPOSITE_RESPONSE_SUCCESS)
+        .hooks(
+          WAIT_HOOK,
+          ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+          ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+        )
         .nodeModulesPath("js")
         .off(),
     )
@@ -150,7 +159,7 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
         pmEnvironmentPathArg,
         variableNameArg,
         prevVariableNameArg,
-        prevEnvArg
+        prevEnvArg,
       ) bind resumeExeHandler,
     )
 }
