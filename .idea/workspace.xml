@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <change beforePath="$PROJECT_DIR$/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/CONTRIBUTING.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/Config.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,8 +74,9 @@
   "keyToString": {
     "Gradle.Build ape-root.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.ape-root [build].executor": "Run",
     "Gradle.ape-root [clean build].executor": "Run",
-    "Gradle.ape-root [spotlessApply].executor": "Debug",
+    "Gradle.ape-root [spotlessApply].executor": "Run",
     "Kotlin.ApeKt.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -88,7 +90,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -111,11 +113,34 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="gradle clean build" />
       <command value="gradle spotlessApply" />
+      <command value="gradle clean build" />
+      <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.ApeKt">
+  <component name="RunManager" selected="Gradle.ape-root [build]">
+    <configuration name="ape-root [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-x integrationTest -x spotlessKotlinCheck -x test" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="ape-root [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -212,6 +237,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ape-root [build]" />
         <item itemvalue="Kotlin.ApeKt" />
         <item itemvalue="Gradle.ape-root [spotlessApply]" />
         <item itemvalue="Gradle.ape-root [clean build]" />
@@ -235,7 +261,7 @@
       <workItem from="1745220578117" duration="682000" />
       <workItem from="1745251564696" duration="1441000" />
       <workItem from="1745297236181" duration="434000" />
-      <workItem from="1745297687386" duration="5663000" />
+      <workItem from="1745297687386" duration="9285000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -325,7 +351,39 @@
       <option name="project" value="LOCAL" />
       <updated>1745308485799</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745313799238</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1745313799238</updated>
+    </task>
+    <task id="LOCAL-00013" summary="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745313861053</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1745313861053</updated>
+    </task>
+    <task id="LOCAL-00014" summary="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745314255769</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745314255769</updated>
+    </task>
+    <task id="LOCAL-00015" summary="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745322363738</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1745322363738</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,12 +418,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>108</line>
+          <line>110</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>116</line>
+          <line>118</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
@@ -385,8 +443,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
+          <line>72</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
           <line>68</line>
-          <option name="timeStamp" value="24" />
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
