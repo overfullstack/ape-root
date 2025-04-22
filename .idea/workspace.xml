@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +81,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/gopala.akshintala/code-clones/my-github/ape-root&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/gopala.akshintala/code-clones/my-github/ape-root/src/main/resources/pm-templates/core&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -93,6 +93,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/pm-templates/core" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -108,7 +109,7 @@
       <command value="gradle spotlessApply" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.ApeKt">
+  <component name="RunManager" selected="Gradle.ape-root [spotlessApply]">
     <configuration name="ape-root [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -225,7 +226,10 @@
       <workItem from="1745162762908" duration="119000" />
       <workItem from="1745163555553" duration="9313000" />
       <workItem from="1745213632035" duration="2714000" />
-      <workItem from="1745220578117" duration="3000" />
+      <workItem from="1745220578117" duration="682000" />
+      <workItem from="1745251564696" duration="1441000" />
+      <workItem from="1745297236181" duration="434000" />
+      <workItem from="1745297687386" duration="4268000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -267,7 +271,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745215416913</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="commit">
+      <option name="closed" value="true" />
+      <created>1745220657181</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745220657181</updated>
+    </task>
+    <task id="LOCAL-00007" summary="commit">
+      <option name="closed" value="true" />
+      <created>1745307165082</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745307165082</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,23 +316,33 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>74</line>
+          <line>86</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>91</line>
+          <line>108</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>99</line>
+          <line>116</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>jar://$PROJECT_DIR$/../../work/revoman-root/build/libs/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt</url>
           <line>313</line>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-mcp-sdk/6.6.0.1/bb4a6e68e25eb3e84d9c2a682a6a9ec1f56ec0b1/http4k-mcp-sdk-6.6.0.1-sources.jar!/org/http4k/mcp/server/capability/ToolCapability.kt</url>
+          <line>47</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
+          <line>83</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
