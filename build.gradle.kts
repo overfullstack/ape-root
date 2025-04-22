@@ -86,6 +86,7 @@ node { nodeProjectDir = file("${project.projectDir}/js") }
 tasks {
   check { dependsOn(npmInstall) }
   test { dependsOn(npmInstall) }
+  withType<Jar> { archiveBaseName = "ape" }
 }
 
 kover { reports { total { html { onCheck = true } } } }

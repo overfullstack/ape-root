@@ -16,7 +16,7 @@ group = GROUP_ID
 
 version = VERSION
 
-description = "ReVoman - A template-driven API automation tool for JVM (Java/Kotlin)"
+description = "Ape - An intelligent API Agent"
 
 repositories { mavenCentral() }
 
@@ -26,14 +26,14 @@ java {
 }
 
 publishing {
-  publications.create<MavenPublication>("revoman") {
+  publications.create<MavenPublication>("ape") {
     artifactId = ARTIFACT_ID
     from(components["java"])
     pom {
-      name.set("revoman")
+      name.set("ape")
       description.set(project.description)
-      url.set("https://github.com/salesforce-misc/ReVoman")
-      inceptionYear.set("2023")
+      url.set("https://github.com/overfullstack/ape-root")
+      inceptionYear.set("2025")
       licenses {
         license {
           name.set("The Apache License, Version 2.0")
@@ -48,15 +48,15 @@ publishing {
         }
       }
       scm {
-        connection.set("scm:git:https://github.com/salesforce-misc/ReVoman")
-        developerConnection.set("scm:git:git@github.com/salesforce-misc/ReVoman.git")
-        url.set("https://github.com/salesforce-misc/ReVoman")
+        connection.set("scm:git:https://github.com/overfullstack/ape-root")
+        developerConnection.set("scm:git:git@github.com/overfullstack/ape-root.git")
+        url.set("https://github.com/overfullstack/ape-root")
       }
     }
   }
 }
 
-signing { sign(publishing.publications["revoman"]) }
+signing { sign(publishing.publications["ape"]) }
 
 tasks {
   javadoc {
