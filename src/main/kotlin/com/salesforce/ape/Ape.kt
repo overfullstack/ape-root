@@ -42,7 +42,7 @@ val pmEnvironmentPathArg =
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
 val milestoneSplitArg =
-  Tool.Arg.csv().required("milestoneSplit", "Comma seperated milestone percentage split")
+  Tool.Arg.csv().optional("milestoneSplit", "Comma seperated milestone percentage split")
 val prevVariableNameArg =
   Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
 val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")

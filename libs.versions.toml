@@ -48,7 +48,6 @@ kotest-frameworkEngine = { module = "io.kotest:kotest-framework-engine", version
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runnerJUnit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
-revoman = { module = "com.salesforce.revoman:revoman", version.ref = "revoman" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj-core" }
 assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
 moshix-adapters = { module = "dev.zacsweers.moshix:moshi-adapters", version.ref = "moshix" }
