@@ -88,7 +88,9 @@ val exeHandler: ToolHandler = { toolRequest ->
       variableName,
       Kick.configure()
         .templatePaths(pmCollectionPaths)
-        .dynamicEnvironment(mapOf("milestoneSplit" to (milestoneSplit?.joinToString(",") ?: "30,20,30")))
+        .dynamicEnvironment(
+          mapOf("milestoneSplit" to (milestoneSplit?.joinToString(",") ?: "30,20,30"))
+        )
         .environmentPaths(pmEnvironmentPaths)
         .haltOnFailureOfTypeExcept(
           HTTP_STATUS,
