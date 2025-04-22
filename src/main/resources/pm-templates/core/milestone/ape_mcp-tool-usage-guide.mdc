@@ -5,17 +5,11 @@ alwaysApply: true
 ---
 # Ape MCP Tool Usage Guide
 
-# Collection Order (MUST FOLLOW) for all these tools
-The collections MUST be provided in this exact order for ALL operations:
-1. `persona-creation-and-setup.postman_collection.json` - Sets up user personas and permissions
-2. `milestone-setup.postman_collection.json` - Configures milestone-related settings
-3. `bmp-create-runtime.postman_collection.json` - Creates runtime entities and finalizes setup
-
 ## Overview
 This guide explains using the MCP tools for Postman collection operations in the Revoman project.
 
 ## `mcp_Ape_query-chain`
-The `mcp_Ape_query-chain` MCP tool helps understand what Postman collection that need to be executed to set a variable.
+The `mcp_Ape_query-chain` MCP tool helps understand which Postman collection needs to be executed to set a variable.
 
 ### How to parse the response
 The response is a JSON file where key is the variableName and value is the Postman Collection JSON that needs to be executed to set that variable
@@ -28,8 +22,6 @@ IMPORTANT: All three collections are REQUIRED for creating any entity. Do not sk
 
 ### Best Practices
 - Always provide detailed explanations of the returned Postman collection
-- Use absolute paths when specifying collection files
-- Format collection paths as a CSV string
 - Verify the order matches the sequence above before executing
 - NEVER skip any collection from the sequence above
 - ALWAYS include all three collections in the correct order
@@ -37,7 +29,6 @@ IMPORTANT: All three collections are REQUIRED for creating any entity. Do not sk
 ### Example Usage
 For creating an Order:
 1. Use `mcp_Ape_query-chain` MCP tool
-2. Provide ALL THREE collection paths in CSV format following the order above
 3. Specify the target variable (e.g., `orderId`)
 
 # `mcp_Ape_exe-chain` 
@@ -52,19 +43,11 @@ The response is a JSON file containing key-value pairs of environment variables 
 - When creating a variable (e.g., "Create a variable `orderId`")
 - Example "Create `orderId` using Postman collection and environment files from this folder"
 
-### Collection Order (MUST FOLLOW)
-The collections MUST be provided in this exact order for ALL operations:
-1. `persona-creation-and-setup.postman_collection.json` - Sets up user personas and permissions
-2. `milestone-setup.postman_collection.json` - Configures milestone-related settings
-3. `bmp-create-runtime.postman_collection.json` - Creates runtime entities and finalizes setup
-
 IMPORTANT: All three collections are REQUIRED for creating any entity. Do not skip any collection.
 
 ### Best Practices
 - When user asks to "Create `X`", it means users wants to "Create a variable `xId`"
 - Render the returned JSON like a Table
-- Use absolute paths when specifying collection files
-- Format collection paths as a CSV string
 - Verify the order matches the sequence above before executing
 - NEVER skip any collection from the sequence above
 - ALWAYS include all three collections in the correct order
@@ -72,7 +55,6 @@ IMPORTANT: All three collections are REQUIRED for creating any entity. Do not sk
 ### Example Usage
 For creating an Order:
 1. Use `mcp_Ape_exe-chain` MCP tool
-2. Provide ALL THREE collection paths in CSV format following the order above
 3. Specify the target variable (e.g., `orderId`)
 
 # `mcp_Ape_resume-exe-chain`
@@ -87,19 +69,9 @@ The response is a JSON file containing key-value pairs of environment variables 
 - When asked "Create Y from X" (e.g., "Create an Invoice from Order")
 - When asked "Create X variableName" (e.g., "Create an invoiceId from orderId")
 
-### Collection Order (MUST FOLLOW)
-The collections MUST be provided in this exact order for ALL operations:
-1. `persona-creation-and-setup.postman_collection.json` - Sets up user personas and permissions
-2. `milestone-setup.postman_collection.json` - Configures milestone-related settings
-3. `bmp-create-runtime.postman_collection.json` - Creates runtime entities and finalizes setup
-
-IMPORTANT: All three collections are REQUIRED for creating any entity. Do not skip any collection.
-
 ### Best Practices
 - When the user asks to "Create `X`", it means user wants to "Create a variable `xId`"
 - Render the returned JSON like a Table
-- Use absolute paths when specifying collection files
-- Format collection paths as a CSV string
 - Verify the order matches the sequence above before executing
 - NEVER skip any collection from the sequence above
 - ALWAYS include all three collections in the correct order
@@ -107,5 +79,4 @@ IMPORTANT: All three collections are REQUIRED for creating any entity. Do not sk
 ### Example Usage
 For creating an Order:
 1. Use `mcp_Ape_resume-exe-chain` MCP tool
-2. Provide ALL THREE collection paths in CSV format following the order above
 3. Specify the target variable (e.g., `orderId`)

@@ -25,22 +25,27 @@ import org.http4k.routing.bind
 import org.http4k.routing.mcpHttpStreaming
 import org.http4k.server.Helidon
 
-val pmCollectionPathArg =
+val PM_COLLECTION_PATH = listOf("pm-templates/core/milestone/persona-creation-and-setup.postman_collection.json", "pm-templates/core/milestone/milestone-setup.postman_collection.json", "pm-templates/core/milestone/bmp-create-runtime.postman_collection.json")
+val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
+
+/*val pmCollectionPathArg =
   Tool.Arg.csv()
     .required("collectionPaths", "CSV string of Absolute paths to the Postman Collection files")
+val pmEnvironmentPathArg =
+  Tool.Arg.csv()
+    .optional("environmentPaths", "CSV string of Absolute paths to the Postman Environment files")*/
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
+val milestoneSplitArg = Tool.Arg.csv().required("milestoneSplit", "Comma seperated milestone percentage split")
 val prevVariableNameArg =
   Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
 val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")
 
-val pmEnvironmentPathArg =
-  Tool.Arg.csv()
-    .optional("environmentPaths", "CSV string of Absolute paths to the Postman Environment files")
 
-val revomanToolHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = pmCollectionPathArg(toolRequest)
-  val pmEnvironmentPaths = pmEnvironmentPathArg(toolRequest)
+
+/*val revomanToolHandler: ToolHandler = { toolRequest ->
+  val pmCollectionPaths = PM_COLLECTION_PATH
+  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
   val rundown =
     ReVoman.revUp(
       Kick.configure()
@@ -50,10 +55,10 @@ val revomanToolHandler: ToolHandler = { toolRequest ->
         .off()
     )
   ToolResponse.Ok(listOf(Content.Text(rundown.mutableEnv.postmanEnvJSONFormat)))
-}
+}*/
 
 val queryChainHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = pmCollectionPathArg(toolRequest)
+  val pmCollectionPaths = PM_COLLECTION_PATH
 
   val variableName = variableNameArg(toolRequest)
   val chain =
@@ -68,15 +73,18 @@ const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
 val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(5000) })
 
 val exeHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = pmCollectionPathArg(toolRequest)
-  val pmEnvironmentPaths = pmEnvironmentPathArg(toolRequest)
+  val pmCollectionPaths = PM_COLLECTION_PATH
+  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
   val variableName = variableNameArg(toolRequest)
+  val milestoneSplit = milestoneSplitArg(toolRequest)
+  println(milestoneSplit)
 
   val environment =
     ReVoman.exeChainForVariable(
       variableName,
       Kick.configure()
         .templatePaths(pmCollectionPaths)
+        .dynamicEnvironment(mapOf("milestoneSplit" to milestoneSplit.joinToString(",")))
         .environmentPaths(pmEnvironmentPaths)
         .haltOnFailureOfTypeExcept(
           HTTP_STATUS,
@@ -94,8 +102,8 @@ val exeHandler: ToolHandler = { toolRequest ->
 }
 
 val resumeExeHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = pmCollectionPathArg(toolRequest)
-  val pmEnvironmentPaths = pmEnvironmentPathArg(toolRequest)
+  val pmCollectionPaths = PM_COLLECTION_PATH
+  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
   val prevVariableName = prevVariableNameArg(toolRequest)
   val variableName = variableNameArg(toolRequest)
   val moshiReVoman = MoshiReVoman.initMoshi()
@@ -142,21 +150,16 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       Tool(
         "query-chain",
         "Accepts a CSV string of Postman collections absolute paths and variable name. Returns a consolidated Postman collection that can then later be executed to set that variable",
-        pmCollectionPathArg,
         variableNameArg,
       ) bind queryChainHandler,
       Tool(
         "exe-chain",
         "Accepts a CSV string of Postman collections absolute paths, environment files absolute paths, and variable name. Returns the environment variables set in the execution",
-        pmCollectionPathArg,
-        pmEnvironmentPathArg,
         variableNameArg,
       ) bind exeHandler,
       Tool(
         "resume-exe-chain",
         "Accepts a CSV string of Postman collections absolute paths, environment files absolute paths, previous environment JSON file, variable name set in the previous execution and variable name to set in the current execution. Returns the environment variables set in the execution",
-        pmCollectionPathArg,
-        pmEnvironmentPathArg,
         variableNameArg,
         prevVariableNameArg,
         prevEnvArg,
