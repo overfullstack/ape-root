@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "24b2f897-c467-4be3-b13e-98fe1f421719",
+		"_postman_id": "2cc8aeb1-18b6-4486-addc-67b598575754",
 		"name": "persona-creation-and-setup",
 		"description": "- Create Persona Users\n    \n- Setup Tax and Pre-setup for Product",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23827434",
-		"_collection_link": "https://salesforce-734821.postman.co/workspace/billing~1c6fbe60-fabb-4988-890b-b032cf03e25d/collection/23827434-24b2f897-c467-4be3-b13e-98fe1f421719?action=share&source=collection_link&creator=23827434"
+		"_exporter_id": "38842946",
+		"_collection_link": "https://hackathon-0182.postman.co/workspace/Hackathon~8ff3b1d3-ed7f-44af-bc54-873d64477ae0/collection/38842946-2cc8aeb1-18b6-4486-addc-67b598575754?action=share&source=collection_link&creator=38842946"
 	},
 	"item": [
 		{
@@ -1242,7 +1242,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT id FROM TaxEngineProvider WHERE ApexAdapterId = '{{mockTaxAdapterId}}'",
+									"raw": "{{baseUrl}}{{versionPath}}/query/?q=select id FROM TaxEngineProvider WHERE ApexAdapterId = '{{mockTaxAdapterId}}'",
 									"host": [
 										"{{baseUrl}}{{versionPath}}"
 									],
