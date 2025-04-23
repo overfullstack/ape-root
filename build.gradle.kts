@@ -22,11 +22,11 @@ dependencies {
   api(platform(libs.http4k.bom))
   api(libs.bundles.http4k)
 
-  // api(libs.revoman)
+  api(libs.revoman)
   implementation(
     fileTree(
       mapOf(
-        "dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs",
+        "dir" to "/Users/psankula/Downloads/Hackathon/revoman-root/build/libs",
         "include" to listOf("*.jar"),
       )
     )
@@ -81,7 +81,10 @@ testing {
   }
 }
 
-node { nodeProjectDir = file("${project.projectDir}/js") }
+node {
+  download = true
+  nodeProjectDir = file("${project.projectDir}/js")
+}
 
 tasks {
   check { dependsOn(npmInstall) }

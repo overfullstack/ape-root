@@ -13,6 +13,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.http4k.core.PolyHandler
 import org.http4k.hotreload.HotReloadServer
 import org.http4k.hotreload.HotReloadable
+import org.http4k.jsonrpc.ErrorMessage
 import org.http4k.lens.csv
 import org.http4k.mcp.ToolHandler
 import org.http4k.mcp.ToolResponse
@@ -65,81 +66,94 @@ val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution re
 }*/
 
 val queryChainHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = PM_COLLECTION_PATH
-  val variableName = variableNameArg(toolRequest)
+  try {
+    val pmCollectionPaths = PM_COLLECTION_PATH
 
-  logger.info { "`query-chain` called with variableName: $variableName" }
-  val chain =
-    ReVoman.queryChainForVariable(
-      variableName,
-      Kick.configure().templatePaths(pmCollectionPaths).off(),
-    )
-  val variableToPmTemplate = chain.toJson()
-  ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+    val variableName = variableNameArg(toolRequest)
+    logger.info { "`query-chain` called with variableName: $variableName" }
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(ErrorMessage(1,e.message ?: "Unknown error occurred in query chain handler: ${e.message}"))
+  }
 }
 
 const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
 val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(5000) })
 
 val exeHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = PM_COLLECTION_PATH
-  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
-  val variableName = variableNameArg(toolRequest)
-  val milestoneSplit = milestoneSplitArg(toolRequest)
+  try {
+    val pmCollectionPaths = PM_COLLECTION_PATH
+    val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
+    val variableName = variableNameArg(toolRequest)
+    val milestoneSplit = milestoneSplitArg(toolRequest)
 
-  val environment =
-    ReVoman.exeChainForVariable(
-      variableName,
-      Kick.configure()
-        .templatePaths(pmCollectionPaths)
-        .dynamicEnvironment(
-          mapOf("milestoneSplit" to (milestoneSplit?.joinToString(",") ?: "30,20,30"))
-        )
-        .environmentPaths(pmEnvironmentPaths)
-        .haltOnFailureOfTypeExcept(
-          HTTP_STATUS,
-          afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
-        )
-        .hooks(
-          WAIT_HOOK,
-          ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
-          ASSERT_COMPOSITE_RESPONSE_SUCCESS,
-        )
-        .nodeModulesPath("js")
-        .off(),
-    )
-  ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+
+    val environment =
+      ReVoman.exeChainForVariable(
+        variableName,
+        Kick.configure()
+          .templatePaths(pmCollectionPaths)
+          .dynamicEnvironment(mapOf("percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
+                                    "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
+                                    "percentage3" to (milestoneSplit?.getOrNull(2) ?: "30")))
+          .environmentPaths(pmEnvironmentPaths)
+          .haltOnFailureOfTypeExcept(
+            HTTP_STATUS,
+            afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
+          )
+          .hooks(
+            WAIT_HOOK,
+            ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+            ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+          )
+          .nodeModulesPath("js")
+          .off(),
+      )
+    ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+  } catch (e: Exception) {
+    ToolResponse.Error(ErrorMessage(2, e.message ?: "Unknown error occurred in execution handler: ${e.message}"))
+  }
 }
 
 val resumeExeHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = PM_COLLECTION_PATH
-  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
-  val prevVariableName = prevVariableNameArg(toolRequest)
-  val variableName = variableNameArg(toolRequest)
-  val moshiReVoman = MoshiReVoman.initMoshi()
-  val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
+  try {
+    val pmCollectionPaths = PM_COLLECTION_PATH
+    val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
+    val prevVariableName = prevVariableNameArg(toolRequest)
+    val variableName = variableNameArg(toolRequest)
+    val moshiReVoman = MoshiReVoman.initMoshi()
+    val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
 
-  val environment =
-    ReVoman.diffExeChainForVariable(
-      prevVariableName,
-      variableName,
-      Kick.configure()
-        .templatePaths(pmCollectionPaths)
-        .environmentPaths(pmEnvironmentPaths)
-        .dynamicEnvironment(prevEnv.associate { it.key to it.value as? String })
-        .haltOnFailureOfTypeExcept(
-          HTTP_STATUS,
-          afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
-        )
-        .hooks(
-          WAIT_HOOK,
-          ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
-          ASSERT_COMPOSITE_RESPONSE_SUCCESS,
-        )
-        .nodeModulesPath("js")
-        .off(),
-    )
-  ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+    val environment =
+      ReVoman.diffExeChainForVariable(
+        prevVariableName,
+        variableName,
+        Kick.configure()
+          .templatePaths(pmCollectionPaths)
+          .environmentPaths(pmEnvironmentPaths)
+          .dynamicEnvironment(prevEnv.associate { it.key to it.value as? String })
+          .haltOnFailureOfTypeExcept(
+            HTTP_STATUS,
+            afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
+          )
+          .hooks(
+            WAIT_HOOK,
+            ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+            ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+          )
+          .nodeModulesPath("js")
+          .off(),
+      )
+    ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+  } catch (e: Exception) {
+    ToolResponse.Error(ErrorMessage(3,e.message ?: "Unknown error occurred in resume execution handler: ${e.message}"))
+  }
 }
 
 class ReloadableMCP : HotReloadable<PolyHandler> {
