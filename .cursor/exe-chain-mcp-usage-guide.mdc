@@ -1,0 +1,148 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Usage Guide for exe_chain and resume_exe_chain
+
+## Purpose
+The exe_chain and resume_exe_chain functions are used to execute a chain of operations to create and set variables in the system.
+
+## `mcp_Ape_exe-chain` 
+The `mcp_Ape_exe-chain` MCP helps create a variable by executing a chain of Postman steps.  It returns Postman environment JSON with all the Ids of objects created in the execution.
+
+### How to parse the response
+The response is a JSON file containing key-value pairs of environment variables set in the execution
+
+### When to Use
+- When asked "Create X" (e.g., "Create an Order")
+- When asked "Create X variableName" (e.g., "Create an orderId")
+- When creating a variable (e.g., "Create a variable `orderId`")
+- Example "Create `orderId` using Postman collection and environment files from this folder"
+
+### Syntax for exe_chain
+```javascript
+mcp_Ape_exe_chain({
+    "variableName": "orderId",
+    "milestoneSplit": "20,50,30"  // When setting milestone splits
+})
+```
+
+## Example Usage Sequence
+```javascript
+// Example 1: Create an order with milestone splits
+mcp_Ape_exe_chain({
+    "variableName": "orderId",
+    "milestoneSplit": "20,50,30"
+})
+```
+
+### Response Structure
+After creating an order, the response will contain:
+1. OrderId (e.g., "orderId": "801LT00000iy8KjYAI")
+2. Billing Treatment IDs:
+   - Billing Policy ID (e.g., "billingPolicyId": "1BPLT0000000A7R4AU")
+   - Billing Treatment ID (e.g., "billingTreatmentId": "1BTLT0000000FiD4AU")
+   - Billing Treatment Item IDs with milestone splits:
+     - Item 1 (e.g., "billingTreatmentItem0Id": "1BDLT0000005A0O4AU") - First milestone percentage
+     - Item 2 (e.g., "billingTreatmentItem1Id": "1BDLT0000005A0P4AU") - Second milestone percentage
+     - Item 3 (e.g., "billingTreatmentItem2Id": "1BDLT0000005A0Q4AU") - Third milestone percentage
+
+// Response will contain:
+// - orderId: "801LT00000iy8KjYAI"
+// - billingPolicyId: "1BPLT0000000A7R4AU"
+// - billingTreatmentId: "1BTLT0000000FiD4AU"
+// - billingTreatmentItem0Id: "1BDLT0000005A0O4AU" (20%)
+// - billingTreatmentItem1Id: "1BDLT0000005A0P4AU" (50%)
+// - billingTreatmentItem2Id: "1BDLT0000005A0Q4AU" (30%)
+
+## `mcp_Ape_resume-exe-chain`
+- The `mcp_Ape_resume-exe-chain` MCP helps resume execution from previous execution. 
+- It can be chained with `mcp_Ape_exe-chain` or `mcp_Ape_resume-exe-chain`
+- While calling this tool, pass the previous variable name used to invoke and the response received from the previous `mcp_Ape_exe-chain` or `mcp_Ape_resume-exe-chain` execution
+
+### Syntax for resume_exe_chain
+```javascript
+mcp_Ape_resume_exe_chain({
+    "variableName": "milestoneSplit",
+    "prevVariableName": "orderId",
+    "previousEnvironment": "[{\"key\": \"orderId\", \"value\": \"801LT00000iw5cJYAQ\"}]"
+})
+```
+
+## Key Points
+1. **Variable Name**
+   - Required parameter
+   - Specifies the variable to be created/set (e.g., "orderId")
+
+2. **Milestone Split**
+   - When specifying milestone splits, use a comma-separated string
+   - Format: "x,y,z" where x, y, z are numbers that total to 100
+   - Example: "20,50,30" for a three-way split
+   - Must be passed as a single string parameter "milestoneSplit"
+
+## Common Mistakes to Avoid
+1. ❌ Don't send milestone values as separate percentage parameters:
+   ```javascript
+   // Wrong
+   {
+     "variableName": "orderId",
+     "percentage1": 20,
+     "percentage2": 50,
+     "percentage3": 30
+   }
+   ```
+
+2. ❌ Don't send milestone values as an array:
+   ```javascript
+   // Wrong
+   {
+     "milestoneSplit": [20,40,40]
+   }
+   ```
+
+3. ❌ Don't combine orderId and milestoneSplit in the variableName:
+   ```javascript
+   // Wrong
+   {
+     "variableName": "orderId,milestoneSplit=20,40,40"
+   }
+   ```
+
+4. ❌ Don't send previousEnvironment as a plain object:
+   ```javascript
+   // Wrong
+   {
+     "previousEnvironment": {"orderId": "801LT00000iw5cJYAQ"}
+   }
+   ```
+
+5. ✅ Correct way for exe_chain with milestone split:
+   ```javascript
+   // Correct
+   {
+     "variableName": "orderId",
+     "milestoneSplit": "20,50,30"
+   }
+   ```
+
+6. ✅ Correct way for resume_exe_chain:
+   ```javascript
+   // Correct
+   {
+     "variableName": "invoiceId",
+     "prevVariableName": "orderId",
+     "previousEnvironment": "[{\"key\": \"orderId\", \"value\": \"801LT00000iw5cJYAQ\"}]"
+   }
+   ```
+
+## Best Practices
+1. Use the appropriate function (exe_chain or resume_exe_chain) based on your needs
+2. Keep the parameter names exact: "variableName", "prevVariableName", "previousEnvironment", "milestoneSplit"
+3. Format the previousEnvironment as a JSON array of key-value pairs
+4. When using milestone splits, always pass them as a single comma-separated string in the "milestoneSplit" parameter
+5. Don't include any additional unnecessary parameters
+
+
+
+---
