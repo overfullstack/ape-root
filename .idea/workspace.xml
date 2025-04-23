@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07893b1f-f762-4ecd-b3c1-13411da01db6" name="Changes" comment="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <change beforePath="$PROJECT_DIR$/BUILD.bazel" beforeDir="false" afterPath="$PROJECT_DIR$/BUILD.bazel" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/ape.publishing-conventions.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/ape.publishing-conventions.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detekt/baseline.xml" beforeDir="false" afterPath="$PROJECT_DIR$/detekt/baseline.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone/ape_mcp-tool-usage-guide.mdc" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +44,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/38e0dff30dc0f8418953391a769c9dec06c0d842/revoman-0.42.5-sources.jar!/com/salesforce/revoman/input/config/StepPick.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/7918c21a4519336f3fab352e0e1d370c380f9df8/revoman-0.42.5.jar!/com/salesforce/revoman/input/config/StepPick.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-mcp-sdk/6.6.0.1/bb4a6e68e25eb3e84d9c2a682a6a9ec1f56ec0b1/http4k-mcp-sdk-6.6.0.1-sources.jar!/org/http4k/mcp/server/capability/ToolCapability.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-core/6.5.6.1/85ad46ba2e53007aace17dbb5f9f7d27e3691bc9/http4k-core-6.5.6.1-sources.jar!/org/http4k/lens/lensSpec.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-format-moshi/6.6.0.1/714bd7aeed72095af01d3c033a4af2e88dad92cd/http4k-format-moshi-6.6.0.1-sources.jar!/org/http4k/format/MoshiNode.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.ideaLibSources/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
@@ -106,6 +106,9 @@
       <recent name="$PROJECT_DIR$/src/main/resources/pm-templates/core" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/prompts" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.salesforce.ape" />
     </key>
@@ -115,12 +118,12 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="gradle spotlessApply" />
       <command value="gradle clean build" />
       <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
+      <command value="gradle spotlessApply" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.ape-root [build]">
+  <component name="RunManager" selected="Kotlin.ApeKt">
     <configuration name="ape-root [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -239,8 +242,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ape-root [build]" />
         <item itemvalue="Kotlin.ApeKt" />
+        <item itemvalue="Gradle.ape-root [build]" />
         <item itemvalue="Gradle.ape-root [spotlessApply]" />
         <item itemvalue="Gradle.ape-root [clean build]" />
       </list>
@@ -263,7 +266,8 @@
       <workItem from="1745220578117" duration="682000" />
       <workItem from="1745251564696" duration="1441000" />
       <workItem from="1745297236181" duration="434000" />
-      <workItem from="1745297687386" duration="9602000" />
+      <workItem from="1745297687386" duration="13234000" />
+      <workItem from="1745336738708" duration="3193000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -401,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745323614370</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745323917880</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1745323917880</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,17 +443,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>86</line>
+          <line>88</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>110</line>
+          <line>112</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>118</line>
+          <line>120</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
@@ -453,21 +465,6 @@
           <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-mcp-sdk/6.6.0.1/bb4a6e68e25eb3e84d9c2a682a6a9ec1f56ec0b1/http4k-mcp-sdk-6.6.0.1-sources.jar!/org/http4k/mcp/server/capability/ToolCapability.kt</url>
           <line>47</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>83</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>72</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>68</line>
-          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,0 +1,177 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# `query-chain` MCP Tool Usage Guide
+
+## Overview
+
+The Ape MCP tools are designed to provide comprehensive insights into entity creation and management processes. These tools should be your FIRST choice when trying to understand how entities are created or managed in the system, rather than searching through the codebase.
+
+## `query-chain`
+
+This MCP tool helps in understanding the complete process of creating and managing an Entity, including all related configurations and dependencies. The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+
+### Response Format
+
+The tool returns a JSON object with the following structure:
+```json
+{
+  "description": "Execution chain to set variable: {variableName}",
+  "variableNameToTemplate": {
+    "{variableName}": {
+      "info": {
+        // Postman collection metadata
+      },
+      "item": [
+        // Array of Postman requests showing the complete chain
+        // Each request includes:
+        // - API endpoint
+        // - Request method
+        // - Headers
+        // - Request body
+        // - Pre/post request scripts
+        // - Tests
+      ]
+    }
+  }
+}
+```
+
+The Postman collection in the response shows:
+- All prerequisite configurations
+- Entity creation steps
+- Required API calls in sequence
+- Environment variable management
+- Dependencies and relationships
+- Test and validation steps
+
+### Handling Large Responses
+
+For complex entities, the Postman collection can be quite large. In such cases:
+
+1. **Break Down the Process**: Divide the response into logical phases:
+   - User Setup and Authentication
+   - Configuration (Tax, Billing, etc.)
+   - Entity Creation
+   - Related Operations
+
+2. **Summarize Each Phase**: For each phase, identify:
+   - Key API endpoints
+   - Required configurations
+   - Dependencies
+   - Environment variables
+
+3. **Focus on Specifics**: When needed, dive deeper into:
+   - Specific API calls
+   - Configuration details
+   - Integration points
+
+4. **Example Breakdown**:
+   ```markdown
+   Phase 1: User Setup
+   - Create user roles
+   - Set permissions
+   - Configure authentication
+
+   Phase 2: Tax Configuration
+   - Set up tax engine
+   - Create tax policies
+   - Define tax rules
+
+   Phase 3: Billing Setup
+   - Configure billing policies
+   - Set up treatments
+   - Define schedules
+
+   Phase 4: Entity Creation
+   - Create main entity
+   - Set up relationships
+   - Configure attributes
+   ```
+
+### When to Use
+
+ALWAYS use `query-chain` when you need to understand:
+- How an entity is created
+- What configurations are needed
+- What dependencies exist
+- The complete flow of entity creation
+- Related system integrations
+
+### Entity Naming Convention
+
+When using the `query-chain` tool:
+- Entity names and their IDs are equivalent in queries
+- Always use the ID format (`xId`) in the `variableName` argument
+- The tool understands both formats and will return the same information
+
+Examples:
+- "How to create an Order" → Use `variableName: "orderId"`
+- "How to create a Billing Policy" → Use `variableName: "billingPolicyId"`
+- "How to create a Tax Treatment" → Use `variableName: "taxTreatmentId"`
+
+### Example Use Cases
+
+- "How to create an `orderId`?" → `{ "variableName": "orderId" }`
+- "How to set up a billing policy?" → `{ "variableName": "billingPolicyId" }`
+- "How to configure tax treatments?" → `{ "variableName": "taxTreatmentId" }`
+- "How to create a product with specific attributes?" → `{ "variableName": "productId" }`
+
+### How to Invoke
+
+1. Identify the entity you want to understand
+2. Convert the entity name to its ID format (add "Id" suffix)
+3. Use the ID format in the `variableName` parameter
+4. The tool will return a Postman collection showing the complete chain of operations
+
+Example Request:
+```json
+{
+  "variableName": "orderId"  // Always use the ID format
+}
+```
+
+### Understanding the Response
+
+The returned Postman collection will contain:
+1. **Setup Steps**: Initial configuration and prerequisite setup
+2. **Authentication**: Required auth steps and token management
+3. **Entity Creation**: The actual API calls to create the entity
+4. **Related Configurations**: Additional settings and relationships
+5. **Environment Variables**: Variables used across requests
+6. **Tests**: Validation steps to ensure proper creation
+
+### Best Practices
+
+1. **Always Start with MCP**: Before searching the codebase, try using the MCP tools first
+2. **Use ID Format**: Always use the ID format (`xId`) in the `variableName` parameter
+3. **Be Specific**: Use the exact entity ID name you're interested in
+4. **Study the Chain**: Review all steps in the returned Postman collection
+5. **Note Dependencies**: Pay attention to prerequisite configurations
+6. **Follow Variables**: Track environment variables set and used across requests
+7. **Break Down Large Responses**: For complex entities, summarize the process in phases
+
+### Common Mistakes to Avoid
+
+- ❌ Searching the codebase before using MCP tools
+- ❌ Using entity names instead of ID format in `variableName`
+- ❌ Using generic terms instead of specific entity IDs
+- ❌ Ignoring parts of the Postman collection chain
+- ❌ Missing prerequisite steps in the collection
+- ❌ Not following environment variable flow
+- ❌ Trying to process the entire large response at once
+
+### Example Response Structure
+
+The Postman collection will show:
+- Complete setup process
+- Required configurations
+- Dependencies
+- Integration points
+- Related entities and their setup
+- Environment variable management
+- Test and validation steps
+
+Remember: The MCP tools provide a comprehensive Postman collection that shows the exact sequence of API calls needed to create and configure an entity. This is more accurate and detailed than searching through the codebase. For large responses, break down the process into manageable phases for better understanding.
