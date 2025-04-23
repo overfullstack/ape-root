@@ -1,0 +1,29 @@
+﻿Write an API to create invoices.
+
+
+SampleInput.json
+
+{
+  "invoice_number": "INV-2025-001",
+  "date": "2025-04-23",
+  "due_date": "2025-05-23",
+  "customer": {"name": "John Doe", "email": "johndoe@example.com"},
+  "items": [
+    {"description": "Laptop", "quantity": 1, "unit_price": 1200},
+    {"description": "Wireless Mouse", "quantity": 2, "unit_price": 25}
+  ],
+  "sub_total": 1250,
+  "tax_rate": 0.08,
+  "tax_amount": 100,
+  "total_amount": 1350
+}
+
+
+SampleOutput.json
+
+{
+  "status": "success",
+  "message": "Invoice created.",
+  "invoice_number": "INV-2025-001",
+  "total_amount": 1350
+}

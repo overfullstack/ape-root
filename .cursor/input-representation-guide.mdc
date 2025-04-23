@@ -1,0 +1,217 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Guide: Creating Input Representations in Java
+
+## Overview
+This guide provides a structured approach to creating Input Representations in Java following Salesforce standards.
+
+## Table of Contents
+1. [File Structure](mdc:#file-structure)
+2. [Required Imports](mdc:#required-imports)
+3. [Class Structure](mdc:#class-structure)
+4. [Annotations](mdc:#annotations)
+5. [Field Patterns](mdc:#field-patterns)
+6. [Best Practices](mdc:#best-practices)
+
+## File Structure
+
+### Copyright Header
+```java
+/*
+ * Copyright, 1999-2019, salesforce.com All Rights Reserved Company Confidential
+ */
+```
+
+### Package Declaration
+```java
+package sfdc.billing.connect.api.input.[module];
+```
+
+## Required Imports
+
+### Core Imports
+```java
+import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+import core.connect.api.input.ConnectInputRepresentation;
+import core.connect.resources.ConnectInputProperty;
+import core.connect.resources.ConnectInputRep;
+import core.connect.resources.ConnectWrapperDefinition;
+import core.connect.resources.IConnectContext;
+```
+
+### Optional Imports (Based on Requirements)
+```java
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
+import java.util.List;
+```
+
+## Class Structure
+
+### Class Declaration Template
+```java
+@ConnectInputRep(
+    description = "Connect API representation of [purpose]",
+    topLevelInputRepresentationXmlTagName = "[xmlTag]",
+    wrapper = @ConnectWrapperDefinition(className = "[ClassName]"))
+@JsonFilter(IConnectContext.JSON_FILTER)
+public class [ClassName]InputRepresentation 
+    extends ConnectInputRepresentation 
+    implements Serializable {
+    // Class contents
+}
+```
+
+### JavaDoc Template
+```java
+/**
+ * Connect API representation of [purpose]
+ *
+ * @author [username]
+ * @since [version]
+ */
+```
+
+## Annotations
+
+### Class Level
+- `@ConnectInputRep`: Defines API representation metadata
+- `@JsonFilter`: Applies JSON filtering
+- `@Valid`: For nested object validation
+
+### Field Level
+- `@ConnectInputProperty`: Documents field properties and version
+- `@JsonProperty`: Customizes JSON field names
+- Validation annotations as needed:
+  - `@NotNull`
+  - `@Size`
+  - `@Pattern`
+  - `@Email`
+  - `@Min`/`@Max`
+  - `@DecimalMin`/`@DecimalMax`
+
+## Field Patterns
+
+### Standard Field Structure
+```java
+private [Type] fieldName;
+private boolean isSetFieldName;
+
+public [Type] getFieldName() {
+    return fieldName;
+}
+
+@ConnectInputProperty(
+    description = "Description of the field",
+    minVersion = [version])
+public void setFieldName([Type] fieldName) {
+    this.fieldName = fieldName;
+    this.isSetFieldName = true;
+}
+
+///CLOVER:OFF
+public boolean _isSetFieldName() {
+    return isSetFieldName;
+}
+///CLOVER:ON
+```
+
+### Nested Class Structure
+```java
+public static class NestedClass implements Serializable {
+    private [Type] field;
+    private boolean isSetField;
+    
+    // Getters, setters, and isSet methods
+}
+```
+
+## Best Practices
+
+### 1. Field Naming
+- Use camelCase for Java fields
+- Use `@JsonProperty` for snake_case JSON mapping
+- Prefix boolean tracking fields with "isSet"
+
+### 2. Type Selection
+- Use primitive wrapper classes (Integer, Boolean) instead of primitives
+- Use BigDecimal for monetary values
+- Use String for dates (format: YYYY-MM-DD)
+- Use List<T> for collections
+
+### 3. Version Control
+- Always specify minVersion in @ConnectInputProperty
+- Increment version numbers appropriately for new fields
+
+### 4. Documentation
+- Include clear descriptions in @ConnectInputProperty
+- Document all public methods and classes
+- Include usage examples in class-level JavaDoc
+
+### 5. Validation
+- Add appropriate validation annotations
+- Include meaningful validation messages
+- Validate nested objects with @Valid
+
+### 6. Code Coverage
+- Mark isSet methods with ///CLOVER:OFF and ///CLOVER:ON
+- Ensure all fields have corresponding isSet methods
+
+### 7. Error Handling
+- Include appropriate validation annotations
+- Use meaningful error messages
+- Consider adding custom validators when needed
+
+## Example Implementation Structure
+
+```java
+@ConnectInputRep(...)
+public class ExampleInputRepresentation extends ConnectInputRepresentation implements Serializable {
+    // Required fields
+    private String mandatoryField;
+    private boolean isSetMandatoryField;
+
+    // Optional fields
+    private String optionalField;
+    private boolean isSetOptionalField;
+
+    // Nested objects
+    private NestedClass nestedObject;
+    private boolean isSetNestedObject;
+
+    // Collections
+    private List<ItemClass> items;
+    private boolean isSetItems;
+
+    // Standard getters/setters with @ConnectInputProperty
+    
+    // isSet methods marked with CLOVER
+    
+    // Nested class definitions
+}
+```
+
+## Common Gotchas
+1. Forgetting to implement Serializable
+2. Missing isSet boolean fields
+3. Incorrect version numbers
+4. Missing CLOVER markers
+5. Incomplete validation rules
+6. Inconsistent JSON property naming
+
+## Testing Checklist
+- [ ] Serialization/deserialization tests
+- [ ] Validation tests
+- [ ] Version compatibility tests
+- [ ] Null handling tests
+- [ ] Collection handling tests
+- [ ] Error message verification
+
+This guide serves as a reference for creating standardized Input Representations in Java following Salesforce conventions.
