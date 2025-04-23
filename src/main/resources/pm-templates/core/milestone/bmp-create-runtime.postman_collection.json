@@ -686,6 +686,51 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "bs-recovery",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 00DLT000005y8W6!AQEAQM_BzmGAc9C50ew5dHciarq4jL2hDuUcvpDDQnqw3SIs5Snt8ZCQJX2lbe9swZW6vHPy9.paaSYRkjHzhMd.Fx3EZ6Gc"
+							},
+							{
+								"key": "Cookie",
+								"value": "BrowserId=jPBtRv5qEe-nHV9TLcPiMA; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n    \"billingScheduleIds\": [\"{{billingScheduleId}}\"] \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{versionPath}}/commerce/invoicing/billing-schedules/collection/actions/recover",
+							"host": [
+								"{{baseUrl}}{{versionPath}}"
+							],
+							"path": [
+								"commerce",
+								"invoicing",
+								"billing-schedules",
+								"collection",
+								"actions",
+								"recover"
+							]
+						},
+						"description": "Generated from cURL: curl --location 'https://dlt000005y8w62ai.test1.my.pc-rnd.salesforce.com/services/data/v65.0/commerce/invoicing/billing-schedules/collection/actions/recover' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer 00DLT000005y8W6!AQEAQM_BzmGAc9C50ew5dHciarq4jL2hDuUcvpDDQnqw3SIs5Snt8ZCQJX2lbe9swZW6vHPy9.paaSYRkjHzhMd.Fx3EZ6Gc' \\\n--header 'Cookie: BrowserId=jPBtRv5qEe-nHV9TLcPiMA; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1' \\\n--data '{ \"billingScheduleIds\": [\"44bLT00000064VZYAY\"] }\n'"
+					},
+					"response": []
 				}
 			]
 		}
