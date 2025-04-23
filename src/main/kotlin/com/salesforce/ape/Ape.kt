@@ -9,6 +9,7 @@ import com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.PickUtils.af
 import com.salesforce.revoman.internal.json.MoshiReVoman
 import com.salesforce.revoman.output.ExeType.HTTP_STATUS
 import com.salesforce.revoman.output.postman.PostmanEnvironment.EnvEntry
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.http4k.core.PolyHandler
 import org.http4k.hotreload.HotReloadServer
 import org.http4k.hotreload.HotReloadable
@@ -25,7 +26,12 @@ import org.http4k.routing.bind
 import org.http4k.routing.mcpHttpStreaming
 import org.http4k.server.Helidon
 
-val PM_COLLECTION_PATH = listOf("pm-templates/core/milestone/persona-creation-and-setup.postman_collection.json", "pm-templates/core/milestone/milestone-setup.postman_collection.json", "pm-templates/core/milestone/bmp-create-runtime.postman_collection.json")
+val PM_COLLECTION_PATH =
+  listOf(
+    "pm-templates/core/milestone/persona-creation-and-setup.postman_collection.json",
+    "pm-templates/core/milestone/milestone-setup.postman_collection.json",
+    "pm-templates/core/milestone/bmp-create-runtime.postman_collection.json",
+  )
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
 /*val pmCollectionPathArg =
@@ -36,7 +42,8 @@ val pmEnvironmentPathArg =
     .optional("environmentPaths", "CSV string of Absolute paths to the Postman Environment files")*/
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
-val milestoneSplitArg = Tool.Arg.csv().required("milestoneSplit", "Comma seperated milestone percentage split")
+val milestoneSplitArg =
+  Tool.Arg.csv().optional("milestoneSplit", "Comma seperated milestone percentage split")
 val prevVariableNameArg =
   Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
 val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")
@@ -59,14 +66,16 @@ val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution re
 
 val queryChainHandler: ToolHandler = { toolRequest ->
   val pmCollectionPaths = PM_COLLECTION_PATH
-
   val variableName = variableNameArg(toolRequest)
+
+  logger.info { "`query-chain` called with variableName: $variableName" }
   val chain =
     ReVoman.queryChainForVariable(
       variableName,
       Kick.configure().templatePaths(pmCollectionPaths).off(),
     )
-  ToolResponse.Ok(listOf(Content.Text(chain.toJson())))
+  val variableToPmTemplate = chain.toJson()
+  ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
 }
 
 const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
@@ -77,14 +86,15 @@ val exeHandler: ToolHandler = { toolRequest ->
   val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
   val variableName = variableNameArg(toolRequest)
   val milestoneSplit = milestoneSplitArg(toolRequest)
-  println(milestoneSplit)
 
   val environment =
     ReVoman.exeChainForVariable(
       variableName,
       Kick.configure()
         .templatePaths(pmCollectionPaths)
-        .dynamicEnvironment(mapOf("milestoneSplit" to milestoneSplit.joinToString(",")))
+        .dynamicEnvironment(
+          mapOf("milestoneSplit" to (milestoneSplit?.joinToString(",") ?: "30,20,30"))
+        )
         .environmentPaths(pmEnvironmentPaths)
         .haltOnFailureOfTypeExcept(
           HTTP_STATUS,
@@ -170,3 +180,5 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
 fun main() {
   HotReloadServer.poly<ReloadableMCP>(Helidon(3001)).start()
 }
+
+private val logger = KotlinLogging.logger {}

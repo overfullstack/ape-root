@@ -3,13 +3,13 @@ load("@rules_java//java:defs.bzl", "java_import")
 package(default_visibility = ["//visibility:public"])
 
 java_import(
-    name = "com_salesforce_revoman_revoman",
+    name = "com_salesforce_ape_ape",
     jars = glob(
-        ["build/libs/ape-root-*.jar"],
+        ["build/libs/ape-*.jar"],
         allow_empty = False,
     ),
     srcjar = glob(
-        ["build/libs/ape-root-*-sources.jar"],
+        ["build/libs/ape-*-sources.jar"],
         allow_empty = False,
     )[0],
 )

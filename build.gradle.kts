@@ -63,7 +63,14 @@ testing {
     register<JvmTestSuite>("integrationTest") {
       dependencies {
         implementation(project())
-        implementation(libs.revoman)
+        implementation(
+          fileTree(
+            mapOf(
+              "dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs",
+              "include" to listOf("*.jar"),
+            )
+          )
+        )
         implementation(libs.truth)
         implementation(libs.mockito.core)
         implementation(libs.spring.beans)
@@ -79,6 +86,7 @@ node { nodeProjectDir = file("${project.projectDir}/js") }
 tasks {
   check { dependsOn(npmInstall) }
   test { dependsOn(npmInstall) }
+  withType<Jar> { archiveBaseName = "ape" }
 }
 
 kover { reports { total { html { onCheck = true } } } }

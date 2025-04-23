@@ -1,7 +1,6 @@
 [versions]
 jdk = "21"
 kotlin = "2.1.20"
-revoman = "0.42.5"
 moshix = "0.30.0"
 http4k = "6.6.0.1"
 immutables = "2.10.1"
@@ -49,7 +48,6 @@ kotest-frameworkEngine = { module = "io.kotest:kotest-framework-engine", version
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 kotest-runnerJUnit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
-revoman = { module = "com.salesforce.revoman:revoman", version.ref = "revoman" }
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj-core" }
 assertj-vavr = { module = "org.assertj:assertj-vavr", version.ref = "assertj-vavr" }
 moshix-adapters = { module = "dev.zacsweers.moshix:moshi-adapters", version.ref = "moshix" }
