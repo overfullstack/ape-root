@@ -21,10 +21,16 @@ When passing the `previousEnvironment` parameter, it must be formatted as an arr
   {"key": "baseUrl", "value": "https://example.salesforce.com"},
   {"key": "username", "value": "user@example.com"},
   {"key": "password", "value": "password123"},
+  {"key": "accessToken", "value": "00XXX!AQEAQGrZHtuMgDxk..."}, /* IMPORTANT: Always include the accessToken */
   {"key": "orderId", "value": "ORDER_ID_VALUE"},
+  {"key": "billingOpsUserName", "value": "billingOps-user@example.com"}, /* IMPORTANT: Include for invoice creation */
   // ... other environment variables
 ]
 ```
+
+### IMPORTANT: 
+1. Always include the `accessToken` from the previous execution in the `previousEnvironment` parameter. Without the accessToken, the API requests will fail with authentication errors.
+2. Include `billingOpsUserName` when creating invoices from orders. This is necessary for proper authentication during the invoice creation process.
 
 ### Common Mistakes to Avoid:
 1. Do not pass the `mutableEnv` as an object:
@@ -42,7 +48,26 @@ When passing the `previousEnvironment` parameter, it must be formatted as an arr
    }
    ```
 
-3. Only extract the needed values from the mutableEnv response and format them correctly as an array of objects with "key" and "value" properties.
+3. Forgetting to include the `accessToken` in the previousEnvironment array:
+   ```json
+   // INCORRECT - Missing accessToken
+   [
+     {"key": "baseUrl", "value": "https://example.com"},
+     {"key": "orderId", "value": "123"}
+   ]
+   ```
+
+4. Forgetting to include the `billingOpsUserName` when creating invoices:
+   ```json
+   // INCORRECT - Missing billingOpsUserName for invoice creation
+   [
+     {"key": "baseUrl", "value": "https://example.com"},
+     {"key": "accessToken", "value": "00XXX!AQEAQGrZHtuMgDxk..."},
+     {"key": "orderId", "value": "123"}
+   ]
+   ```
+
+5. Extract all the values from the mutableEnv response and format them correctly as an array of objects with "key" and "value" properties.
 
 ## Example Usage:
 ```javascript
@@ -57,10 +82,26 @@ const formattedEnv = Object.entries(mutableEnv).map(([key, value]) => ({
 }));
 
 // Step 3: Call resume-exe-chain with the properly formatted environment
+// Make sure formattedEnv includes accessToken and billingOpsUserName
 const resumeResponse = await mcp_Ape_resume-exe-chain({
   variableName: "invoiceId",
   prevVariableName: "orderId",
   previousEnvironment: formattedEnv
 });
+```
+
+## Sample previousEnvironment with accessToken and billingOpsUserName:
+```json
+[
+  {"key":"baseUrl","value":"https://example.salesforce.com"},
+  {"key":"username","value":"user@example.com"},
+  {"key":"password","value":"password123"},
+  {"key":"accessToken","value":"00XXX!AQEAQGrZHtuMgDxk..."},
+  {"key":"orderId","value":"801LT00000j9xyz"},
+  {"key":"billingOpsUserName","value":"billingOps-user@example.com"},
+  {"key":"percentage1","value":"20"},
+  {"key":"percentage2","value":"30"},
+  {"key":"percentage3","value":"50"}
+]
 ```
 
