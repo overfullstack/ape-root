@@ -81,7 +81,7 @@ val exeHandler: ToolHandler = { toolRequest ->
             mapOf(
               "percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
               "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
-              "percentage3" to (milestoneSplit?.getOrNull(2) ?: "30"),
+              "percentage3" to (milestoneSplit?.getOrNull(2) ?: "40"),
             )
           )
           .environmentPaths(pmEnvironmentPaths)
