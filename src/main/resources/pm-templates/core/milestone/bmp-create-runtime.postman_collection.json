@@ -591,7 +591,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"billingScheduleIds\": [\n    \"{{billingSchedule1Id}}\"\n  ],\n  \"action\": \"Posted\",\n  \"targetDate\": \"{{milestone1Date}}\",\n  \"invoiceDate\": \"{{$currentDate}}\"\n}",
+							"raw": "{\n  \"billingScheduleIds\": [\n    \"{{billingScheduleId}}\"\n  ],\n  \"action\": \"Posted\",\n  \"targetDate\": \"{{milestone1Date}}\",\n  \"invoiceDate\": \"{{$currentDate}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -630,15 +630,11 @@
 									"  pm.environment.set(\"invoiceLine\" + (index + 1) + \"Id\", record.Id)",
 									"})",
 									"",
-									"jsonData.compositeResponse[1].body.records.forEach((record, index) => {",
-									"  pm.environment.set(\"billingSchedule\" + (index + 1) + \"Id\", record.Id)",
-									"  pm.environment.set(\"billingSchedule\" + (index + 1) + \"Status\", record.Status)",
-									"})",
+									"pm.environment.set(\"billingScheduleId\", jsonData.compositeResponse[1].body.records[0].Id)",
+									"pm.environment.set(\"billingScheduleStatus\", jsonData.compositeResponse[1].body.records[0].Status)",
 									"",
-									"jsonData.compositeResponse[2].body.records.forEach((record, index) => {",
-									"  pm.environment.set(\"billingMilestonePlan\" + (index + 1) + \"Id\", record.Id)",
-									"  pm.environment.set(\"billingMilestonePlan\" + (index + 1) + \"Status\", record.Status)",
-									"})",
+									"pm.environment.set(\"billingMilestonePlanId\", jsonData.compositeResponse[2].body.records[0].Id)",
+									"pm.environment.set(\"billingMilestonePlanStatus\", jsonData.compositeResponse[2].body.records[0].Status)",
 									"",
 									"jsonData.compositeResponse[3].body.records.forEach((record, index) => {",
 									"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Id\", record.Id)",
@@ -668,7 +664,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$invLineFieldsToQuery}} FROM InvoiceLine WHERE billingScheduleId = '{{billingSchedule1Id}}'\",\n      \"referenceId\": \"invoiceLines\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bsFieldsToQuery}} FROM BillingSchedule WHERE Id = '{{billingSchedule1Id}}'\",\n      \"referenceId\": \"billingSchedule\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '{{billingSchedule1Id}}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    }\n  ]\n}",
+							"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$invLineFieldsToQuery}} FROM InvoiceLine WHERE billingScheduleId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"invoiceLines\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bsFieldsToQuery}} FROM BillingSchedule WHERE Id = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingSchedule\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
