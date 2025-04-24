@@ -161,7 +161,7 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       Tool(
         "exe-chain",
         """Helps to execute the steps involved in creating an entity.
-          |This tools may send a delayed response if the collection size is large.
+          |This tool may send a delayed response if the collection size is large.
           |The response size of this tool may be huge if the collection size is large. Consume in chunks.
           |Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable
           |`mutableEnv` property in this tool’s response can be used to invoke `resume-exe-chain`"""
@@ -170,7 +170,12 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       ) bind exeHandler,
       Tool(
         "resume-exe-chain",
-        "Accepts previous environment JSON file, variable name set in the previous execution and variable name to set in the current execution. Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable",
+        """Helps to resume execution of the steps involved in creating one entity from another entity.
+          |This tool may send a delayed response if the collection size is large.
+          |The response size of this tool may be huge if the collection size is large. Consume in chunks.
+          |Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable
+          |`mutableEnv` property from the `exe-chain` Tool call response or previous `resume-exe-chain` call response should be sent as a parameter while calling this tool"""
+          .trimMargin(),
         variableNameArg,
         prevVariableNameArg,
         prevEnvArg,
