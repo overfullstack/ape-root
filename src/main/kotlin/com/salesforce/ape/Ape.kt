@@ -151,12 +151,21 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0"), ToolsChanged),
       Tool(
         "query-chain",
-        "Accepts a variable name. Returns a consolidated Postman collection that can then later be executed to set that variable",
+        """Helps to understand the steps involved in creating an entity, including all related dependencies.
+          |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+          |Accepts a variable name.
+          |Returns a consolidated Postman collection that can then later be executed to set that variable"""
+          .trimMargin(),
         variableNameArg,
       ) bind queryChainHandler,
       Tool(
         "exe-chain",
-        "Accepts a variable name. Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable. Can be used to resume execution after a halt",
+        """Helps to execute the steps involved in creating an entity.
+          |This tools may send a delayed response if the collection size is large.
+          |The response size of this tool may be huge if the collection size is large. Consume in chunks.
+          |Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable
+          |`mutableEnv` property in this tool’s response can be used to invoke `resume-exe-chain`"""
+          .trimMargin(),
         variableNameArg,
       ) bind exeHandler,
       Tool(

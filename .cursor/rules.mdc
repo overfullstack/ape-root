@@ -16,3 +16,7 @@ tech_stack:
   java_version: 21
   language: English
   code_comments: English
+
+# Prompt rules
+
+- Always, show me which model are you using in auto-mode

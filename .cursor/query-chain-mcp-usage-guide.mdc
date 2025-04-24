@@ -7,11 +7,41 @@ alwaysApply: true
 
 ## Overview
 
-The Ape MCP tools are designed to provide comprehensive insights into entity creation and management processes. These tools should be your FIRST choice when trying to understand how entities are created or managed in the system, rather than searching through the codebase.
+This tool should be your FIRST choice when trying to understand how entities are created or managed in the system, rather than searching through the codebase.
+
+## ⚠️ IMPORTANT: ALWAYS USE ID FORMAT (`entityId`) ⚠️
+
+The most common mistake is using entity names (like "order") instead of ID format (like "orderId").
+ALWAYS use the ID format with the "Id" suffix in the `variableName` parameter.
+
+Examples:
+- ✅ CORRECT: `"variableName": "orderId"`
+- ❌ INCORRECT: `"variableName": "order"`
+
+## `query-chain` vs `exe-chain`
+
+⚠️ **CRITICAL DISTINCTION** ⚠️
+
+These two tools serve different purposes:
+
+1. **`query-chain`**: Use when you want to UNDERSTAND HOW to create an entity
+   - Example query: "How to create an OrderId?" or "Help me understand the steps to create an Order"
+   - Returns: Postman collection showing the sequence of API calls needed (documentation)
+   - Does NOT actually create anything
+
+2. **`exe-chain`**: Use when you want to ACTUALLY CREATE an entity
+   - Example query: "Create an OrderId" or "Set up a new Order"
+   - Executes: The actual API calls to create the entity in the system
+   - Returns: Execution data including request/response information
+   - Actually creates the entity in the system
+
+Quick Reference:
+- "How to..." or "Understand..." → Use `query-chain`
+- "Create..." or "Set up..." → Use `exe-chain`
 
 ## `query-chain`
 
-This MCP tool helps in understanding the complete process of creating and managing an Entity, including all related configurations and dependencies. The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+This `query-chain` tool helps in understanding the steps involved in creating an entity, including all related dependencies. The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
 
 ### Response Format
 
@@ -94,30 +124,51 @@ For complex entities, the Postman collection can be quite large. In such cases:
 ### When to Use
 
 ALWAYS use `query-chain` when you need to understand:
-- How an entity is created
-- What configurations are needed
-- What dependencies exist
+- How an entity is created. Example: "How to create an Order?"
+- To understand all the steps involved in creating an Entity. Example: "Help me understand all the steps involved in creating an Order"
 - The complete flow of entity creation
 - Related system integrations
 
+Remember: `query-chain` EXPLAINS how to create, while `exe-chain` ACTUALLY creates.
+
 ### Entity Naming Convention
 
+⚠️ **CRITICAL REQUIREMENT** ⚠️
+
 When using the `query-chain` tool:
-- Entity names and their IDs are equivalent in queries
-- Always use the ID format (`xId`) in the `variableName` argument
-- The tool understands both formats and will return the same information
+- ALWAYS use the ID format (`entityId`) in the `variableName` parameter
+- NEVER use the entity name without the "Id" suffix
+- The tool will NOT work correctly if you use entity names instead of IDs
+
+Common Entity ID Formats:
+- Order → `orderId`
+- Account → `accountId`
+- Product → `productId`
+- User → `userId`
+- Billing Policy → `billingPolicyId`
+- Tax Treatment → `taxTreatmentId`
 
 Examples:
-- "How to create an Order" → Use `variableName: "orderId"`
-- "How to create a Billing Policy" → Use `variableName: "billingPolicyId"`
-- "How to create a Tax Treatment" → Use `variableName: "taxTreatmentId"`
+- "How to create an Order" → Use `variableName: "orderId"` (NOT `variableName: "order"`)
+- "Help me understand all the steps involved in creating an Order?" → `"variableName": "orderId"` (NOT `"variableName": "order"`)
+- "How to create a Billing Policy" → Use `variableName: "billingPolicyId"` (NOT `variableName: "billingPolicy"`)
+- "How to create a Tax Treatment" → Use `variableName: "taxTreatmentId"` (NOT `variableName: "taxTreatment"`)
 
 ### Example Use Cases
 
-- "How to create an `orderId`?" → `{ "variableName": "orderId" }`
-- "How to set up a billing policy?" → `{ "variableName": "billingPolicyId" }`
-- "How to configure tax treatments?" → `{ "variableName": "taxTreatmentId" }`
-- "How to create a product with specific attributes?" → `{ "variableName": "productId" }`
+- "How to create an Order?" → `query-chain { "variableName": "orderId" }` ✅
+- "How to set up a billing policy?" → `query-chain { "variableName": "billingPolicyId" }` ✅
+- "Help me understand creating a tax treatment" → `query-chain { "variableName": "taxTreatmentId" }` ✅
+- "Tell me about creating a product" → `query-chain { "variableName": "productId" }` ✅
+
+- "Create an Order" → `exe-chain { "variableName": "orderId" }` ✅
+- "Set up a new billing policy" → `exe-chain { "variableName": "billingPolicyId" }` ✅
+
+INCORRECT EXAMPLES:
+- "How to create an Order?" → `{ "variableName": "order" }` ❌
+- "How to set up a billing policy?" → `{ "variableName": "billingPolicy" }` ❌
+- "Create an Order" → `query-chain { "variableName": "orderId" }` ❌ (use `exe-chain` instead)
+- "How to create an Order?" → `exe-chain { "variableName": "orderId" }` ❌ (use `query-chain` instead)
 
 ### How to Invoke
 
@@ -129,7 +180,7 @@ Examples:
 Example Request:
 ```json
 {
-  "variableName": "orderId"  // Always use the ID format
+  "variableName": "orderId"  // Always use the ID format with "Id" suffix
 }
 ```
 
@@ -146,18 +197,21 @@ The returned Postman collection will contain:
 ### Best Practices
 
 1. **Always Start with MCP**: Before searching the codebase, try using the MCP tools first
-2. **Use ID Format**: Always use the ID format (`xId`) in the `variableName` parameter
-3. **Be Specific**: Use the exact entity ID name you're interested in
-4. **Study the Chain**: Review all steps in the returned Postman collection
-5. **Note Dependencies**: Pay attention to prerequisite configurations
-6. **Follow Variables**: Track environment variables set and used across requests
-7. **Break Down Large Responses**: For complex entities, summarize the process in phases
+2. **Use ID Format**: Always use the ID format (`entityId`) in the `variableName` parameter
+3. **Choose the Right Tool**: Use `query-chain` to understand, `exe-chain` to create
+4. **Be Specific**: Use the exact entity ID name you're interested in
+5. **Study the Chain**: Review all steps in the returned Postman collection
+6. **Note Dependencies**: Pay attention to prerequisite configurations
+7. **Follow Variables**: Track environment variables set and used across requests
+8. **Break Down Large Responses**: For complex entities, summarize the process in phases
 
 ### Common Mistakes to Avoid
 
 - ❌ Searching the codebase before using MCP tools
-- ❌ Using entity names instead of ID format in `variableName`
+- ❌ Using entity names instead of ID format in `variableName` (e.g., using "order" instead of "orderId")
 - ❌ Using generic terms instead of specific entity IDs
+- ❌ Using `query-chain` when you want to actually create (use `exe-chain` instead)
+- ❌ Using `exe-chain` when you just want to understand (use `query-chain` instead)
 - ❌ Ignoring parts of the Postman collection chain
 - ❌ Missing prerequisite steps in the collection
 - ❌ Not following environment variable flow
