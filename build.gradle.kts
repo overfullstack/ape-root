@@ -22,14 +22,8 @@ dependencies {
   api(platform(libs.http4k.bom))
   api(libs.bundles.http4k)
 
-  api(libs.revoman)
   implementation(
-    fileTree(
-      mapOf(
-        "dir" to "/Users/psankula/Downloads/Hackathon/revoman-root/build/libs",
-        "include" to listOf("*.jar"),
-      )
-    )
+    fileTree(mapOf("dir" to "../revoman-root/build/libs", "include" to listOf("*.jar")))
   )
   api(libs.moshix.adapters)
   api(libs.java.vavr)
@@ -64,12 +58,7 @@ testing {
       dependencies {
         implementation(project())
         implementation(
-          fileTree(
-            mapOf(
-              "dir" to "/Users/gopala.akshintala/code-clones/work/revoman-root/build/libs",
-              "include" to listOf("*.jar"),
-            )
-          )
+          fileTree(mapOf("dir" to "../revoman-root/build/libs", "include" to listOf("*.jar")))
         )
         implementation(libs.truth)
         implementation(libs.mockito.core)

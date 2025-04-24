@@ -35,35 +35,12 @@ val PM_COLLECTION_PATH =
   )
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
-/*val pmCollectionPathArg =
-  Tool.Arg.csv()
-    .required("collectionPaths", "CSV string of Absolute paths to the Postman Collection files")
-val pmEnvironmentPathArg =
-  Tool.Arg.csv()
-    .optional("environmentPaths", "CSV string of Absolute paths to the Postman Environment files")*/
-
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
 val milestoneSplitArg =
   Tool.Arg.csv().optional("milestoneSplit", "Comma seperated milestone percentage split")
 val prevVariableNameArg =
   Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
 val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")
-
-
-
-/*val revomanToolHandler: ToolHandler = { toolRequest ->
-  val pmCollectionPaths = PM_COLLECTION_PATH
-  val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
-  val rundown =
-    ReVoman.revUp(
-      Kick.configure()
-        .templatePaths(pmCollectionPaths)
-        .environmentPaths(pmEnvironmentPaths)
-        .nodeModulesPath("js")
-        .off()
-    )
-  ToolResponse.Ok(listOf(Content.Text(rundown.mutableEnv.postmanEnvJSONFormat)))
-}*/
 
 val queryChainHandler: ToolHandler = { toolRequest ->
   try {
@@ -79,7 +56,9 @@ val queryChainHandler: ToolHandler = { toolRequest ->
     val variableToPmTemplate = chain.toJson()
     ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
   } catch (e: Exception) {
-    ToolResponse.Error(ErrorMessage(1,e.message ?: "Unknown error occurred in query chain handler: ${e.message}"))
+    ToolResponse.Error(
+      ErrorMessage(1, e.message ?: "Unknown error occurred in query chain handler: ${e.message}")
+    )
   }
 }
 
@@ -93,15 +72,18 @@ val exeHandler: ToolHandler = { toolRequest ->
     val variableName = variableNameArg(toolRequest)
     val milestoneSplit = milestoneSplitArg(toolRequest)
 
-
-    val environment =
+    val rundown =
       ReVoman.exeChainForVariable(
         variableName,
         Kick.configure()
           .templatePaths(pmCollectionPaths)
-          .dynamicEnvironment(mapOf("percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
-                                    "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
-                                    "percentage3" to (milestoneSplit?.getOrNull(2) ?: "30")))
+          .dynamicEnvironment(
+            mapOf(
+              "percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
+              "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
+              "percentage3" to (milestoneSplit?.getOrNull(2) ?: "30"),
+            )
+          )
           .environmentPaths(pmEnvironmentPaths)
           .haltOnFailureOfTypeExcept(
             HTTP_STATUS,
@@ -115,9 +97,11 @@ val exeHandler: ToolHandler = { toolRequest ->
           .nodeModulesPath("js")
           .off(),
       )
-    ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
   } catch (e: Exception) {
-    ToolResponse.Error(ErrorMessage(2, e.message ?: "Unknown error occurred in execution handler: ${e.message}"))
+    ToolResponse.Error(
+      ErrorMessage(2, e.message ?: "Unknown error occurred in execution handler: ${e.message}")
+    )
   }
 }
 
@@ -130,7 +114,7 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
     val moshiReVoman = MoshiReVoman.initMoshi()
     val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
 
-    val environment =
+    val rundown =
       ReVoman.diffExeChainForVariable(
         prevVariableName,
         variableName,
@@ -150,9 +134,14 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
           .nodeModulesPath("js")
           .off(),
       )
-    ToolResponse.Ok(listOf(Content.Text(environment.envJson)))
+    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
   } catch (e: Exception) {
-    ToolResponse.Error(ErrorMessage(3,e.message ?: "Unknown error occurred in resume execution handler: ${e.message}"))
+    ToolResponse.Error(
+      ErrorMessage(
+        3,
+        e.message ?: "Unknown error occurred in resume execution handler: ${e.message}",
+      )
+    )
   }
 }
 
@@ -160,30 +149,19 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
     mcpHttpStreaming(
       ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0"), ToolsChanged),
-      /*Tool(
-        "execute-collection-file",
-        "Accepts a CSV string of Postman collections absolute paths and environment files absolute paths to execute",
-        pmCollectionPathArg,
-        pmEnvironmentPathArg,
-      ) bind revomanToolHandler,*/
-      /*Tool(
-        "dep-graph",
-        "Accepts a CSV string of Postman collections absolute paths and provides a map of variable name and Postman Collection that can create that variable",
-        pmCollectionPathArg,
-      ) bind revomanDepGraphHandler,*/
       Tool(
         "query-chain",
-        "Accepts a CSV string of Postman collections absolute paths and variable name. Returns a consolidated Postman collection that can then later be executed to set that variable",
+        "Accepts a variable name. Returns a consolidated Postman collection that can then later be executed to set that variable",
         variableNameArg,
       ) bind queryChainHandler,
       Tool(
         "exe-chain",
-        "Accepts a CSV string of Postman collections absolute paths, environment files absolute paths, and variable name. Returns the environment variables set in the execution",
+        "Accepts a variable name. Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable. Can be used to resume execution after a halt",
         variableNameArg,
       ) bind exeHandler,
       Tool(
         "resume-exe-chain",
-        "Accepts a CSV string of Postman collections absolute paths, environment files absolute paths, previous environment JSON file, variable name set in the previous execution and variable name to set in the current execution. Returns the environment variables set in the execution",
+        "Accepts previous environment JSON file, variable name set in the previous execution and variable name to set in the current execution. Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable",
         variableNameArg,
         prevVariableNameArg,
         prevEnvArg,
