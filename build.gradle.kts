@@ -16,6 +16,10 @@ plugins {
   alias(libs.plugins.gradle.taskinfo)
 }
 
+application {
+  mainClass.set("com.salesforce.ape.ApeKt")
+}
+
 val mockitoAgent = configurations.create("mockitoAgent")
 
 dependencies {
@@ -49,6 +53,8 @@ dependencies {
   mockitoAgent(libs.mockito.core) { isTransitive = false }
   testImplementation(libs.mockk)
 }
+
+
 
 testing {
   suites {
