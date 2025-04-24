@@ -15,7 +15,7 @@ The `mcp_Ape_exe-chain` MCP helps create a variable by executing a chain of Post
 The response is a JSON file containing key-value pairs of environment variables set in the execution
 
 ### When to Use
-- When asked "Create X" (e.g., "Create an Order")
+- When asked "Create X" (e.g., "Create an Order", "Create orderCalculationStatus")
 - When asked "Create X variableName" (e.g., "Create an orderId")
 - When creating a variable (e.g., "Create a variable `orderId`")
 - Example "Create `orderId` using Postman collection and environment files from this folder"
