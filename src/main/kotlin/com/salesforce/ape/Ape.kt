@@ -280,6 +280,166 @@ val commandPlaceOrder: ToolHandler = { toolRequest ->
     )
   }
 }
+// 1. Persona Creation Handler
+val queryChainHandlerForPersona: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForPersona: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths = "pm-templates/core/milestone/persona-creation.postman_collection.json"
+    val variableName = "personaId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(
+        1,
+        e.message ?: "Unknown error occurred in persona creation handler: ${e.message}",
+      )
+    )
+  }
+}
+
+// 2. Tax and Billing Setup Handler
+val queryChainHandlerForTaxBilling: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForTaxBilling: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/tax-setup.postman_collection.json",
+        "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+      )
+    val variableName = "taxBillingSetupId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(
+        1,
+        e.message ?: "Unknown error occurred in tax-billing setup handler: ${e.message}",
+      )
+    )
+  }
+}
+
+// 3. Product Setup Handler
+val queryChainHandlerForProduct: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForProduct: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/tax-setup.postman_collection.json",
+        "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+        "pm-templates/core/milestone/product-setup.postman_collection.json",
+      )
+    val variableName = "productId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(1, e.message ?: "Unknown error occurred in product setup handler: ${e.message}")
+    )
+  }
+}
+
+// 4. Order Creation Handler
+val queryChainHandlerForOrder: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForOrder: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/product-setup.postman_collection.json",
+        "pm-templates/core/milestone/place-order.postman_collection.json",
+      )
+    val variableName = "orderId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(1, e.message ?: "Unknown error occurred in order creation handler: ${e.message}")
+    )
+  }
+}
+
+// 5. Billing Schedule Handler
+val queryChainHandlerForBillingSchedule: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info {
+    "Current thread executing queryChainHandlerForBillingSchedule: ${currentThread.name}"
+  }
+  try {
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/place-order.postman_collection.json",
+        "pm-templates/core/milestone/order-to-billingSchedule.postman_collection.json",
+      )
+    val variableName = "billingScheduleId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(
+        1,
+        e.message ?: "Unknown error occurred in billing schedule handler: ${e.message}",
+      )
+    )
+  }
+}
+
+// 6. Invoice Generation Handler
+val queryChainHandlerForInvoice: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForInvoice: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/order-to-billingSchedule.postman_collection.json",
+        "pm-templates/core/milestone/invoice-with-recovery.postman_collection.json",
+      )
+    val variableName = "invoiceId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(
+        1,
+        e.message ?: "Unknown error occurred in invoice generation handler: ${e.message}",
+      )
+    )
+  }
+}
 
 class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
@@ -320,6 +480,64 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
           .trimMargin(),
         prevEnvArg,
       ) bind commandPlaceOrder,
+      // 1. Persona Creation Tool
+      Tool(
+        "query_persona-setup",
+        """Helps to understand the steps involved in creating a Persona, including all permissions and settings.
+      |The tool returns a Postman collection that demonstrates the complete chain of API calls needed for persona creation.
+      |This is a prerequisite for all other operations."""
+          .trimMargin(),
+      ) bind queryChainHandlerForPersona,
+
+      // 2. Tax and Billing Setup Tool
+      Tool(
+        "query_tax-billing-setup",
+        """Helps to understand the steps involved in setting up Tax and Billing configurations.
+      |Depends on `query_persona-setup` MCP tool. Execute that before this.
+      |Returns a consolidated Postman collection with all Tax and Billing setup steps.
+      |Required before Product Setup."""
+          .trimMargin(),
+      ) bind queryChainHandlerForTaxBilling,
+
+      // 3. Product Setup Tool
+      Tool(
+        "query_product-setup",
+        """Helps to understand the steps involved in creating a Product, including all related dependencies.
+      |Depends on `query_tax-billing-setup` MCP tool. Execute that before this.
+      |Returns a consolidated Postman collection for complete product setup.
+      |Required before Order Creation."""
+          .trimMargin(),
+      ) bind queryChainHandlerForProduct,
+
+      // 4. Order Creation Tool
+      Tool(
+        "query_create-order",
+        """Helps to understand the steps involved in creating an Order with Pricing & Taxation.
+      |Depends on `query_product-setup` MCP tool. Execute that before this.
+      |Returns a consolidated Postman collection for order creation with pricing and tax calculation.
+      |Required before Billing Schedule creation."""
+          .trimMargin(),
+      ) bind queryChainHandlerForOrder,
+
+      // 5. Billing Schedule Creation Tool
+      Tool(
+        "query_billing-schedule",
+        """Helps to understand the steps involved in creating Billing Schedules.
+      |Depends on `query_create-order` MCP tool. Execute that before this.
+      |Returns a consolidated Postman collection for billing schedule creation.
+      |Required before Invoice Generation."""
+          .trimMargin(),
+      ) bind queryChainHandlerForBillingSchedule,
+
+      // 6. Invoice Generation Tool
+      Tool(
+        "query_generate-invoice",
+        """Helps to understand the steps involved in generating Invoices.
+      |Depends on `query_billing-schedule` MCP tool. Execute that before this.
+      |Returns a Postman collection for invoice generation process.
+      |Final step in the order-to-invoice flow."""
+          .trimMargin(),
+      ) bind queryChainHandlerForInvoice,
     )
 }
 
