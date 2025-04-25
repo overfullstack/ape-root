@@ -151,8 +151,7 @@
 					"script": {
 						"exec": [
 							"var jsonData = pm.response.json()",
-							"pm.environment.set(\"orderId\", jsonData.salesTransactionId);",
-							""
+							"pm.environment.set(\"orderId\", jsonData.salesTransactionId);"
 						],
 						"type": "text/javascript",
 						"packages": {}

@@ -8,7 +8,6 @@ import com.salesforce.revoman.input.config.Kick
 import com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.PickUtils.afterStepContainingHeader
 import com.salesforce.revoman.internal.json.MoshiReVoman
 import com.salesforce.revoman.output.ExeType.HTTP_STATUS
-import com.salesforce.revoman.output.postman.PostmanEnvironment.EnvEntry
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.http4k.core.PolyHandler
 import org.http4k.hotreload.HotReloadServer
@@ -35,7 +34,8 @@ val PM_COLLECTION_PATH =
     "pm-templates/core/milestone/product-setup.postman_collection.json",
     "pm-templates/core/milestone/place-order.postman_collection.json",
     "pm-templates/core/milestone/order-to-billingSchedule.postman_collection.json",
-    "pm-templates/core/milestone/invoice-with-recovery.postman_collection.json")
+    "pm-templates/core/milestone/invoice-with-recovery.postman_collection.json",
+  )
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
@@ -43,7 +43,11 @@ val milestoneSplitArg =
   Tool.Arg.csv().optional("milestoneSplit", "Comma seperated milestone percentage split")
 val prevVariableNameArg =
   Tool.Arg.required("prevVariableName", "variable name to set in the previous execution")
-val prevEnvArg = Tool.Arg.required("previousEnvironment", "previous execution response JSON")
+val prevEnvArg =
+  Tool.Arg.required(
+    "previousEnvironment",
+    "`mutableEnv` JSON property from previous `command_` call",
+  )
 
 val queryChainHandler: ToolHandler = { toolRequest ->
   try {
@@ -115,7 +119,7 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
     val prevVariableName = prevVariableNameArg(toolRequest)
     val variableName = variableNameArg(toolRequest)
     val moshiReVoman = MoshiReVoman.initMoshi()
-    val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
+    val prevEnv = moshiReVoman.fromJson<Map<String, String?>>(prevEnvArg(toolRequest))!!
 
     val rundown =
       ReVoman.diffExeChainForVariable(
@@ -124,7 +128,7 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
         Kick.configure()
           .templatePaths(pmCollectionPaths)
           .environmentPaths(pmEnvironmentPaths)
-          .dynamicEnvironment(prevEnv.associate { it.key to it.value as? String })
+          .dynamicEnvironment(prevEnv)
           .haltOnFailureOfTypeExcept(
             HTTP_STATUS,
             afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
@@ -159,7 +163,7 @@ val queryChainHandlerForPlaceOrder: ToolHandler = { toolRequest ->
         Kick.configure().templatePaths(pmCollectionPaths).off(),
       )
     val variableToPmTemplate = chain.toJson()
-    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+    ToolResponse.Ok(Content.Text(variableToPmTemplate))
   } catch (e: Exception) {
     ToolResponse.Error(
       ErrorMessage(1, e.message ?: "Unknown error occurred in query chain handler: ${e.message}")
@@ -169,19 +173,22 @@ val queryChainHandlerForPlaceOrder: ToolHandler = { toolRequest ->
 
 val queryChainHandlerForOneTimeProduct: ToolHandler = { toolRequest ->
   try {
-    val pmCollectionPaths = listOf("pm-templates/core/milestone/persona-creation.postman_collection.json",
-      "pm-templates/core/milestone/tax-setup.postman_collection.json",
-      "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
-      "pm-templates/core/milestone/product-setup.postman_collection.json")
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/persona-creation.postman_collection.json",
+        "pm-templates/core/milestone/tax-setup.postman_collection.json",
+        "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+        "pm-templates/core/milestone/product-setup.postman_collection.json",
+      )
 
     val variableName = "oneTimePriceBookEntryId"
-    val chain =
+    val template =
       ReVoman.queryChainForVariable(
         variableName,
         Kick.configure().templatePaths(pmCollectionPaths).off(),
       )
-    val variableToPmTemplate = chain.toJson()
-    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+    val templateJSON = template.toJson()
+    ToolResponse.Ok(Content.Text(templateJSON))
   } catch (e: Exception) {
     ToolResponse.Error(
       ErrorMessage(1, e.message ?: "Unknown error occurred in query chain handler: ${e.message}")
@@ -191,10 +198,13 @@ val queryChainHandlerForOneTimeProduct: ToolHandler = { toolRequest ->
 
 val commandCreateOneTimeProduct: ToolHandler = { toolRequest ->
   try {
-    val pmCollectionPaths = listOf("pm-templates/core/milestone/persona-creation.postman_collection.json",
-      "pm-templates/core/milestone/tax-setup.postman_collection.json",
-      "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
-      "pm-templates/core/milestone/product-setup.postman_collection.json")
+    val pmCollectionPaths =
+      listOf(
+        "pm-templates/core/milestone/persona-creation.postman_collection.json",
+        "pm-templates/core/milestone/tax-setup.postman_collection.json",
+        "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+        "pm-templates/core/milestone/product-setup.postman_collection.json",
+      )
     val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
     val variableName = "oneTimePriceBookEntryId"
     val milestoneSplit = milestoneSplitArg(toolRequest)
@@ -224,7 +234,8 @@ val commandCreateOneTimeProduct: ToolHandler = { toolRequest ->
           .nodeModulesPath("js")
           .off(),
       )
-    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
+    logger.info { "Sending back:\n ${rundown.toJson()}" }
+    ToolResponse.Ok(Content.Text(rundown.toJson()))
   } catch (e: Exception) {
     ToolResponse.Error(
       ErrorMessage(2, e.message ?: "Unknown error occurred in execution handler: ${e.message}")
@@ -236,19 +247,17 @@ val commandPlaceOrder: ToolHandler = { toolRequest ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/place-order.postman_collection.json"
     val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
-    val prevVariableName = "oneTimePriceBookEntryId"
-    val variableName = "orderId"
+    val variableName = "activatedOrderId"
     val moshiReVoman = MoshiReVoman.initMoshi()
-    val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
+    val prevEnv = moshiReVoman.fromJson<Map<String, String?>>(prevEnvArg(toolRequest))!!
 
     val rundown =
-      ReVoman.diffExeChainForVariable(
-        prevVariableName,
+      ReVoman.exeChainForVariable(
         variableName,
         Kick.configure()
           .templatePaths(pmCollectionPaths)
           .environmentPaths(pmEnvironmentPaths)
-          .dynamicEnvironment(prevEnv.associate { it.key to it.value as? String })
+          .dynamicEnvironment(prevEnv)
           .haltOnFailureOfTypeExcept(
             HTTP_STATUS,
             afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
@@ -261,7 +270,7 @@ val commandPlaceOrder: ToolHandler = { toolRequest ->
           .nodeModulesPath("js")
           .off(),
       )
-    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
+    ToolResponse.Ok(Content.Text(rundown.toJson()))
   } catch (e: Exception) {
     ToolResponse.Error(
       ErrorMessage(
@@ -296,8 +305,8 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       Tool(
         "command_product-setup",
         """Creates a OneTime product.
-          |The tool's response has all the data of steps executed to create OneTime product. 
-          |The tool's response contains a `mutableEnv` property which can be used to send to tools dependent on this tool.
+          |The tool's response has all the data of steps executed to create OneTime product.
+          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
           |If the returned data is large, consume in chunks."""
           .trimMargin(),
       ) bind commandCreateOneTimeProduct,
@@ -305,11 +314,11 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
         "command_place-order",
         """Create an Order.
           |The tool's response has all the data of steps executed to create an Order.
-          |It depends on `command_product-setup` MCP tool. Execute that before this and pass the `mutableEnv` from `command_product-setup` call
-          |The tool's response contains a `mutableEnv` property which can be used to send to `command_` tools dependent on this tool.
+          |It depends on `command_product-setup` MCP tool. Execute `command_product-setup` before this and pass the `mutableEnv` from `command_product-setup` call
+          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
           |If the returned data is large, consume in chunks."""
           .trimMargin(),
-        prevEnvArg
+        prevEnvArg,
       ) bind commandPlaceOrder,
     )
 }

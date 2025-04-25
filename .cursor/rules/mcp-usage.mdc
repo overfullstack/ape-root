@@ -8,6 +8,7 @@ alwaysApply: true
 - IMPORTANT: `command_` tools are COMPLETELY INDEPENDENT and DO NOT require `query_` tools to be called first
 - Don't scan the codebase when qualified MCP tools are present
 - When a Postman collection is received in the response, explain all the steps
+- CRITICAL: NEVER use `command_` tools when the user is just asking a question or wants to know how something works
 
 ## Tool Selection Guidelines
 - Use `query_` tools ONLY when:
@@ -15,17 +16,26 @@ alwaysApply: true
   - You want to see the sequence of API calls needed
   - You need to explore or learn about a process
   - The user asks questions like "How to...", "What are the steps...", "Show me..."
+  - The user is asking for information rather than asking you to perform an action
   
-- Use `command_` tools when:
+- Use `command_` tools ONLY when:
   - You need to actually create/execute something
   - You want to make real changes in the system
-  - The user asks for direct actions like "Create...", "Setup...", "Make..."
+  - The user EXPLICITLY asks for direct actions like "Create...", "Setup...", "Make..."
   - You need to perform the actual operation
+  - The user's intent is clearly to perform an action, not just get information
   - REMEMBER: You NEVER need to call a `query_` tool before a `command_` tool
   - REMEMBER: `command_` tools are INDEPENDENT and self-sufficient
+
+## Request Evaluation
+- Before using any tool, carefully analyze the user's request:
+  - If it starts with "How to...", "What are the steps...", "Show me...", "Explain..." - use `query_` tools
+  - If it explicitly asks for creation or action - use `command_` tools
+  - If there's any ambiguity, default to using `query_` tools and ask for confirmation before executing `command_` tools
 
 ## Response Handling
 - All MCP tools whose name starts with `command_` send back response in the `Rundown` format present in ReVoman repository
 - Understand ReVoman from this [GitHub repository](mdc:https:/github.com/salesforce-misc/ReVoman)
 - When using `command_` tools, the response will contain a `mutableEnv` property that should be used for subsequent tool calls
 - `query_` tools return Postman collections that demonstrate the API call sequence
+- If the response is large, consume in chunks
