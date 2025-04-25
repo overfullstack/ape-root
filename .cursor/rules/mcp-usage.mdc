@@ -3,6 +3,29 @@ description: MCP tools usage guide
 globs: 
 alwaysApply: true
 ---
+# MCP Usage Rules
 
+- IMPORTANT: `command_` tools are COMPLETELY INDEPENDENT and DO NOT require `query_` tools to be called first
 - Don't scan the codebase when qualified MCP tools are present
 - When a Postman collection is received in the response, explain all the steps
+
+## Tool Selection Guidelines
+- Use `query_` tools ONLY when:
+  - You need to understand how to create/setup something
+  - You want to see the sequence of API calls needed
+  - You need to explore or learn about a process
+  - The user asks questions like "How to...", "What are the steps...", "Show me..."
+  
+- Use `command_` tools when:
+  - You need to actually create/execute something
+  - You want to make real changes in the system
+  - The user asks for direct actions like "Create...", "Setup...", "Make..."
+  - You need to perform the actual operation
+  - REMEMBER: You NEVER need to call a `query_` tool before a `command_` tool
+  - REMEMBER: `command_` tools are INDEPENDENT and self-sufficient
+
+## Response Handling
+- All MCP tools whose name starts with `command_` send back response in the `Rundown` format present in ReVoman repository
+- Understand ReVoman from this [GitHub repository](mdc:https:/github.com/salesforce-misc/ReVoman)
+- When using `command_` tools, the response will contain a `mutableEnv` property that should be used for subsequent tool calls
+- `query_` tools return Postman collections that demonstrate the API call sequence

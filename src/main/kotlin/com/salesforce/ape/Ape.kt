@@ -149,8 +149,6 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
 }
 
 val queryChainHandlerForPlaceOrder: ToolHandler = { toolRequest ->
-  val currentThread = Thread.currentThread()
-  logger.info { "Current thread executing queryChainHandlerForOneTimeProduct: ${currentThread.name}" }
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/place-order.postman_collection.json"
 
@@ -170,9 +168,6 @@ val queryChainHandlerForPlaceOrder: ToolHandler = { toolRequest ->
 }
 
 val queryChainHandlerForOneTimeProduct: ToolHandler = { toolRequest ->
-  // Print the current thread name
-  val currentThread = Thread.currentThread()
-  logger.info { "Current thread executing queryChainHandlerForOneTimeProduct: ${currentThread.name}" }
   try {
     val pmCollectionPaths = listOf("pm-templates/core/milestone/persona-creation.postman_collection.json",
       "pm-templates/core/milestone/tax-setup.postman_collection.json",
@@ -194,6 +189,89 @@ val queryChainHandlerForOneTimeProduct: ToolHandler = { toolRequest ->
   }
 }
 
+val commandCreateOneTimeProduct: ToolHandler = { toolRequest ->
+  try {
+    val pmCollectionPaths = listOf("pm-templates/core/milestone/persona-creation.postman_collection.json",
+      "pm-templates/core/milestone/tax-setup.postman_collection.json",
+      "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+      "pm-templates/core/milestone/product-setup.postman_collection.json")
+    val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
+    val variableName = "oneTimePriceBookEntryId"
+    val milestoneSplit = milestoneSplitArg(toolRequest)
+
+    val rundown =
+      ReVoman.exeChainForVariable(
+        variableName,
+        Kick.configure()
+          .templatePaths(pmCollectionPaths)
+          .dynamicEnvironment(
+            mapOf(
+              "percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
+              "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
+              "percentage3" to (milestoneSplit?.getOrNull(2) ?: "40"),
+            )
+          )
+          .environmentPaths(pmEnvironmentPaths)
+          .haltOnFailureOfTypeExcept(
+            HTTP_STATUS,
+            afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
+          )
+          .hooks(
+            WAIT_HOOK,
+            ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+            ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+          )
+          .nodeModulesPath("js")
+          .off(),
+      )
+    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(2, e.message ?: "Unknown error occurred in execution handler: ${e.message}")
+    )
+  }
+}
+
+val commandPlaceOrder: ToolHandler = { toolRequest ->
+  try {
+    val pmCollectionPaths = "pm-templates/core/milestone/place-order.postman_collection.json"
+    val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
+    val prevVariableName = "oneTimePriceBookEntryId"
+    val variableName = "orderId"
+    val moshiReVoman = MoshiReVoman.initMoshi()
+    val prevEnv = moshiReVoman.fromJson<List<EnvEntry>>(prevEnvArg(toolRequest))!!
+
+    val rundown =
+      ReVoman.diffExeChainForVariable(
+        prevVariableName,
+        variableName,
+        Kick.configure()
+          .templatePaths(pmCollectionPaths)
+          .environmentPaths(pmEnvironmentPaths)
+          .dynamicEnvironment(prevEnv.associate { it.key to it.value as? String })
+          .haltOnFailureOfTypeExcept(
+            HTTP_STATUS,
+            afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
+          )
+          .hooks(
+            WAIT_HOOK,
+            ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+            ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+          )
+          .nodeModulesPath("js")
+          .off(),
+      )
+    ToolResponse.Ok(listOf(Content.Text(rundown.toJson())))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(
+        3,
+        e.message ?: "Unknown error occurred in resume execution handler: ${e.message}",
+      )
+    )
+  }
+}
+
 class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
     mcpHttpStreaming(
@@ -201,7 +279,7 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
       Tool(
         "query_create-order",
         """Helps to understand the steps involved in creating an Order, including all related dependencies.
-          |It depends on `query_product-setup` MCP tool. Execute that before this
+          |It depends on `query_product-setup` MCP tool. Execute that before this.
           |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
           |Returns a consolidated Postman collection with all the steps involved in creating an Order.
           |If the returned data is large, consume in chunks."""
@@ -215,6 +293,24 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
           |If the returned data is large, consume in chunks."""
           .trimMargin(),
       ) bind queryChainHandlerForOneTimeProduct,
+      Tool(
+        "command_product-setup",
+        """Creates a OneTime product.
+          |The tool's response has all the data of steps executed to create OneTime product. 
+          |The tool's response contains a `mutableEnv` property which can be used to send to tools dependent on this tool.
+          |If the returned data is large, consume in chunks."""
+          .trimMargin(),
+      ) bind commandCreateOneTimeProduct,
+      Tool(
+        "command_place-order",
+        """Create an Order.
+          |The tool's response has all the data of steps executed to create an Order.
+          |It depends on `command_product-setup` MCP tool. Execute that before this and pass the `mutableEnv` from `command_product-setup` call
+          |The tool's response contains a `mutableEnv` property which can be used to send to `command_` tools dependent on this tool.
+          |If the returned data is large, consume in chunks."""
+          .trimMargin(),
+        prevEnvArg
+      ) bind commandPlaceOrder,
     )
 }
 
