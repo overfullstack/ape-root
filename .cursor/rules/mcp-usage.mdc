@@ -1,0 +1,8 @@
+---
+description: MCP tools usage guide
+globs: 
+alwaysApply: true
+---
+
+- Don't scan the codebase when qualified MCP tools are present
+- When a Postman collection is received in the response, explain all the steps

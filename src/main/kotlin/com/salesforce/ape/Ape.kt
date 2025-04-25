@@ -29,10 +29,13 @@ import org.http4k.server.Helidon
 
 val PM_COLLECTION_PATH =
   listOf(
-    "pm-templates/core/milestone/persona-creation-and-setup.postman_collection.json",
-    "pm-templates/core/milestone/milestone-setup.postman_collection.json",
-    "pm-templates/core/milestone/bmp-create-runtime.postman_collection.json",
-  )
+    "pm-templates/core/milestone/persona-creation.postman_collection.json",
+    "pm-templates/core/milestone/tax-setup.postman_collection.json",
+    "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+    "pm-templates/core/milestone/product-setup.postman_collection.json",
+    "pm-templates/core/milestone/place-order.postman_collection.json",
+    "pm-templates/core/milestone/order-to-billingSchedule.postman_collection.json",
+    "pm-templates/core/milestone/invoice-with-recovery.postman_collection.json")
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
 val variableNameArg = Tool.Arg.required("variableName", "variable name to set or create")
@@ -145,41 +148,73 @@ val resumeExeHandler: ToolHandler = { toolRequest ->
   }
 }
 
+val queryChainHandlerForPlaceOrder: ToolHandler = { toolRequest ->
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForOneTimeProduct: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths = "pm-templates/core/milestone/place-order.postman_collection.json"
+
+    val variableName = "orderId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(1, e.message ?: "Unknown error occurred in query chain handler: ${e.message}")
+    )
+  }
+}
+
+val queryChainHandlerForOneTimeProduct: ToolHandler = { toolRequest ->
+  // Print the current thread name
+  val currentThread = Thread.currentThread()
+  logger.info { "Current thread executing queryChainHandlerForOneTimeProduct: ${currentThread.name}" }
+  try {
+    val pmCollectionPaths = listOf("pm-templates/core/milestone/persona-creation.postman_collection.json",
+      "pm-templates/core/milestone/tax-setup.postman_collection.json",
+      "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json",
+      "pm-templates/core/milestone/product-setup.postman_collection.json")
+
+    val variableName = "oneTimePriceBookEntryId"
+    val chain =
+      ReVoman.queryChainForVariable(
+        variableName,
+        Kick.configure().templatePaths(pmCollectionPaths).off(),
+      )
+    val variableToPmTemplate = chain.toJson()
+    ToolResponse.Ok(listOf(Content.Text(variableToPmTemplate)))
+  } catch (e: Exception) {
+    ToolResponse.Error(
+      ErrorMessage(1, e.message ?: "Unknown error occurred in query chain handler: ${e.message}")
+    )
+  }
+}
+
 class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
     mcpHttpStreaming(
       ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0"), ToolsChanged),
       Tool(
-        "query-chain",
-        """Helps to understand the steps involved in creating an entity, including all related dependencies.
+        "query_create-order",
+        """Helps to understand the steps involved in creating an Order, including all related dependencies.
+          |It depends on `query_product-setup` MCP tool. Execute that before this
           |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
-          |Accepts a variable name.
-          |Returns a consolidated Postman collection that can then later be executed to set that variable"""
+          |Returns a consolidated Postman collection with all the steps involved in creating an Order.
+          |If the returned data is large, consume in chunks."""
           .trimMargin(),
-        variableNameArg,
-      ) bind queryChainHandler,
+      ) bind queryChainHandlerForPlaceOrder,
       Tool(
-        "exe-chain",
-        """Helps to execute the steps involved in creating an entity.
-          |This tool may send a delayed response if the collection size is large.
-          |The response size of this tool may be huge if the collection size is large. Consume in chunks.
-          |Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable
-          |`mutableEnv` property in this tool’s response can be used to invoke `resume-exe-chain`"""
+        "query_product-setup",
+        """Helps to understand the steps involved in creating creating a OneTime product, including all related dependencies.
+          |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+          |Returns a consolidated Postman collection with all the steps involved in creating a OneTime product.
+          |If the returned data is large, consume in chunks."""
           .trimMargin(),
-        variableNameArg,
-      ) bind exeHandler,
-      Tool(
-        "resume-exe-chain",
-        """Helps to resume execution of the steps involved in creating one entity from another entity.
-          |This tool may send a delayed response if the collection size is large.
-          |The response size of this tool may be huge if the collection size is large. Consume in chunks.
-          |Returns all the postman execution data (requestInfo, responseInfo, headers, etc) used to create that variable
-          |`mutableEnv` property from the `exe-chain` Tool call response or previous `resume-exe-chain` call response should be sent as a parameter while calling this tool"""
-          .trimMargin(),
-        variableNameArg,
-        prevVariableNameArg,
-        prevEnvArg,
-      ) bind resumeExeHandler,
+      ) bind queryChainHandlerForOneTimeProduct,
     )
 }
 

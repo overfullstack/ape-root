@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/ape-root.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ape-root.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools">
+      <change beforePath="$PROJECT_DIR$/.cursor/rules/mcp-usage.mdc" beforeDir="false" afterPath="$PROJECT_DIR$/.cursor/rules/mcp-usage.mdc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +19,14 @@
     </projectState>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -36,6 +40,16 @@
     &quot;accountId&quot;: &quot;1ede2384-e826-47d5-a65a-99f2977fb5d0&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/38e0dff30dc0f8418953391a769c9dec06c0d842/revoman-0.42.5-sources.jar!/com/salesforce/revoman/input/config/StepPick.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/7918c21a4519336f3fab352e0e1d370c380f9df8/revoman-0.42.5.jar!/com/salesforce/revoman/input/config/StepPick.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-mcp-sdk/6.6.0.1/bb4a6e68e25eb3e84d9c2a682a6a9ec1f56ec0b1/http4k-mcp-sdk-6.6.0.1-sources.jar!/org/http4k/mcp/server/capability/ToolCapability.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-core/6.5.6.1/85ad46ba2e53007aace17dbb5f9f7d27e3691bc9/http4k-core-6.5.6.1-sources.jar!/org/http4k/lens/lensSpec.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-format-moshi/6.6.0.1/714bd7aeed72095af01d3c033a4af2e88dad92cd/http4k-format-moshi-6.6.0.1-sources.jar!/org/http4k/format/MoshiNode.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.20/a17d644acea6159970c25bbf99ff204b03c1c0b6/kotlin-stdlib-2.1.20-sources.jar!/commonMain/kotlin/text/Indent.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.ideaLibSources/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../revoman-root/build/libs/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -43,17 +57,19 @@
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Build ape-root.executor": "Run",
     "Gradle.ape-root [build].executor": "Run",
-    "Kotlin.ApeKt.executor": "Run",
+    "Kotlin.ApeKt.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/psankula/Downloads/Hackathon/ape-root",
+    "last_opened_file_path": "/Users/gopala.akshintala/code-clones/work/ape-root/src/main/resources/pm-templates/core/milestone",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,6 +82,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
@@ -97,12 +118,6 @@
     <configuration name="ApeKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.salesforce.ape.ApeKt" />
       <module name="ape-root.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="ape-root" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -140,9 +155,51 @@
       <workItem from="1745475467343" duration="89000" />
       <workItem from="1745475585139" duration="911000" />
     </task>
+    <task id="LOCAL-00001" summary="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools">
+      <option name="closed" value="true" />
+      <created>1745571459637</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745571459637</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
+          <line>188</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
+          <line>163</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

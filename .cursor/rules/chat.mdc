@@ -1,0 +1,9 @@
+---
+description: Chat rules
+globs: 
+alwaysApply: true
+---
+
+# Chat rules
+
+- Always, show me which model are you using in auto-mode

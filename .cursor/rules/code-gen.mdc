@@ -1,0 +1,25 @@
+---
+description: Code generation rules
+globs: 
+alwaysApply: true
+---
+
+# Best Practices for Code generation
+
+## Functional programming guidelines
+
+- Use functional programming style
+- "Try to use immutable objects"
+- "Try to not mutate the state of the objects"
+
+# Technical Stack
+tech_stack:
+  build_tool: Gradle
+  java_version: 21
+  language: English
+  code_comments: English
+
+# Chat rules
+
+- Always, show me which model are you using in auto-mode
+- Don't scan the codebase when qualified MCP tools are present

@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "37dbef04-bbaf-4321-bf1b-7f87f4aacd65",
+		"name": "order-to-billingSchedule",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23827434",
+		"_collection_link": "https://salesforce-734821.postman.co/workspace/Ape~84673b5d-fa1c-4ac7-ab44-1073ee53332d/collection/23827434-37dbef04-bbaf-4321-bf1b-7f87f4aacd65?action=share&source=collection_link&creator=23827434"
+	},
+	"item": [
+		{
+			"name": "Login as BillingOps",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xml2js = require('xml2js')",
+							"xml2js.parseString(pm.response.text(), { explicitArray: false }, (_, jsonResponse) => {",
+							"  let result = jsonResponse['soapenv:Envelope']['soapenv:Body'].loginResponse.result",
+							"  pm.environment.set(\"accessToken\", result.sessionId)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "login"
+					},
+					{
+						"key": "charset",
+						"value": "UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <env:Body>\n    <n1:login xmlns:n1=\"urn:partner.soap.sforce.com\">\n      <n1:username><![CDATA[{{billingOpsUserName}}]]></n1:username>\n      <n1:password><![CDATA[{{commonUserPassword}}{{secretToken}}]]></n1:password>\n    </n1:login>\n  </env:Body>\n</env:Envelope>"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/services/Soap/u/{{version}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"services",
+						"Soap",
+						"u",
+						"{{version}}"
+					]
+				},
+				"description": "Login to Salesforce"
+			},
+			"response": []
+		},
+		{
+			"name": "bt2bs-ia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "isAsync",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"inputs\": [\n    {\n      \"billingTransactionId\": \"{{orderId}}\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/actions/standard/createBillingSchedulesFromBillingTransaction",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"actions",
+						"standard",
+						"createBillingSchedulesFromBillingTransaction"
+					],
+					"query": [
+						{
+							"key": "Authorization",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query-bs-bmp-bmpi",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"billingScheduleId\", jsonData.compositeResponse[0].body.records[0].Id)",
+							"pm.environment.set(\"billingScheduleStatus\", jsonData.compositeResponse[0].body.records[0].Status)",
+							"",
+							"pm.environment.set(\"billingMilestonePlanId\", jsonData.compositeResponse[1].body.records[0].Id)",
+							"pm.environment.set(\"billingMilestonePlanStatus\", jsonData.compositeResponse[1].body.records[0].Status)",
+							"",
+							"jsonData.compositeResponse[2].body.records.forEach((record, index) => {",
+							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Id\", record.Id)",
+							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Status\", record.Status)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"$bsFieldsToQuery\", \"Id, Status, BillingMilestonePlanId\")",
+							"pm.environment.set(\"$bmpFieldsToQuery\", \"Id, Status\")",
+							"pm.environment.set(\"$bmpiFieldsToQuery\", \"Id, Status, MilestoneAccomplishmentDate\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=Select {{$bsFieldsToQuery}} FROM BillingSchedule WHERE ReferenceEntityItemId in (Select Id FROM OrderItem WHERE OrderId = '{{orderId}}')\",\n      \"referenceId\": \"billingScheduleForOrderId\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '@{billingScheduleForOrderId.records[0].Id}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
