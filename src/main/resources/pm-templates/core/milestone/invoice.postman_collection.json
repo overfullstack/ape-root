@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "baf3ada5-e335-4189-8ace-17509614116c",
-		"name": "invoice-with-recovery",
+		"name": "invoice",
 		"description": "- SalesOpsRep: Create an Order using PST and Activate it",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23827434",

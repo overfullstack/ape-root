@@ -452,16 +452,18 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.environment.set(\"activatedTaxPolicyId\", pm.environment.get(\"taxPolicyId\"));"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],

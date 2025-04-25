@@ -941,7 +941,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.environment.set(\"passwordReset\", true)"
 						],
 						"type": "text/javascript",
 						"packages": {}

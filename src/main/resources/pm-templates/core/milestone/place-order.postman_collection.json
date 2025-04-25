@@ -268,7 +268,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.environment.set(\"activatedOrderId\", pm.environment.get(\"orderId\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}

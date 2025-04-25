@@ -204,7 +204,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.environment.set(\"activatedBillingPolicyId\", pm.environment.get(\"billingPolicyId\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}

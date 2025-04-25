@@ -37,5 +37,7 @@ alwaysApply: true
 - All MCP tools whose name starts with `command_` send back response in the `Rundown` format present in ReVoman repository
 - Understand ReVoman from this [GitHub repository](mdc:https:/github.com/salesforce-misc/ReVoman)
 - When using `command_` tools, the response will contain a `mutableEnv` property that should be used for subsequent tool calls
+- IMPORTANT: NEVER modify or mutate the `mutableEnv` from a previous `command_` call - always send it as is in the `previousEnvironment` parameter of the next `command_` call
 - `query_` tools return Postman collections that demonstrate the API call sequence
-- If the response is large, consume in chunks
+- The MCP calls may take time to respond sometimes, wait until you receive a success or error response
+- The response for all these tools may be large. Consume in chunks
