@@ -8,6 +8,82 @@
 	},
 	"item": [
 		{
+			"name": "Login as BillingOps",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xml2js = require('xml2js')",
+							"xml2js.parseString(pm.response.text(), { explicitArray: false }, (_, jsonResponse) => {",
+							"  let result = jsonResponse['soapenv:Envelope']['soapenv:Body'].loginResponse.result",
+							"  pm.environment.set(\"accessToken\", result.sessionId)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "login"
+					},
+					{
+						"key": "charset",
+						"value": "UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <env:Body>\n    <n1:login xmlns:n1=\"urn:partner.soap.sforce.com\">\n      <n1:username><![CDATA[{{billingOpsUserName}}]]></n1:username>\n      <n1:password><![CDATA[{{commonUserPassword}}{{secretToken}}]]></n1:password>\n    </n1:login>\n  </env:Body>\n</env:Envelope>"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/services/Soap/u/{{version}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"services",
+						"Soap",
+						"u",
+						"{{version}}"
+					]
+				},
+				"description": "Login to Salesforce"
+			},
+			"response": []
+		},
+		{
 			"name": "bs-recovery",
 			"event": [
 				{
@@ -96,16 +172,6 @@
 				}
 			],
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
