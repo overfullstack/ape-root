@@ -2,7 +2,6 @@
 	"info": {
 		"_postman_id": "99292ce5-ca92-455f-9b75-fe51149de6af",
 		"name": "invoice-with-billingSchedule-recovery",
-		"description": "- SalesOpsRep: Create an Order using PST and Activate it",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23827434",
 		"_collection_link": "https://salesforce-734821.postman.co/workspace/Ape~84673b5d-fa1c-4ac7-ab44-1073ee53332d/collection/23827434-99292ce5-ca92-455f-9b75-fe51149de6af?action=share&source=collection_link&creator=23827434"
