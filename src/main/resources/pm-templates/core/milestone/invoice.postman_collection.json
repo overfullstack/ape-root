@@ -108,7 +108,10 @@
 							"jsonData.compositeResponse[3].body.records.forEach((record, index) => {",
 							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Id\", record.Id)",
 							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Status\", record.Status)",
-							"})"
+							"})",
+							"",
+							"var rtel = jsonData.compositeResponse[4].body.records[0].ErrorMessage",
+							"pm.environment.set(\"rtel\", rtel)"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -133,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$invLineFieldsToQuery}} FROM InvoiceLine WHERE billingScheduleId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"invoiceLines\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bsFieldsToQuery}} FROM BillingSchedule WHERE Id = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingSchedule\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    }\n  ]\n}",
+					"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$invLineFieldsToQuery}} FROM InvoiceLine WHERE billingScheduleId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"invoiceLines\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bsFieldsToQuery}} FROM BillingSchedule WHERE Id = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingSchedule\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT ErrorMessage FROM RevenueTransactionErrorLog WHERE RelatedRecordId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"RevenueTransactionErrorLog\"\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
