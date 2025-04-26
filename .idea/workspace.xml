@@ -4,25 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/bmp-create-runtime.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/env.postman_environment.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/milestone-setup.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/persona-creation-and-setup.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/place-order.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/billing-setup-with-milestone.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/env.postman_environment.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/invoice-with-billingSchedule-recovery.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/invoice.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/order-to-billingSchedule.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/persona-creation.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/place-order.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/product-setup.postman_collection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/tax-setup.postman_collection.json" afterDir="false" />
+    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Updated collections with auth&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/ReVomanConfigForBT2BS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/ReVomanConfigForBT2BS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone/tax-setup.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone/tax-setup.postman_collection.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +111,7 @@
       <command value="gradle spotlessApply" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.ape-root [spotlessApply]">
+  <component name="RunManager" selected="Kotlin.ApeKt">
     <configuration name="ape-root [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -359,7 +342,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745645959995</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Tax add randomcity&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745661184876</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1745661184876</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Updated collections with auth&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745668156322</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1745668156322</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +396,9 @@
     <MESSAGE value="Command query working single level&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Command queries for all&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <MESSAGE value="Tax add randomcity&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <MESSAGE value="Updated collections with auth&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated collections with auth&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
