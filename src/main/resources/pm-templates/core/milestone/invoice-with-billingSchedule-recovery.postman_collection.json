@@ -43,7 +43,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \n    \"billingScheduleIds\": [\"{{billingScheduleId}}\"] \n}",
+					"raw": "{\n  \"billingScheduleIds\": [\n    \"{{billingScheduleId}}\"\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
