@@ -47,13 +47,9 @@ public final class ReVomanConfigForBT2BS {
 	static final String PST = "connect/rev/sales-transaction/actions/place";
 	static final String STANDALONE_INVOICE_IA =
 			"commerce/invoicing/invoices/collection/actions/generate";
-	static final String ASSETIZE_IA = "actions/standard/createOrUpdateAssetFromOrder";
-	static final String AMEND_API = "connect/revenue-management/assets/actions/amend";
-	static final String CANCEL_API = "connect/revenue-management/assets/actions/cancel";
 	public static final HookConfig MEMQ_AWAIT =
 			post(
-					afterStepContainingURIPathOfAny(
-							PST, STANDALONE_INVOICE_IA, ASSETIZE_IA, AMEND_API, CANCEL_API),
+					afterStepContainingURIPathOfAny(PST, STANDALONE_INVOICE_IA),
 					(ignore1, ignore2) -> Thread.sleep(5000));
 
 	// ## Milestone Setup Config

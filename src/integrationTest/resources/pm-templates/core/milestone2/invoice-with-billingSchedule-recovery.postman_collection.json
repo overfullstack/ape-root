@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "99292ce5-ca92-455f-9b75-fe51149de6af",
+		"name": "invoice-with-billingSchedule-recovery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23827434",
+		"_collection_link": "https://salesforce-734821.postman.co/workspace/Ape~84673b5d-fa1c-4ac7-ab44-1073ee53332d/collection/23827434-99292ce5-ca92-455f-9b75-fe51149de6af?action=share&source=collection_link&creator=23827434"
+	},
+	"item": [
+		{
+			"name": "bs-recovery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"",
+							"var recoveredBillingScheduleId = jsonData.recoveryResults[0].billingSchedules[0].billingScheduleId",
+							"pm.environment.set(\"recoveredBillingScheduleId\", recoveredBillingScheduleId)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 00DLT000005y8W6!AQEAQM_BzmGAc9C50ew5dHciarq4jL2hDuUcvpDDQnqw3SIs5Snt8ZCQJX2lbe9swZW6vHPy9.paaSYRkjHzhMd.Fx3EZ6Gc"
+					},
+					{
+						"key": "Cookie",
+						"value": "BrowserId=jPBtRv5qEe-nHV9TLcPiMA; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"billingScheduleIds\": [\n    \"{{billingScheduleId}}\"\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/commerce/invoicing/billing-schedules/collection/actions/recover",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"commerce",
+						"invoicing",
+						"billing-schedules",
+						"collection",
+						"actions",
+						"recover"
+					]
+				},
+				"description": "Generated from cURL: curl --location 'https://dlt000005y8w62ai.test1.my.pc-rnd.salesforce.com/services/data/v65.0/commerce/invoicing/billing-schedules/collection/actions/recover' \\\n--header 'Content-Type: application/json' \\\n--header 'Authorization: Bearer 00DLT000005y8W6!AQEAQM_BzmGAc9C50ew5dHciarq4jL2hDuUcvpDDQnqw3SIs5Snt8ZCQJX2lbe9swZW6vHPy9.paaSYRkjHzhMd.Fx3EZ6Gc' \\\n--header 'Cookie: BrowserId=jPBtRv5qEe-nHV9TLcPiMA; CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1' \\\n--data '{ \"billingScheduleIds\": [\"44bLT00000064VZYAY\"] }\n'"
+			},
+			"response": []
+		},
+		{
+			"name": "re-invoice-bmpi",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var moment = require('moment')",
+							"",
+							"pm.environment.set(\"milestone1Date\", moment().add(1, 'month').format(\"YYYY-MM-DD\"))",
+							"pm.environment.set(\"milestone2Date\", moment().add(2, 'month').format(\"YYYY-MM-DD\"))",
+							"pm.environment.set(\"milestone3Date\", moment().add(3, 'month').format(\"YYYY-MM-DD\"))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "isAsync",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"billingScheduleIds\": [\n    \"{{billingScheduleId}}\"\n  ],\n  \"action\": \"Posted\",\n  \"targetDate\": \"{{milestone3Date}}\",\n  \"invoiceDate\": \"{{$currentDate}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/commerce/invoicing/invoices/collection/actions/generate",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"commerce",
+						"invoicing",
+						"invoices",
+						"collection",
+						"actions",
+						"generate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query-invoice-and-related-records-recovered",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"",
+							"var invoiceId = jsonData.compositeResponse[0].body.records[0].InvoiceId",
+							"pm.environment.set(\"invoiceIdAfterRecovery\", invoiceId)",
+							"jsonData.compositeResponse[0].body.records.forEach((record, index) => {",
+							"  pm.environment.set(\"invoiceLine\" + (index + 1) + \"Id\", record.Id)",
+							"})",
+							"",
+							"var bsRecord = jsonData.compositeResponse[1].body.records[0]",
+							"pm.environment.set(\"billingScheduleId\", bsRecord.Id)",
+							"pm.environment.set(\"billingScheduleStatus\", bsRecord.Status)",
+							"",
+							"",
+							"jsonData.compositeResponse[2].body.records.forEach((record, index) => {",
+							"  pm.environment.set(\"billingMilestonePlan\" + (index + 1) + \"Id\", record.Id)",
+							"  pm.environment.set(\"billingMilestonePlan\" + (index + 1) + \"Status\", record.Status)",
+							"})",
+							"",
+							"jsonData.compositeResponse[3].body.records.forEach((record, index) => {",
+							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Id\", record.Id)",
+							"  pm.environment.set(\"billingMilestonePlanItem\" + (index + 1) + \"Status\", record.Status)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"$invLineFieldsToQuery\", \"Id, InvoiceId, Invoice.status\")",
+							"pm.environment.set(\"$bsFieldsToQuery\", \"Id, Status\")",
+							"pm.environment.set(\"$bmpFieldsToQuery\", \"Id, Status\")",
+							"pm.environment.set(\"$bmpiFieldsToQuery\", \"Id, MilestoneAccomplishmentDate, Status\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$invLineFieldsToQuery}} FROM InvoiceLine WHERE billingScheduleId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"invoiceLines\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bsFieldsToQuery}} FROM BillingSchedule WHERE Id = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingSchedule\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpFieldsToQuery}} FROM BillingMilestonePlan WHERE ReferenceItemId = '{{billingScheduleId}}'\",\n      \"referenceId\": \"billingMilestonePlan\"\n    },\n    {\n      \"method\": \"GET\",\n      \"url\": \"{{versionPath}}/query/?q=SELECT {{$bmpiFieldsToQuery}} FROM BillingMilestonePlanItem WHERE BillingMilestonePlanId = '@{billingMilestonePlan.records[0].Id}' ORDER BY MilestoneAccomplishmentDate\",\n      \"referenceId\": \"billingMilestonePlanItems\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

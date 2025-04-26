@@ -1,0 +1,1017 @@
+{
+	"info": {
+		"_postman_id": "08036e99-6a11-438d-beee-ad4aba33b49a",
+		"name": "persona-creation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23827434",
+		"_collection_link": "https://salesforce-734821.postman.co/workspace/Ape~84673b5d-fa1c-4ac7-ab44-1073ee53332d/collection/23827434-08036e99-6a11-438d-beee-ad4aba33b49a?action=share&source=collection_link&creator=23827434"
+	},
+	"item": [
+		{
+			"name": "latest-api-version",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var lastNode = jsonData.pop();",
+							"pm.environment.set(\"version\", lastNode.version);",
+							"pm.environment.set(\"apiVersion\", \"v\" + lastNode.version);",
+							"pm.environment.set(\"versionPath\", lastNode.url);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "login"
+					},
+					{
+						"key": "charset",
+						"value": "UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <env:Body>\n    <n1:login xmlns:n1=\"urn:partner.soap.sforce.com\">\n      <n1:username><![CDATA[{{username}}]]></n1:username>\n      <n1:password><![CDATA[{{password}}]]></n1:password>\n    </n1:login>\n  </env:Body>\n</env:Envelope>"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/services/data/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"services",
+						"data",
+						""
+					]
+				},
+				"description": "Login to Salesforce"
+			},
+			"response": []
+		},
+		{
+			"name": "Login as SysAdmin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xml2js = require('xml2js')",
+							"xml2js.parseString(pm.response.text(), { explicitArray: false }, (_, jsonResponse) => {",
+							"  let result = jsonResponse['soapenv:Envelope']['soapenv:Body'].loginResponse.result",
+							"  pm.environment.set(\"accessToken\", result.sessionId)",
+							"  pm.environment.set(\"adminUserId\", result.userId)",
+							"  pm.environment.set(\"orgId\", result.userInfo.organizationId)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "login"
+					},
+					{
+						"key": "charset",
+						"value": "UTF-8",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <env:Body>\n    <n1:login xmlns:n1=\"urn:partner.soap.sforce.com\">\n      <n1:username><![CDATA[{{username}}]]></n1:username>\n      <n1:password><![CDATA[{{password}}]]></n1:password>\n    </n1:login>\n  </env:Body>\n</env:Envelope>"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/services/Soap/u/{{version}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"services",
+						"Soap",
+						"u",
+						"{{version}}"
+					]
+				},
+				"description": "Login to Salesforce"
+			},
+			"response": []
+		},
+		{
+			"name": "Standard User Profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"standardUserProfileId\", jsonData.records[0].Id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM Profile WHERE Name = 'Standard User'",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM Profile WHERE Name = 'Standard User'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TaxAdminPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"taxAdminPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"taxAdminPermSets\", \"'RevLifecycleManagementTaxConfiguration', 'RevenueLifecycleManagementBillingTaxAdmin'\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{taxAdminPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{taxAdminPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TaxAdmin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"taxAdminUserName\", pm.variables.replaceIn(\"taxAdmin-rlm-{{$timestamp}}@revoman.org\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"taxAdminUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{taxAdminUserName}}\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Alias\": \"taxAdmin\",\n            \"Email\": \"{{taxAdminUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"TaxAdmin\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"taxAdminPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{taxAdminPS1Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductAndPricingAdminPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"productAndPricingAdminPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"productAndPricingAdminPermSets\", \"'RevLifecycleManagementCalculatePricesApi', 'RevLifecycleManagementProductAndPriceConfigurationApi', 'RevLifecycleManagementProductImportApi', 'ProductCatalogManagementAdministrator', 'RevenueLifecycleManagementBillingAdmin'\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{productAndPricingAdminPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{productAndPricingAdminPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductAndPricingAdmin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"productAndPricingAdminUserName\", pm.variables.replaceIn(\"productAndPricingAdmin-rlm-{{$timestamp}}@revoman.org\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"productAndPricingAdminUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{productAndPricingAdminUserName}}\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Alias\": \"prodPr\",\n            \"Email\": \"{{productAndPricingAdminUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"Codey\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"productAndPricingAdminPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{productAndPricingAdminPS1Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"productAndPricingAdminPS2Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{productAndPricingAdminPS2Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"productAndPricingAdminPS3Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{productAndPricingAdminPS3Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"productAndPricingAdminPS4Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{productAndPricingAdminPS4Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"productAndPricingAdminPS5Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{productAndPricingAdminPS5Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SalesRepPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"salesRepPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"salesRepPermSets\", \"'RevLifecycleManagementQuotePricesTaxes', 'ProductDiscoveryUser', 'ProductCatalogManagementViewer', 'ContextServiceRuntimePsl', 'Custom_Sales_Rep_Perm_Set'\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{salesRepPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{salesRepPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SalesRep",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"salesRepUserName\", pm.variables.replaceIn(\"salesRep-rlm-{{$timestamp}}@revoman.org\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"salesRepUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{salesRepUserName}}\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Alias\": \"salesRep\",\n            \"Email\": \"{{salesRepUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"Salaar\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesRepPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesRepPS1Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesRepPS2Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesRepPS2Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesRepPS3Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesRepPS3Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesRepPS4Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesRepPS4Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesRepPS5Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesRepPS5Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SalesOpsRepPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"salesOpsPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"salesOpsRepPermSets\", \"'RevLifecycleManagementCreateOrderFromQuote', 'RevLifecycleManagementCalculatePricesApi', 'RevLifecycleManagementCoreCPQAssetization', 'RevLifecycleManagementPlaceOrderApi', 'RevLifecycleManagementQuotePricesTaxes', 'RevLifecycleManagementTaxConfiguration', 'RevLifecycleManagementInitiateAmendmentApi', 'RevLifecycleManagementInitiateCancellationApi', 'RevLifecycleManagementInitiateRenewalApi', 'ContextServiceRuntimePsl', 'Custom_Sales_Ops_Rep_Perm_Set'\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{salesOpsRepPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{salesOpsRepPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SalesOpsRep",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"salesOpsRepUserName\", pm.variables.replaceIn(\"salesOps-rlm-{{$timestamp}}@revoman.org\"))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"salesOpsRepUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{salesOpsRepUserName}}\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Alias\": \"salesOps\",\n            \"Email\": \"{{salesOpsRepUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"Pushpa\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS1Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS2Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS2Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS3Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS3Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS4Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS4Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS5Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS5Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS6Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS6Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS7Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS7Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS8Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS8Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS9Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS9Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS10Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS10Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"salesOpsPS11Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{salesOpsPS11Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BillingOpsPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"billingOpsPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"billingOpsRepPermSets\", \"'RevenueLifecycleManagementBillingOperations', 'ProductCatalogManagementAdministrator', 'RevLifecycleManagementUsageDesignUser'\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{billingOpsRepPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{billingOpsRepPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BillingOps",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"billingOpsUserName\", pm.variables.replaceIn(\"billingOps-rlm-{{$timestamp}}@revoman.org\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"billingOpsUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{billingOpsUserName}}\",\n            \"Alias\": \"billOps\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Email\": \"{{billingOpsUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"Brian\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"billingOpsPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{billingOpsPS1Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"billingOpsPS2Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{billingOpsPS2Id}}\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"billingOpsPS3Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{billingOpsPS3Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BillingAdminPermSets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"jsonData.records.forEach((record, index) => {",
+							"    pm.environment.set(\"billingAdminPS\" + (index + 1) + \"Id\", record.Id)",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"billingAdminPermSets\", \"'RevenueLifecycleManagementBillingAdmin'\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/query/?q=SELECT Id FROM PermissionSet WHERE Name IN ({{billingAdminPermSets}})",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "SELECT Id FROM PermissionSet WHERE Name IN ({{billingAdminPermSets}})"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BillingAdmin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"billingAdminUserName\", pm.variables.replaceIn(\"billingAdmin-rlm-{{$timestamp}}@revoman.org\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()",
+							"pm.environment.set(\"billingAdminUserId\", jsonData.graphs[0].graphResponse.compositeResponse[0].body.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"graphs\": [\n    {\n      \"graphId\": \"1\",\n      \"compositeRequest\": [\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/User\",\n          \"referenceId\": \"refUser\",\n          \"body\": {\n            \"Username\": \"{{billingAdminUserName}}\",\n            \"Alias\": \"bAdmin\",\n            \"ProfileId\": \"{{standardUserProfileId}}\",\n            \"Email\": \"{{billingAdminUserName}}\",\n            \"EmailEncodingKey\": \"ISO-8859-1\",\n            \"LastName\": \"Cloudy\",\n            \"LanguageLocaleKey\": \"en_US\",\n            \"LocaleSidKey\": \"en_US\",\n            \"TimeZoneSidKey\": \"America/Los_Angeles\"\n          }\n        },\n        {\n          \"method\": \"POST\",\n          \"url\": \"{{versionPath}}/sobjects/PermissionSetAssignment/\",\n          \"referenceId\": \"billingAdminPS1Assignment\",\n          \"body\": {\n            \"AssigneeId\": \"@{refUser.id}\",\n            \"PermissionSetId\": \"{{billingAdminPS1Id}}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite/graph",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite",
+						"graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "password-reset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"passwordReset\", true)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"allOrNone\": false,\n  \"compositeRequest\": [\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{taxAdminUserId}}/password\",\n      \"referenceId\": \"taxAdminNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    },\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{productAndPricingAdminUserId}}/password\",\n      \"referenceId\": \"productAndPricingAdminNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    },\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{salesRepUserId}}/password\",\n      \"referenceId\": \"salesRepNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    },\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{salesOpsRepUserId}}/password\",\n      \"referenceId\": \"salesOpsRepNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    },\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{billingOpsUserId}}/password\",\n      \"referenceId\": \"billingOpsNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    },\n    {\n      \"method\": \"POST\",\n      \"url\": \"{{versionPath}}/sobjects/User/{{billingAdminUserId}}/password\",\n      \"referenceId\": \"billingAdminNewPassword\",\n      \"body\": {\n        \"NewPassword\": \"{{commonUserPassword}}\"\n      }\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{versionPath}}/composite",
+					"host": [
+						"{{baseUrl}}{{versionPath}}"
+					],
+					"path": [
+						"composite"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/bmp-create-runtime.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/env.postman_environment.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/milestone-setup.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/persona-creation-and-setup.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone1/place-order.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/billing-setup-with-milestone.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/env.postman_environment.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/invoice-with-billingSchedule-recovery.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/invoice.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/order-to-billingSchedule.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/persona-creation.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/place-order.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/product-setup.postman_collection.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core/milestone2/tax-setup.postman_collection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/ReVomanConfigForBT2BS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/ReVomanConfigForBT2BS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone/tax-setup.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone/tax-setup.postman_collection.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,30 +87,30 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build ape-root.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.ape-root [build].executor": "Run",
-    "Gradle.ape-root [spotlessApply].executor": "Run",
-    "Kotlin.ApeKt.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/gopala.akshintala/code-clones/work/ape-root/src/main/resources/pm-templates/core/milestone",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build ape-root.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ape-root [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ape-root [spotlessApply].executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.ApeKt.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/gopala.akshintala/code-clones/work/ape-root/src/integrationTest/resources/pm-templates/core&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="main" />
@@ -99,6 +118,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/integrationTest/resources/pm-templates/core" />
       <recent name="$PROJECT_DIR$/src/main/resources/pm-templates/core/milestone" />
     </key>
   </component>
@@ -108,7 +128,7 @@
       <command value="gradle spotlessApply" />
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.ApeKt">
+  <component name="RunManager" selected="Gradle.ape-root [spotlessApply]">
     <configuration name="ape-root [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -331,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745639120944</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Update collections&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1745645959995</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1745645959995</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -381,7 +409,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>284</line>
+          <line>288</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">

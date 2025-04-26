@@ -29,7 +29,11 @@ import org.http4k.server.Helidon
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
 val milestoneSplitArg =
-  Tool.Arg.csv().optional("milestoneSplit", "Comma seperated milestone percentage split to create BillingTreatmentItems")
+  Tool.Arg.csv()
+    .optional(
+      "milestoneSplit",
+      "Comma seperated milestone percentage split to create BillingTreatmentItems",
+    )
 val prevEnvArg =
   Tool.Arg.required(
     "previousEnvironment",
@@ -291,11 +295,12 @@ val commandBillingSetupWithMilestone: ToolHandler = { toolRequest ->
           .templatePaths(pmCollectionPaths)
           .environmentPaths(pmEnvironmentPaths)
           .dynamicEnvironment(
-            prevEnv.mapValues { it.value.toString() } + mapOf(
-              "percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
-              "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
-              "percentage3" to (milestoneSplit?.getOrNull(2) ?: "40"),
-            )
+            prevEnv.mapValues { it.value.toString() } +
+              mapOf(
+                "percentage1" to (milestoneSplit?.getOrNull(0) ?: "30"),
+                "percentage2" to (milestoneSplit?.getOrNull(1) ?: "30"),
+                "percentage3" to (milestoneSplit?.getOrNull(2) ?: "40"),
+              )
           )
           .haltOnFailureOfTypeExcept(
             HTTP_STATUS,
@@ -614,7 +619,7 @@ class ReloadableMCP : HotReloadable<PolyHandler> {
           |If the returned data is large, consume in chunks."""
           .trimMargin(),
         prevEnvArg,
-        milestoneSplitArg
+        milestoneSplitArg,
       ) bind commandBillingSetupWithMilestone,
       Tool(
         "command_product-setup",

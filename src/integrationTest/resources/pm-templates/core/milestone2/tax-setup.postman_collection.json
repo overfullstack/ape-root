@@ -326,8 +326,7 @@
 							"var jsonData = pm.response.json();",
 							"pm.environment.set(\"taxEngineId\", jsonData.id);"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -336,7 +335,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"taxEngineProviderId\": \"{{taxEngineProviderId}}\",\n    \"merchantcredentialid\": \"{{namedCredentialId}}\",\n    \"taxenginename\": \"{{$randomCompanyName}}-{{$randomCity}}\",\n    \"Status\": \"Active\",\n    \"sellercode\": \"Billing2\",\n    \"taxenginecity\": \"Irvine\",\n    \"taxenginestate\": \"California\",\n    \"taxenginecountry\": \"US\",\n    \"taxenginepostalcode\": \"92614\"\n}",
+					"raw": "{\n    \"taxEngineProviderId\": \"{{taxEngineProviderId}}\",\n    \"merchantcredentialid\": \"{{namedCredentialId}}\",\n    \"taxenginename\": \"{{$randomCompanyName}}\",\n    \"Status\": \"Active\",\n    \"sellercode\": \"Billing2\",\n    \"taxenginecity\": \"Irvine\",\n    \"taxenginestate\": \"California\",\n    \"taxenginecountry\": \"US\",\n    \"taxenginepostalcode\": \"92614\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
