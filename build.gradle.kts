@@ -24,9 +24,7 @@ dependencies {
   api(platform(libs.http4k.bom))
   api(libs.bundles.http4k)
 
-  implementation(
-    fileTree(mapOf("dir" to "../revoman-root/build/libs", "include" to listOf("*.jar")))
-  )
+  implementation(fileTree(mapOf("dir" to "jar", "include" to listOf("*.jar"))))
   api(libs.moshix.adapters)
   api(libs.java.vavr)
   api(libs.kotlin.vavr)
@@ -59,9 +57,7 @@ testing {
     register<JvmTestSuite>("integrationTest") {
       dependencies {
         implementation(project())
-        implementation(
-          fileTree(mapOf("dir" to "../revoman-root/build/libs", "include" to listOf("*.jar")))
-        )
+        implementation(fileTree(mapOf("dir" to "jar", "include" to listOf("*.jar"))))
         implementation(libs.truth)
         implementation(libs.mockito.core)
         implementation(libs.spring.beans)

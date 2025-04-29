@@ -9,6 +9,8 @@ alwaysApply: true
 - Don't scan the codebase when qualified MCP tools are present
 - When a Postman collection is received in the response, explain all the steps
 - CRITICAL: NEVER use `command_` tools when the user is just asking a question or wants to know how something works
+- DO NOT invoke optional steps unless explicitly requested by the user
+- CRITICAL: ONLY execute the EXACT `command_` tools requested by the user - DO NOT call additional command tools beyond what was explicitly specified
 
 ## Tool Selection Guidelines
 - Use `query_` tools ONLY when:
@@ -32,6 +34,8 @@ alwaysApply: true
   - If it starts with "How to...", "What are the steps...", "Show me...", "Explain..." - use `query_` tools
   - If it explicitly asks for creation or action - use `command_` tools
   - If there's any ambiguity, default to using `query_` tools and ask for confirmation before executing `command_` tools
+  - Strictly adhere to the scope of the request - only perform the exact steps requested and stop when those steps are complete
+  - If the user asks to "Create X", do not automatically proceed to create Y or perform operations on X unless explicitly requested
 
 ## Response Handling
 - All MCP tools whose name starts with `command_` send back response in the `Rundown` format present in ReVoman repository

@@ -41,7 +41,7 @@ val prevEnvArg =
   )
 
 const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
-val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(5000) })
+val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(7000) })
 
 val queryChainPersonaCreation: ToolHandler = { toolRequest ->
   try {
