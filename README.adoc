@@ -1,4 +1,25 @@
 = Ape 🦧 [POC]
+Gopal S Akshintala <gopalakshintala@gmail.com>
+:Revision: 1.0
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:hide-uri-scheme:
+:toc:
+:toc-placement!:
+:figure-caption!:
+:sourcedir: src/main/kotlin
+:testdir: src/test/java
+:integrationtestdir: src/integrationTest/java
+:pmtemplates: src/integrationTest/resources/pm-templates
+:imagesdir: docs/images
+:prewrap!:
+
+NOTE: link:docs/ape-deck.pdf
 
 == The problem
 
@@ -8,16 +29,16 @@
 * Think about keeping all these docs current. It's impossible for humans to keep that many scattered resources perfectly synced up, especially when different teams are developing in their own sort of silos. There isn’t one central platform that connects E2E, which leads to integration headaches down the line for Customers.
 * What if we teach Agents about our API relationships, and we interact with them Agent-first instead of API-first?
 * While Flow-based Agentforce Agents solve this problem to an extent, they need to maintain a new Flow all together
- - Not all Connect APIs are Flow compatible
- - Plus, Flows are not intuitive to collaborate among teams, and they quickly grow complex for troubleshooting
+- Not all Connect APIs are Flow compatible
+- Plus, Flows are not intuitive to collaborate among teams, and they quickly grow complex for troubleshooting
 * Let’s demonstrate a novel approach to solve this using any LLM, MCP protocol and ReVoman with Postman collections
- - MCP is free and Open-source, and we can use any free LLM and MCP client like Claude
- - We use Postman Collections in place of Salesforce flows, to define API relationships which are easy to collaborate
- - We can write MCP tools in Java and use ReVoman as the Postman execution engine
+- MCP is free and Open-source, and we can use any free LLM and MCP client like Claude
+- We use Postman Collections in place of Salesforce flows, to define API relationships which are easy to collaborate
+- We can write MCP tools in Java and use ReVoman as the Postman execution engine
 * But why wouldn’t there be an overhead on maintenance?
- - ReVoman is used to write Low-code persona-based FTests with Postman Collections
- - Which makes these Postman collections hook to automation
- - So, TF yoda make sure they are always in-sync with your API contract
+- ReVoman is used to write Low-code persona-based FTests with Postman Collections
+- Which makes these Postman collections hook to automation
+- So, TF yoda make sure they are always in-sync with your API contract
 
 == ReṼoman tests as a Runbook
 
@@ -25,20 +46,22 @@
 * ReVoman configurations in FTests act like a runbook, stitching unsorted postman collections in a specific execution order.
 * And it caught on! Its adoption across multiple teams resulted in nearly 150 core FTests in a single release, accumulating a pool of valuable API data and metadata in the form of Postman collections and Configurations.
 * With the advent of Cursor code generation, this is gonna explode
- - Pick your JSON contract from PRD, and you can generate Postman Collections
- - Given the deterministic pattern of the ReṼoman tests along with simplicity, low-code, Cursor can easily generate FTests out of Postman collections
+- Pick your JSON contract from PRD, and you can generate Postman Collections
+- Given the deterministic pattern of the ReṼoman tests along with simplicity, low-code, Cursor can easily generate FTests out of Postman collections
 
 It’s too much of a good thing! We traded scattered docs with automated tests, but we ended-up drowning in a pile of Postman collections, and the how-to-execute recipe for these collections is buried in ReṼoman configuration code in FTests.
 
 == Enter the LLM
 
-Our next obvious thought was let's throw an LLM at it! Like the one in Cursor, feed it with all the unstructured Postman collections and structural metadata from ReṼoman configurations. But LLMs, as you know, are probabilistic. It felt like a slot machine, almost always giving inaccurate results.
+Our next obvious thought was let's throw an LLM at it!
+Like the one in the Cursor IDE,
+feed it with all the unstructured Postman collections and structural metadata from ReṼoman configurations.
+But LLMs, as you know, are probabilistic.
+It felt like a slot machine, almost always giving inaccurate results.
 
-That’s when it dawned on us: How about we marry LLM reasoning skills with the deterministic ReṼoman executables, adding one more meta layer on top of them using Model Context Protocol (MCP)? That’s Ape!
+That’s when it dawned on us: How about we marry LLM reasoning skills with the deterministic ReṼoman executables, adding one more meta-layer on top of them using Model Context Protocol (MCP)? That’s Ape!
 
 == Birth of the Ape
-
-* TBD: An image where LLM reading descriptions from multiple tools swap with a Human reading scattered docs
 
 === What is Ape
 
@@ -64,8 +87,8 @@ That’s when it dawned on us: How about we marry LLM reasoning skills with the 
 
 * It Governs the Tool descriptions, arguments, and tool dependencies
 * Provides infrastructure for building MCP Capabilities like:
- — The Monorepo with all build tools and dependencies, to spin up your MCP server
- - State management among multiple MCP calls via persistence
+— The Monorepo with all build tools and dependencies, to spin up your MCP server
+- State management among multiple MCP calls via persistence
 * SDKs and utilities to validate and operate on the Postman collection
 * Automation and troubleshooting tools
 * Last but not least, the very API automation engine, ReṼoman
@@ -99,6 +122,6 @@ Think about all the possibilities it can unlock:
 * MCP tools can be grouped and sub-grouped with strategies that help scale the platform
 * These can even be GAed to Customers with a release cadence.
 * The platform is generic, so it can be standardized, open-sourced, and released to the Community to build MCP servers for interdependent APIs
-* 
+*
 
 === We believe Ape can be a great extension to Agentforce with Agentforce SDK and in-future Ape can catch up with trending tech like A2A protocol
