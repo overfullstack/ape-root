@@ -51,7 +51,7 @@ You can run/debug the existing unit tests or write your own to play with the too
 
 === Kotlin
 
-* The code-base is a mix of Java and Kotlin.
+* The code-base is all Kotlin.
 If you're a Java developer and new to Kotlin, don't worry, Kotlin is a JVM language and can be used anywhere Java is used.
 In fact, it has got the reputation of *"Better Java!"*.
 * A typical Java developer can ramp up on Kotlin in less than a week. These resources can help catalyze your ramp-up:
