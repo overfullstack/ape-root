@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Update README.adoc&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Add revoman jars&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/CONTRIBUTING.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +35,7 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
     <option name="SIGN_OFF_COMMIT" value="true" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -54,12 +55,10 @@
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/38e0dff30dc0f8418953391a769c9dec06c0d842/revoman-0.42.5-sources.jar!/com/salesforce/revoman/input/config/StepPick.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.salesforce.revoman/revoman/0.42.5/7918c21a4519336f3fab352e0e1d370c380f9df8/revoman-0.42.5.jar!/com/salesforce/revoman/input/config/StepPick.class" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-mcp-sdk/6.6.0.1/bb4a6e68e25eb3e84d9c2a682a6a9ec1f56ec0b1/http4k-mcp-sdk-6.6.0.1-sources.jar!/org/http4k/mcp/server/capability/ToolCapability.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-core/6.5.6.1/85ad46ba2e53007aace17dbb5f9f7d27e3691bc9/http4k-core-6.5.6.1-sources.jar!/org/http4k/lens/lensSpec.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-core/6.6.0.1/3d273aaabe15b0667e781d9085f5b90acd2c9aeb/http4k-core-6.6.0.1-sources.jar!/org/http4k/lens/lensSpec.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k/http4k-format-moshi/6.6.0.1/714bd7aeed72095af01d3c033a4af2e88dad92cd/http4k-format-moshi-6.6.0.1-sources.jar!/org/http4k/format/MoshiNode.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.20/a17d644acea6159970c25bbf99ff204b03c1c0b6/kotlin-stdlib-2.1.20-sources.jar!/commonMain/kotlin/text/Indent.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.ideaLibSources/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$PROJECT_DIR$/../revoman-root/build/libs/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
   </component>
   <component name="KtfmtSettingsMigration">
     <option name="stateVersion" value="2" />
@@ -118,8 +117,8 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
       <command value="gradle spotlessApply" />
+      <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
     </option>
   </component>
   <component name="RunManager" selected="Gradle.ape-root [spotlessApply]">
@@ -210,12 +209,7 @@
       <workItem from="1745475585139" duration="911000" />
       <workItem from="1745778291706" duration="91000" />
       <workItem from="1745815557061" duration="1627000" />
-      <workItem from="1745956040034" duration="907000" />
-      <workItem from="1745992555517" duration="2136000" />
-      <workItem from="1746202930752" duration="1006000" />
-      <workItem from="1746959686517" duration="517000" />
-      <workItem from="1746962618287" duration="15000" />
-      <workItem from="1746963185634" duration="668000" />
+      <workItem from="1747277022386" duration="1901000" />
     </task>
     <task id="LOCAL-00001" summary="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools">
       <option name="closed" value="true" />
@@ -385,31 +379,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745679750348</updated>
     </task>
-    <task id="LOCAL-00022" summary="Change jar&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <option name="closed" value="true" />
-      <created>1745956294779</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1745956294779</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Update README.adoc&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <option name="closed" value="true" />
-      <created>1745994492799</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1745994492799</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Update README.adoc&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
-      <option name="closed" value="true" />
-      <created>1745995216389</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1745995216389</updated>
-    </task>
-    <option name="localTasksCounter" value="25" />
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -450,10 +420,7 @@
     <MESSAGE value="Tax add randomcity&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Updated collections with auth&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Fix collection&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <MESSAGE value="Update README&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <MESSAGE value="Change jar&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <MESSAGE value="Update README.adoc&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update README.adoc&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix collection&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -465,7 +432,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt</url>
-          <line>288</line>
+          <line>294</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
