@@ -30,7 +30,7 @@ gradle-taskinfo = "2.2.0"
 
 # Common dependencies
 
-junit = "5.13.0"
+junit = "5.13.1"
 kover = "0.9.1"
 detekt = "1.23.8"
 spotless = "7.0.4"
