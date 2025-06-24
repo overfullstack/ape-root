@@ -23,14 +23,14 @@ mockito = "5.18.0"
 spring = "6.2.8"
 json-assert = "1.5.3"
 nexus-publish = "2.0.0"
-kotlinx-datetime = "0.6.2"
+kotlinx-datetime = "0.7.0-0.6.x-compat"
 node-gradle = "7.1.0"
 mockk = "1.14.4"
 gradle-taskinfo = "2.2.0"
 
 # Common dependencies
 
-junit = "5.13.1"
+junit = "5.13.2"
 kover = "0.9.1"
 detekt = "1.23.8"
 spotless = "7.0.4"
