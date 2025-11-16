@@ -13,17 +13,17 @@ import org.gradle.api.provider.Provider
 import org.gradle.plugin.use.PluginDependency
 
 val Provider<PluginDependency>.pluginId: String
-  get() = get().pluginId
+    get() = get().pluginId
 
-infix fun <T> Property<T>.by(value: T) {
-  set(value)
+infix fun <T : Any> Property<T>.by(value: T) {
+    set(value)
 }
 
 internal val VersionCatalog.jdk: VersionConstraint
-  get() = getVersion("jdk")
+    get() = getVersion("jdk")
 
 internal val VersionCatalog.kotestBundle: Provider<ExternalModuleDependencyBundle>
-  get() = getBundle("kotest")
+    get() = getBundle("kotest")
 
 private fun VersionCatalog.getLibrary(library: String) = findLibrary(library).get()
 

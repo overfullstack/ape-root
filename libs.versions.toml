@@ -1,5 +1,5 @@
 [versions]
-jdk = "21"
+jdk = "25"
 kotlin = "2.2.21"
 moshix = "0.33.0"
 http4k = "6.20.2.1"
@@ -55,7 +55,7 @@ http4k-bom = { module = "org.http4k:http4k-bom", version.ref = "http4k" }
 http4k-core = { module = "org.http4k:http4k-core" }
 http4k-client-apache = { module = "org.http4k:http4k-client-apache" }
 http4k-format-moshi = { module = "org.http4k:http4k-format-moshi" }
-http4k-mcp-sdk = { module = "org.http4k.pro:http4k-mcp-sdk" }
+http4k-ai-mcp-sdk = { module = "org.http4k.pro:http4k-ai-mcp-sdk" }
 http4k-server-helidon = { module = "org.http4k:http4k-server-helidon" }
 http4k-tools-hotreload = { module = "org.http4k.pro:http4k-tools-hotreload" }
 graal-js = { module = "org.graalvm.js:js-language", version.ref = "graal" }
@@ -95,7 +95,7 @@ http4k = [
     "http4k-core",
     "http4k-client-apache",
     "http4k-format-moshi",
-    "http4k-mcp-sdk",
+    "http4k-ai-mcp-sdk",
     "http4k-server-helidon",
     "http4k-tools-hotreload"
 ]

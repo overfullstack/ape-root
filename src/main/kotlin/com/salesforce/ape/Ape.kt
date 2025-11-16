@@ -9,19 +9,19 @@ import com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.PickUtils.af
 import com.salesforce.revoman.internal.json.MoshiReVoman
 import com.salesforce.revoman.output.ExeType.HTTP_STATUS
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.http4k.ai.mcp.ToolHandler
+import org.http4k.ai.mcp.ToolResponse
+import org.http4k.ai.mcp.model.Content
+import org.http4k.ai.mcp.model.McpEntity
+import org.http4k.ai.mcp.model.Tool
+import org.http4k.ai.mcp.model.string
+import org.http4k.ai.mcp.protocol.ServerMetaData
+import org.http4k.ai.mcp.protocol.Version
+import org.http4k.ai.mcp.server.security.NoMcpSecurity
 import org.http4k.core.PolyHandler
 import org.http4k.hotreload.HotReloadServer
 import org.http4k.hotreload.HotReloadable
 import org.http4k.jsonrpc.ErrorMessage
-import org.http4k.lens.csv
-import org.http4k.mcp.ToolHandler
-import org.http4k.mcp.ToolResponse
-import org.http4k.mcp.model.Content
-import org.http4k.mcp.model.McpEntity
-import org.http4k.mcp.model.Tool
-import org.http4k.mcp.protocol.ServerMetaData
-import org.http4k.mcp.protocol.ServerProtocolCapability.ToolsChanged
-import org.http4k.mcp.protocol.Version
 import org.http4k.routing.bind
 import org.http4k.routing.mcpHttpStreaming
 import org.http4k.server.Helidon
@@ -29,13 +29,13 @@ import org.http4k.server.Helidon
 val PM_ENVIRONMENT_PATH = listOf("pm-templates/core/milestone/env.postman_environment.json")
 
 val milestoneSplitArg =
-  Tool.Arg.csv()
+  Tool.Arg.string()
     .optional(
       "milestoneSplit",
       "Comma seperated milestone percentage split to create BillingTreatmentItems",
     )
 val prevEnvArg =
-  Tool.Arg.required(
+  Tool.Arg.string().required(
     "previousEnvironment",
     "`mutableEnv` JSON property from previous `command_` call response response",
   )
@@ -43,7 +43,7 @@ val prevEnvArg =
 const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
 val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(7000) })
 
-val queryChainPersonaCreation: ToolHandler = { toolRequest ->
+val queryChainPersonaCreation: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/persona-creation.postman_collection.json"
     val variableName = "passwordReset"
@@ -64,7 +64,7 @@ val queryChainPersonaCreation: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainOneTimeProduct: ToolHandler = { toolRequest ->
+val queryChainOneTimeProduct: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/product-setup.postman_collection.json"
 
@@ -83,7 +83,7 @@ val queryChainOneTimeProduct: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainTax: ToolHandler = { toolRequest ->
+val queryChainTax: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/tax-setup.postman_collection.json"
     val variableName = "activatedTaxPolicyId"
@@ -104,7 +104,7 @@ val queryChainTax: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainBilling: ToolHandler = { toolRequest ->
+val queryChainBilling: ToolHandler = { _ ->
   try {
     val pmCollectionPaths =
       "pm-templates/core/milestone/billing-setup-with-milestone.postman_collection.json"
@@ -126,7 +126,7 @@ val queryChainBilling: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainPlaceOrder: ToolHandler = { toolRequest ->
+val queryChainPlaceOrder: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/place-order.postman_collection.json"
 
@@ -145,7 +145,7 @@ val queryChainPlaceOrder: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainBillingSchedule: ToolHandler = { toolRequest ->
+val queryChainBillingSchedule: ToolHandler = { _ ->
   try {
     val pmCollectionPaths =
       "pm-templates/core/milestone/order-to-billingSchedule.postman_collection.json"
@@ -167,7 +167,7 @@ val queryChainBillingSchedule: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainInvoiceBillingSchedule: ToolHandler = { toolRequest ->
+val queryChainInvoiceBillingSchedule: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/invoice.postman_collection.json"
     val variableName = "invoiceId"
@@ -188,7 +188,7 @@ val queryChainInvoiceBillingSchedule: ToolHandler = { toolRequest ->
   }
 }
 
-val queryChainInvoiceWithRecovery: ToolHandler = { toolRequest ->
+val queryChainInvoiceWithRecovery: ToolHandler = { _ ->
   try {
     val pmCollectionPaths =
       "pm-templates/core/milestone/invoice-with-billingSchedule-recovery.postman_collection.json"
@@ -211,7 +211,7 @@ val queryChainInvoiceWithRecovery: ToolHandler = { toolRequest ->
 }
 
 /** *** COMMAND TOOLS *** */
-val commandPersonaCreation: ToolHandler = { toolRequest ->
+val commandPersonaCreation: ToolHandler = { _ ->
   try {
     val pmCollectionPaths = "pm-templates/core/milestone/persona-creation.postman_collection.json"
     val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
@@ -285,7 +285,7 @@ val commandBillingSetupWithMilestone: ToolHandler = { toolRequest ->
     val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
     val variableName = "activatedBillingPolicyId"
     val moshiReVoman = MoshiReVoman.initMoshi()
-    val milestoneSplit = milestoneSplitArg(toolRequest)
+    val milestoneSplit = milestoneSplitArg(toolRequest)?.split(",")?.map { it.trim() }
     val prevEnv = moshiReVoman.fromJson<Map<String, Any?>>(prevEnvArg(toolRequest))!!
 
     val rundown =
@@ -514,7 +514,7 @@ val commandRecoverInvoice: ToolHandler = { toolRequest ->
 class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
     mcpHttpStreaming(
-      ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0"), ToolsChanged),
+      ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0")), NoMcpSecurity,
       Tool(
         "query_persona-setup",
         """Helps to understand the steps involved in creating a Persona, including all permissions and settings.
