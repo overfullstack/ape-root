@@ -20,14 +20,14 @@ pprint = "3.0.0"
 underscore = "1.119"
 kotlin-faker = "1.16.0"
 mockito = "5.20.0"
-spring = "7.0.0"
+spring = "7.0.1"
 json-assert = "1.5.3"
 nexus-publish = "2.0.0"
 kotlinx-datetime = "0.7.1-0.6.x-compat"
 node-gradle = "7.1.0"
 mockk = "1.14.6"
 gradle-taskinfo = "2.2.0"
-koog = "0.5.2"
+koog = "0.5.3"
 
 # Common dependencies
 
