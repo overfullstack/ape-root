@@ -27,6 +27,7 @@ kotlinx-datetime = "0.7.1-0.6.x-compat"
 node-gradle = "7.1.0"
 mockk = "1.14.6"
 gradle-taskinfo = "2.2.0"
+koog = "0.5.2"
 
 # Common dependencies
 
@@ -77,6 +78,10 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+koog-agents = { module = "ai.koog:koog-agents", version.ref = "koog" }
+koog-tools = { module = "ai.koog:agents-tools", version.ref = "koog" }
+koog-executor-openai-client = { module = "ai.koog:prompt-executor-openai-client", version.ref = "koog" }
+koog-features-event-handler = { module = "ai.koog:agents-features-event-handler", version.ref = "koog" }
 
 
 # Gradle plugins
@@ -90,6 +95,12 @@ kotest = [
     "kotest-frameworkEngine",
     "kotest-property",
     "kotest-runnerJUnit5",
+]
+koog = [
+    "koog-agents",
+    "koog-tools",
+    "koog-executor-openai-client",
+    "koog-features-event-handler"
 ]
 http4k = [
     "http4k-core",
