@@ -1,3 +1,8 @@
+import org.gradle.kotlin.dsl.assign
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 /**
  * ************************************************************************************************
  * Copyright (c) 2023, Salesforce, Inc. All rights reserved. SPDX-License-Identifier: Apache License
@@ -24,4 +29,8 @@ kotlin {
   compilerOptions {
     freeCompilerArgs.addAll("-Xjvm-default=all", "-Xcontext-receivers", "-Xconsistent-data-class-copy-visibility", "-Xmulti-dollar-interpolation")
   } 
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    jvmTargetValidationMode = JvmTargetValidationMode.WARNING
 }
