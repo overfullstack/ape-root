@@ -35,10 +35,11 @@ val milestoneSplitArg =
       "Comma seperated milestone percentage split to create BillingTreatmentItems",
     )
 val prevEnvArg =
-  Tool.Arg.string().required(
-    "previousEnvironment",
-    "`mutableEnv` JSON property from previous `command_` call response response",
-  )
+  Tool.Arg.string()
+    .required(
+      "previousEnvironment",
+      "`mutableEnv` JSON property from previous `command_` call response response",
+    )
 
 const val IGNORE_HTTP_STATUS_UNSUCCESSFUL = "ignoreHTTPStatusUnsuccessful"
 val WAIT_HOOK = post(afterStepContainingHeader("isAsync"), { _, _ -> Thread.sleep(7000) })
@@ -514,149 +515,182 @@ val commandRecoverInvoice: ToolHandler = { toolRequest ->
 class ReloadableMCP : HotReloadable<PolyHandler> {
   override fun create() =
     mcpHttpStreaming(
-      ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0")), NoMcpSecurity,
+      ServerMetaData(McpEntity.of("Ape MCP server"), Version.of("1.0.0")),
+      NoMcpSecurity,
       Tool(
         "query_persona-setup",
-        """Helps to understand the steps involved in creating a Persona, including all permissions and settings.
-      |The tool returns a Postman collection that demonstrates the complete chain of API calls needed for all persona creation.
-      |This is a prerequisite for all other `query_` operations."""
+        """
+        |Helps to understand the steps involved in creating a Persona, including all permissions and settings.
+        |The tool returns a Postman collection that demonstrates the complete chain of API calls needed for all persona creation.
+        |This is a prerequisite for all other `query_` operations.
+        """
           .trimMargin(),
       ) bind queryChainPersonaCreation,
       Tool(
         "query_create-order",
-        """Helps to understand the steps involved in creating an Order, including all related dependencies.
-          |It depends on `query_product-setup` MCP tool. Execute that before this.
-          |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
-          |Returns a consolidated Postman collection with all the steps involved in creating an Order.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Helps to understand the steps involved in creating an Order, including all related dependencies.
+        |It depends on `query_product-setup` MCP tool. Execute that before this.
+        |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+        |Returns a consolidated Postman collection with all the steps involved in creating an Order.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
       ) bind queryChainPlaceOrder,
       Tool(
         "query_tax-setup",
-        """Helps to understand the steps involved in setting up Tax and Billing configurations.
-      |Depends on `query_persona-setup` MCP tool. Execute that before this.
-      |Returns a consolidated Postman collection with all Tax and Billing setup steps.
-      |Required before Product Setup."""
+        """
+        |Helps to understand the steps involved in setting up Tax and Billing configurations.
+        |Depends on `query_persona-setup` MCP tool. Execute that before this.
+        |Returns a consolidated Postman collection with all Tax and Billing setup steps.
+        |Required before Product Setup.
+        """
           .trimMargin(),
       ) bind queryChainTax,
       Tool(
         "query_billing-setup-with-milestone",
-        """Helps to understand the steps involved in setting up Tax and Billing configurations.
-      |Depends on `query_persona-setup` MCP tool. Execute that before this.
-      |Returns a consolidated Postman collection with all Tax and Billing setup steps.
-      |Required before Product Setup."""
+        """
+        |Helps to understand the steps involved in setting up Tax and Billing configurations.
+        |Depends on `query_persona-setup` MCP tool. Execute that before this.
+        |Returns a consolidated Postman collection with all Tax and Billing setup steps.
+        |Required before Product Setup.
+        """
           .trimMargin(),
       ) bind queryChainBilling,
       Tool(
         "query_product-setup",
-        """Helps to understand the steps involved in creating creating a OneTime product, including all related dependencies.
-          |Depends on `query_tax-setup` and `query_billing-setup-with-milestone` MCP tools. Execute those before this.
-          |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
-          |Returns a consolidated Postman collection with all the steps involved in creating a OneTime product.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Helps to understand the steps involved in creating creating a OneTime product, including all related dependencies.
+        |Depends on `query_tax-setup` and `query_billing-setup-with-milestone` MCP tools. Execute those before this.
+        |The tool returns a Postman collection that demonstrates the complete chain of API calls needed to create and configure the entity.
+        |Returns a consolidated Postman collection with all the steps involved in creating a OneTime product.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
       ) bind queryChainOneTimeProduct,
       Tool(
         "query_billing-schedule",
-        """Helps to understand the steps involved in creating Billing Schedules from Order.
-      |Depends on `query_create-order` MCP tool. Execute that before this.
-      |Returns a consolidated Postman collection for billing schedule creation.
-      |Required before Invoice Generation."""
+        """
+        |Helps to understand the steps involved in creating Billing Schedules from Order.
+        |Depends on `query_create-order` MCP tool. Execute that before this.
+        |Returns a consolidated Postman collection for billing schedule creation.
+        |Required before Invoice Generation.
+        """
           .trimMargin(),
       ) bind queryChainBillingSchedule,
       Tool(
         "query_invoice-billingSchedule",
-        """Helps to understand the steps involved in generating Invoices.
-      |Depends on `query_billing-schedule` MCP tool. Execute that before this.
-      |Returns a Postman collection for invoice generation process."""
+        """
+        |Helps to understand the steps involved in generating Invoices.
+        |Depends on `query_billing-schedule` MCP tool. Execute that before this.
+        |Returns a Postman collection for invoice generation process.
+        """
           .trimMargin(),
       ) bind queryChainInvoiceBillingSchedule,
       Tool(
         "query_invoice-with-billingSchedule-recovery",
-        """Helps to understand the steps involved to recover a Billing Schedule in error state before invoicing them.
-      |Depends on `query_invoice-billingSchedule` MCP tool. Execute that before this.
-      |Returns a Postman collection for invoice recovery process."""
+        """
+        |Helps to understand the steps involved to recover a Billing Schedule in error state before invoicing them.
+        |Depends on `query_invoice-billingSchedule` MCP tool. Execute that before this.
+        |Returns a Postman collection for invoice recovery process.
+        """
           .trimMargin(),
       ) bind queryChainInvoiceWithRecovery,
 
       /** COMMAND-TOOLS */
       Tool(
         "command_persona-creation",
-        """Create a Persona.
-          |The tool's response has all the data of steps executed to create a Persona.
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |This is a prerequisite for all other `command_` operations.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Create a Persona.
+        |The tool's response has all the data of steps executed to create a Persona.
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |This is a prerequisite for all other `command_` operations.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
       ) bind commandPersonaCreation,
       Tool(
         "command_place-order",
-        """Create an Order.
-          |The tool's response has all the data of steps executed to create an Order.
-          |It depends on `command_product-setup` MCP tool. Execute `command_product-setup` before this and pass the `mutableEnv` from `command_product-setup` call response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Create an Order.
+        |The tool's response has all the data of steps executed to create an Order.
+        |It depends on `command_product-setup` MCP tool. Execute `command_product-setup` before this and pass the `mutableEnv` from `command_product-setup` call response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandPlaceOrder,
       Tool(
         "command_tax-setup",
-        """Setup Tax configuration.
-          |The tool's response has all the data of steps executed for Tax setup.
-          |It depends on `command_persona-creation` MCP tool. Execute `command_persona-creation` before this and pass the `mutableEnv` from `command_persona-creation` call response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Setup Tax configuration.
+        |The tool's response has all the data of steps executed for Tax setup.
+        |It depends on `command_persona-creation` MCP tool. Execute `command_persona-creation` before this and pass the `mutableEnv` from `command_persona-creation` call response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandTaxSetup,
       Tool(
         "command_billing-setup-with-milestone",
-        """Setup Billing configuration.
-          |The tool's response has all the data of steps executed for Billing setup.
-          |It depends on `command_tax-setup` MCP tool. Execute `command_tax-setup` before this and pass the `mutableEnv` from `command_tax-setup` call response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |The tool accepts an optional parameter called `milestoneSplit` which is used to create BillingTreatmentItems
-          |If the returned data is large, consume in chunks."""
+        """
+        |Setup Billing configuration.
+        |The tool's response has all the data of steps executed for Billing setup.
+        |It depends on `command_tax-setup` MCP tool. Execute `command_tax-setup` before this and pass the `mutableEnv` from `command_tax-setup` call response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |The tool accepts an optional parameter called `milestoneSplit` which is used to create BillingTreatmentItems
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
         milestoneSplitArg,
       ) bind commandBillingSetupWithMilestone,
       Tool(
         "command_product-setup",
-        """Creates a OneTime product.
-          |The tool's response has all the data of steps executed to create OneTime product.
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Creates a OneTime product.
+        |The tool's response has all the data of steps executed to create OneTime product.
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandCreateOneTimeProduct,
       Tool(
         "command_billing-schedule",
-        """Create a Billing Schedule from Order.
-          |The tool's response has all the data of steps executed to create a Billing Schedule from Order.
-          |It depends on `command_place-order` MCP tool. Execute `command_place-order` before this and pass the `mutableEnv` from `command_place-order` call response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Create a Billing Schedule from Order.
+        |The tool's response has all the data of steps executed to create a Billing Schedule from Order.
+        |It depends on `command_place-order` MCP tool. Execute `command_place-order` before this and pass the `mutableEnv` from `command_place-order` call response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandBillingSchedule,
       Tool(
         "command_invoice-billingSchedule",
-        """Generate Invoice for a BillingSchedule.
-          |The tool's response has all the data of steps executed to generate an Invoice from BillingSchedule.
-          |It depends on `command_billing-schedule` MCP tool. Execute `command_billing-schedule` before this and pass the `mutableEnv` from `command_billing-schedule` call response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Generate Invoice for a BillingSchedule.
+        |The tool's response has all the data of steps executed to generate an Invoice from BillingSchedule.
+        |It depends on `command_billing-schedule` MCP tool. Execute `command_billing-schedule` before this and pass the `mutableEnv` from `command_billing-schedule` call response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandInvoiceBillingSchedule,
       Tool(
         "command_invoice-with-billingSchedule-recovery",
-        """Recovers a BillingSchedule and Invoice that BillingSchedule.
-          |The tool's response has all the data of steps executed to recover an Invoice.
-          |It depends on `command_invoice-billingSchedule` MCP tool. Execute `command_invoice-billingSchedule` before this and pass the `mutableEnv` from `command_invoice-billingSchedule` call response response
-          |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
-          |If the returned data is large, consume in chunks."""
+        """
+        |Recovers a BillingSchedule and Invoice that BillingSchedule.
+        |The tool's response has all the data of steps executed to recover an Invoice.
+        |It depends on `command_invoice-billingSchedule` MCP tool. Execute `command_invoice-billingSchedule` before this and pass the `mutableEnv` from `command_invoice-billingSchedule` call response response
+        |The tool's response contains a `mutableEnv` JSON property which can be used to send to `command_` tools dependent on this tool.
+        |If the returned data is large, consume in chunks.
+        """
           .trimMargin(),
         prevEnvArg,
       ) bind commandRecoverInvoice,
