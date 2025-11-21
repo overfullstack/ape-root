@@ -23,6 +23,7 @@ val mockitoAgent = configurations.create("mockitoAgent")
 dependencies {
   api(platform(libs.http4k.bom))
   api(libs.bundles.koog)
+  implementation(libs.bundles.mcp)
   api(libs.bundles.http4k)
 
   implementation(fileTree(mapOf("dir" to "jar", "include" to listOf("*.jar"))))
