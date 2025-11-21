@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Fix compile errors&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Add koog dependencies&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/TestMcpServer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/CoreUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/adapters/ConnectInputRepWithGraphAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/adapters/IDAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/MilestoneBillingE2ETest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/bt2bs/ReVomanConfigForBT2BS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/PQE2EWithSMTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/ConnectInputRepresentationWithGraph.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/ObjectGraphInputRepresentation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/ObjectInputRepresentationMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/ObjectWithReferenceInputRepresentation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/ObjectWithReferenceInputRepresentationList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/PlaceQuoteInputRepresentation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/request/PricingPreferenceEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/response/ID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/response/PlaceQuoteErrorResponseRepresentation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/integrationTest/java/com/salesforce/ape/core/pq/connect/response/PlaceQuoteOutputRepresentation.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +71,13 @@
 }</component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.sdkman/candidates/gradle/9.2.0" javaHome="$USER_HOME$/Library/Java/JavaVirtualMachines/openjdk-21.0.2/Contents/Home" gradleVersion="9.2.0" />
   <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/a8b237037835421cbcfe8353623d8c16c00057a0/http4k-ai-mcp-core-6.20.2.1-sources.jar!/org/http4k/ai/mcp/protocol/ServerMetaData.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/a8b237037835421cbcfe8353623d8c16c00057a0/http4k-ai-mcp-core-6.20.2.1-sources.jar!/org/http4k/ai/mcp/protocol/Version.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/b1751d95ff5dbd8659cf45bd373da2c80d73e067/http4k-ai-mcp-core-6.20.2.1.jar!/org/http4k/ai/mcp/protocol/ServerMetaData.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a06bf3851fff5fb2a3185464043c479d7db95fd/http4k-ai-mcp-sdk-6.20.2.1.jar!/org/http4k/routing/McpKt.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/ai/mcp/server/security/McpSecurity.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/ai/mcp/server/security/OAuthMcpSecurity.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/routing/Mcp.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.ideaLibSources/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
   </component>
   <component name="KtfmtSettingsMigration">
@@ -64,37 +92,42 @@
 }</component>
   <component name="ProjectId" id="2wA9DJnaW0LfLSt9cW01l2BfjZy" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build ape-root.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ape-root [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ape-root [spotlessApply].executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.ApeKt.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.com.sfdc.cdb.use_credential_helper&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/gopala.akshintala/code-clones/work/ape-root/jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build ape-root.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.ape-root [:com.salesforce.ape.ApeKt.main()].executor": "Run",
+    "Gradle.ape-root [build].executor": "Run",
+    "Gradle.ape-root [spotlessApply].executor": "Run",
+    "Kotlin.ApeKt.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.com.sfdc.cdb.use_credential_helper": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
+    "bazel.project.detector.is.bazel.project": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/gopala.akshintala/code-clones/work/ape-root/jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="main" />
@@ -109,11 +142,11 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="gradle spotlessApply" />
       <command value="gradle build -x integrationTest -x spotlessKotlinCheck -x test" />
+      <command value="gradle spotlessApply" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.ape-root [spotlessApply]">
+  <component name="RunManager" selected="Kotlin.ApeKt">
     <configuration name="ape-root [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -132,8 +165,11 @@
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
     <configuration name="ape-root [spotlessApply]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -154,8 +190,11 @@
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
     <configuration name="ApeKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
@@ -173,8 +212,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.ape-root [build]" />
       <item itemvalue="Gradle.ape-root [spotlessApply]" />
+      <item itemvalue="Gradle.ape-root [build]" />
       <item itemvalue="Kotlin.ApeKt" />
     </list>
     <recent_temporary>
@@ -210,6 +249,10 @@
       <workItem from="1760002133479" duration="706000" />
       <workItem from="1760007302024" duration="1371000" />
       <workItem from="1763278131646" duration="2584000" />
+      <workItem from="1763282880797" duration="1878000" />
+      <workItem from="1763352405659" duration="597000" />
+      <workItem from="1763627200396" duration="6770000" />
+      <workItem from="1763713316771" duration="896000" />
     </task>
     <task id="LOCAL-00001" summary="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools">
       <option name="closed" value="true" />
@@ -403,7 +446,39 @@
       <option name="project" value="LOCAL" />
       <updated>1763280093820</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Fix compile errors&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1763282968639</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1763282968639</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fix jvm validation&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1763631350708</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1763631350708</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Spotless&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1763631781929</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1763631781929</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Add koog dependencies&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <option name="closed" value="true" />
+      <created>1763633209529</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1763633209529</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,7 +552,10 @@
     <MESSAGE value="Add revoman jars&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Commit&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
     <MESSAGE value="Fix compile errors&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix compile errors&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <MESSAGE value="Fix jvm validation&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <MESSAGE value="Spotless&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <MESSAGE value="Add koog dependencies&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add koog dependencies&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
