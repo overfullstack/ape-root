@@ -1,6 +1,11 @@
 package com.salesforce.ape
 
 import ai.koog.utils.io.SuitableForIO
+import com.salesforce.ape.CoreUtils.ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS
+import com.salesforce.ape.CoreUtils.ASSERT_COMPOSITE_RESPONSE_SUCCESS
+import com.salesforce.revoman.ReVoman
+import com.salesforce.revoman.input.config.Kick
+import com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.PickUtils.afterStepContainingHeader
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
 import io.modelcontextprotocol.kotlin.sdk.CallToolResult
@@ -80,13 +85,76 @@ class TestMcpServer(private val port: Int) {
             )
         }
 
-        // A completely empty tool that accepts nothing and returns nothing
         server.addTool(
-            name = "empty",
-            description = "An empty tool",
-            inputSchema = Tool.Input()
-        ) {
-            CallToolResult(content = emptyList())
+            name = "Create Service Appointment",
+            description = "Creates a new service appointment given appointment topic name and service territory name. Successful output would contain Service Appointment and Assigned Resource Id.",
+            inputSchema = Tool.Input(
+                properties = buildJsonObject {
+                    putJsonObject("appointmentTopicName") {
+                        put("type", "string")
+                        put("description", "Appointment topic name")
+                    }
+                    putJsonObject("serviceTerritoryName") {
+                        put("type", "string")
+                        put("description", "Service territory name")
+                    }
+                    putJsonObject("previousEnvironment") {
+                        put("type", "string")
+                        put("description", "Optional: `mutableEnv` JSON property from previous `command_` call response")
+                    }
+                },
+                required = listOf("appointmentTopicName", "serviceTerritoryName")
+            )
+        ) { request ->
+            try {
+                val appointmentTopicName = request.arguments["appointmentTopicName"]?.jsonPrimitive?.content
+                    ?: throw IllegalArgumentException("appointmentTopicName is required")
+                val serviceTerritoryName = request.arguments["serviceTerritoryName"]?.jsonPrimitive?.content
+                    ?: throw IllegalArgumentException("serviceTerritoryName is required")
+
+                val pmCollectionPaths = "scheduler-e2e/Schedule Appointment E2E.postman_collection.json"
+                val pmEnvironmentPaths = listOf("scheduler-e2e/scheduler-sdb14.postman_environment.json")
+
+                // Build dynamic environment
+                val dynamicEnv = mutableMapOf<String, String>(
+                    "stName" to serviceTerritoryName,
+                    "wtgName" to appointmentTopicName
+                )
+
+                val rundown = ReVoman.revUp(
+                    Kick.configure()
+                        .templatePaths(pmCollectionPaths)
+                        .dynamicEnvironment(dynamicEnv)
+                        .environmentPaths(pmEnvironmentPaths)
+                        .haltOnFailureOfTypeExcept(
+                            com.salesforce.revoman.output.ExeType.HTTP_STATUS,
+                            afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
+                        )
+                        .hooks(
+                            WAIT_HOOK,
+                            ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS,
+                            ASSERT_COMPOSITE_RESPONSE_SUCCESS,
+                        )
+                        .nodeModulesPath("js")
+                        .off(),
+                )
+
+                val lastStep = rundown.stepReports.last();
+                val saResponse = lastStep.responseInfo?.get()?.httpMsg?.body.toString()
+
+                CallToolResult(
+                    content = listOf(TextContent(saResponse))
+                )
+            } catch (e: Exception) {
+                CallToolResult(
+                    content = listOf(
+                        TextContent(
+                            """{"error": "${e.message ?: "Unknown error occurred in appointment scheduling"}"}"""
+                        )
+                    ),
+                    isError = true
+                )
+            }
         }
 
         return server
@@ -120,5 +188,31 @@ class TestMcpServer(private val port: Int) {
         serverJob = null
         isRunning = false
         println("Test MCP server stopped")
+    }
+}
+
+/**
+ * Main function to run the Test MCP server.
+ * The server can be configured via the PORT environment variable (default: 3000).
+ */
+fun main() {
+    val port = System.getenv("PORT")?.toIntOrNull() ?: 3000
+    val server = TestMcpServer(port)
+
+    // Add shutdown hook for graceful shutdown
+    Runtime.getRuntime().addShutdownHook(Thread {
+        println("\nShutting down Test MCP server...")
+        server.stop()
+    })
+
+    // Start the server
+    server.start()
+
+    // Keep the main thread alive
+    try {
+        Thread.currentThread().join()
+    } catch (e: InterruptedException) {
+        println("Main thread interrupted")
+        server.stop()
     }
 }
