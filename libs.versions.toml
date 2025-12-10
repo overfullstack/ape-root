@@ -26,7 +26,7 @@ nexus-publish = "2.0.0"
 kotlinx-datetime = "0.7.1-0.6.x-compat"
 node-gradle = "7.1.0"
 mockk = "1.14.7"
-gradle-taskinfo = "2.2.1"
+gradle-taskinfo = "3.0.0"
 koog = "0.5.4"
 mcp = "0.8.1"
 
