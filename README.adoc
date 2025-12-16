@@ -19,7 +19,7 @@ endif::[]
 :imagesdir: docs/images
 :prewrap!:
 
-NOTE: link:docs/ape-deck.pdf
+NOTE: link:docs/ape-deck.pdf[Slide deck]
 
 == The problem
 

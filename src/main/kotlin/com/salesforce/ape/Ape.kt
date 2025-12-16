@@ -478,13 +478,11 @@ val commandRecoverInvoice: ToolHandler = { toolRequest ->
     val pmCollectionPaths =
       "pm-templates/core/milestone/invoice-with-billingSchedule-recovery.postman_collection.json"
     val pmEnvironmentPaths = PM_ENVIRONMENT_PATH
-    val variableName = "invoiceIdAfterRecovery"
-    val moshiReVoman = MoshiReVoman.initMoshi()
+      val moshiReVoman = MoshiReVoman.initMoshi()
     val prevEnv = moshiReVoman.fromJson<Map<String, String?>>(prevEnvArg(toolRequest))!!
 
     val rundown =
-      ReVoman.exeChainForVariable(
-        variableName,
+      ReVoman.revUp(
         Kick.configure()
           .templatePaths(pmCollectionPaths)
           .environmentPaths(pmEnvironmentPaths)
