@@ -23,6 +23,7 @@ val mockitoAgent = configurations.create("mockitoAgent")
 dependencies {
   api(platform(libs.http4k.bom))
   api(libs.bundles.koog)
+  implementation(libs.koog.agents)
   implementation(libs.bundles.mcp)
   api(libs.bundles.http4k)
 
@@ -79,6 +80,10 @@ tasks {
   check { dependsOn(npmInstall) }
   test { dependsOn(npmInstall) }
   withType<Jar> { archiveBaseName = "ape" }
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 kover { reports { total { html { onCheck = true } } } }
