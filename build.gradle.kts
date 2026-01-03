@@ -13,7 +13,7 @@ plugins {
   alias(libs.plugins.node.gradle)
   alias(libs.plugins.kover)
   alias(libs.plugins.nexus.publish)
-  alias(libs.plugins.gradle.taskinfo)
+  // alias(libs.plugins.gradle.taskinfo)
 }
 
 application { mainClass.set("com.salesforce.ape.ApeKt") }

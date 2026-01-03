@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf055c80-3823-4e48-a580-0d8a0e1d12be" name="Changes" comment="Remove redundant files&#10;&#10;Signed-off-by: Gopal S Akshintala &lt;gopala.akshintala@salesforce.com&gt;">
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/salesforce/ape/Ape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,13 +55,6 @@
 }</component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.sdkman/candidates/gradle/9.2.0" javaHome="$USER_HOME$/Library/Java/JavaVirtualMachines/openjdk-21.0.2/Contents/Home" gradleVersion="9.2.0" />
   <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/a8b237037835421cbcfe8353623d8c16c00057a0/http4k-ai-mcp-core-6.20.2.1-sources.jar!/org/http4k/ai/mcp/protocol/ServerMetaData.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/a8b237037835421cbcfe8353623d8c16c00057a0/http4k-ai-mcp-core-6.20.2.1-sources.jar!/org/http4k/ai/mcp/protocol/Version.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-core/6.20.2.1/b1751d95ff5dbd8659cf45bd373da2c80d73e067/http4k-ai-mcp-core-6.20.2.1.jar!/org/http4k/ai/mcp/protocol/ServerMetaData.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a06bf3851fff5fb2a3185464043c479d7db95fd/http4k-ai-mcp-sdk-6.20.2.1.jar!/org/http4k/routing/McpKt.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/ai/mcp/server/security/McpSecurity.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/ai/mcp/server/security/OAuthMcpSecurity.kt" root0="SKIP_INSPECTION" />
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.http4k.pro/http4k-ai-mcp-sdk/6.20.2.1/a3043ad75f5f4abb2ca97b750acb7fc5b98b16a8/http4k-ai-mcp-sdk-6.20.2.1-sources.jar!/org/http4k/routing/Mcp.kt" root0="SKIP_INSPECTION" />
     <setting file="jar://$USER_HOME$/.ideaLibSources/revoman-0.7.9-sources.jar!/com/salesforce/revoman/ReVoman.kt" root0="SKIP_INSPECTION" />
   </component>
   <component name="KtfmtSettingsMigration">
@@ -81,35 +76,36 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build ape-root.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ape-root [:com.salesforce.ape.ApeKt.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ape-root [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ape-root [spotlessApply].executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.ApeKt.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.com.sfdc.cdb.use_credential_helper&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
-    &quot;bazel.project.detector.is.bazel.project&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/gopala.akshintala/code-clones/work/ape-root/jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.mcpserver.settings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build ape-root.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.ape-root [:com.salesforce.ape.ApeKt.main()].executor": "Run",
+    "Gradle.ape-root [build].executor": "Run",
+    "Gradle.ape-root [spotlessApply].executor": "Run",
+    "Kotlin.ApeKt.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.com.sfdc.cdb.use_credential_helper": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
+    "bazel.project.detector.is.bazel.project": "true",
+    "com.github.patou.gitmoji.migration-offered": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/gopala.akshintala/code-clones/work/ape-root/jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "com.intellij.mcpserver.settings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="main" />
@@ -245,6 +241,9 @@
       <workItem from="1764860159865" duration="943000" />
       <workItem from="1765171052966" duration="603000" />
       <workItem from="1765171773233" duration="595000" />
+      <workItem from="1767348001663" duration="2441000" />
+      <workItem from="1767445980551" duration="204000" />
+      <workItem from="1767446205410" duration="1412000" />
     </task>
     <task id="LOCAL-00001" summary="Backtrack&#10;- Remove usage guides&#10;- Add specific query tools">
       <option name="closed" value="true" />
