@@ -77,10 +77,6 @@
           "listen": "test",
           "script": {
             "exec": [
-              "// Parse the JSON response body",
-              "var jsonData1 = pm.response.json();",
-              "var workTypeGroupID = jsonData1.workTypeGroups[0][0].id;",
-              "pm.environment.set(\"workTypeGroupID\", workTypeGroupID);"
             ],
             "type": "text/javascript",
             "packages": {},

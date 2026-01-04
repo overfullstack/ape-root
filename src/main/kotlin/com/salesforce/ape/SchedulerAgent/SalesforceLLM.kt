@@ -1,4 +1,4 @@
-package com.salesforce.ape
+package com.salesforce.ape.SchedulerAgent
 
 import ai.koog.prompt.executor.clients.openai.OpenAIClientSettings
 import ai.koog.prompt.executor.clients.openai.OpenAILLMClient
@@ -19,7 +19,7 @@ object SalesforceLLM {
         )
 
         //Set the env variable with your API Key
-        val apiKeyVar: String = System.getenv("API_KEY") ?: "default_value"
+        val apiKeyVar: String = System.getenv("API_KEY") ?: "<Your API Key>"
 
         val openAiClient = OpenAILLMClient(
             apiKey = apiKeyVar,

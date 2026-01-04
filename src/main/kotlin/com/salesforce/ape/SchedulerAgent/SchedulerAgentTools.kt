@@ -1,22 +1,18 @@
-package com.salesforce.ape
+package com.salesforce.ape.SchedulerAgent
 
-import ai.koog.agents.core.agent.AIAgent
-import ai.koog.agents.core.agent.AIAgent.Companion.invoke
-import ai.koog.agents.core.tools.ToolRegistry
-import ai.koog.agents.core.tools.ToolRegistry.Companion.invoke
 import ai.koog.agents.core.tools.annotations.LLMDescription
 import ai.koog.agents.core.tools.annotations.Tool
 import ai.koog.agents.core.tools.reflect.ToolSet
-import ai.koog.agents.core.tools.reflect.tools
-import ai.koog.agents.ext.tool.AskUser
-import ai.koog.agents.ext.tool.SayToUser
 import com.salesforce.ape.CoreUtils.ASSERT_COMPOSITE_GRAPH_RESPONSE_SUCCESS
 import com.salesforce.ape.CoreUtils.ASSERT_COMPOSITE_RESPONSE_SUCCESS
+import com.salesforce.ape.IGNORE_HTTP_STATUS_UNSUCCESSFUL
+import com.salesforce.ape.WAIT_HOOK
 import com.salesforce.revoman.ReVoman
 import com.salesforce.revoman.input.config.Kick
 import com.salesforce.revoman.input.config.StepPick.PostTxnStepPick.PickUtils.afterStepContainingHeader
+import com.salesforce.revoman.output.ExeType
 
-class SchedulerAgent {
+object SchedulerAgentTools {
 
     @LLMDescription("Tools for obtaining the work type group")
     class CustomTools : ToolSet {
@@ -36,7 +32,7 @@ class SchedulerAgent {
                     .dynamicEnvironment(dynamicEnv)
                     .environmentPaths(pmEnvironmentPaths)
                     .haltOnFailureOfTypeExcept(
-                        com.salesforce.revoman.output.ExeType.HTTP_STATUS,
+                        ExeType.HTTP_STATUS,
                         afterStepContainingHeader(IGNORE_HTTP_STATUS_UNSUCCESSFUL),
                     )
                     .hooks(
@@ -49,38 +45,9 @@ class SchedulerAgent {
             )
 
             val lastStep = rundown.stepReports.last();
-            //val saResponse = lastStep.responseInfo?.get()?.httpMsg?.body.toString()
-            println()
-            println()
-            println("HELLO")
-            //println(lastStep.responseInfo.responseInfo.httpMessage)
-            return lastStep.toString()
+
+            return lastStep.responseInfo?.get().toString()
         }
     }
 
-    val toolRegistry = ToolRegistry {
-        tools(CustomTools())
-        tool(SayToUser)
-        tool(AskUser)
-    }
-
-    fun simpleAgent(): AIAgent<String, String> {
-        val agent = AIAgent(
-            promptExecutor = SalesforceLLM.getLlmExecutor(),
-            llmModel = SalesforceLLM.getModel(),
-            toolRegistry = toolRegistry
-        )
-
-        return agent;
-    }
-
 }
-
-suspend fun main() {
-
-    val agent = SchedulerAgent()
-    val ans = agent.simpleAgent().run("Give me the id of a work type group for depositing cash? Answer in less than 5 words and tell the user")
-
-    println(ans)
-}
-
