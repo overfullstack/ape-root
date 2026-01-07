@@ -3,7 +3,7 @@ jdk = "25"
 kotlin = "2.3.0"
 moshix = "0.34.1"
 http4k = "6.25.1.0"
-immutables = "2.12.0"
+immutables = "2.12.1"
 arrow = "2.2.1.1"
 graal = "25.0.1"
 java-vavr = "0.11.0"
@@ -32,7 +32,7 @@ mcp = "0.8.1"
 
 # Common dependencies
 
-junit = "6.0.1"
+junit = "6.0.2"
 kover = "0.9.4"
 detekt = "1.23.8"
 spotless = "8.1.0"
