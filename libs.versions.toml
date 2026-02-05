@@ -33,7 +33,7 @@ mcp = "0.8.3"
 # Common dependencies
 
 junit = "6.0.2"
-kover = "0.9.5"
+kover = "0.9.6"
 detekt = "1.23.8"
 spotless = "8.2.1"
 apache-log4j = "2.25.3"
