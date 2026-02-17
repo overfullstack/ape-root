@@ -28,7 +28,7 @@ node-gradle = "7.1.0"
 mockk = "1.14.9"
 gradle-taskinfo = "3.0.1"
 koog = "0.6.2"
-mcp = "0.8.3"
+mcp = "0.8.4"
 
 # Common dependencies
 
