@@ -2,7 +2,7 @@
 jdk = "25"
 kotlin = "2.3.10"
 moshix = "0.34.4"
-http4k = "6.31.0.0"
+http4k = "6.31.1.0"
 immutables = "2.12.1"
 arrow = "2.2.1.1"
 graal = "25.0.2"
