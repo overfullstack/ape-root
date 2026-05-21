@@ -27,7 +27,7 @@ kotlinx-datetime = "0.8.0-0.6.x-compat"
 node-gradle = "7.1.0"
 mockk = "1.14.9"
 gradle-taskinfo = "3.0.2"
-koog = "0.8.0"
+koog = "1.0.0"
 mcp = "0.12.0"
 
 # Common dependencies
