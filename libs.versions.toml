@@ -2,7 +2,7 @@
 jdk = "25"
 kotlin = "2.3.21"
 moshix = "0.35.0"
-http4k = "6.50.0.0"
+http4k = "6.51.0.0"
 immutables = "2.12.2"
 arrow = "2.2.2.1"
 graal = "25.0.3"
@@ -28,7 +28,7 @@ node-gradle = "7.1.0"
 mockk = "1.14.11"
 gradle-taskinfo = "3.0.2"
 koog = "1.0.0"
-mcp = "0.12.0"
+mcp = "0.13.0"
 
 # Common dependencies
 
