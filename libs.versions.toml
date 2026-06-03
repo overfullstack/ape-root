@@ -1,7 +1,7 @@
 [versions]
 jdk = "25"
-kotlin = "2.3.21"
-moshix = "0.35.0"
+kotlin = "2.4.0"
+moshix = "0.36.0"
 http4k = "6.51.0.0"
 immutables = "2.12.2"
 arrow = "2.2.2.1"
