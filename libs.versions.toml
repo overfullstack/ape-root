@@ -35,7 +35,7 @@ mcp = "0.13.0"
 junit = "6.1.0"
 kover = "0.9.8"
 detekt = "1.23.8"
-spotless = "8.6.0"
+spotless = "8.7.0"
 apache-log4j = "2.26.0"
 
 [libraries]
